@@ -1,45 +1,34 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-using Xamarin.Forms;
+﻿using Xamarin.Forms;
 
 namespace ClassManagement
 {
     public class App : Application
     {
+        public DataModel data;
+
         public App()
         {
+            Toolkit.Init();
+            data = new DataModel();
+
             // The root page of your application
-            MainPage = new ContentPage
-            {
-                Content = new StackLayout
-                {
-                    VerticalOptions = LayoutOptions.Center,
-                    Children = {
-                        new Label {
-                            HorizontalTextAlignment = TextAlignment.Center,
-                            Text = "Welcome to Xamarin Forms!"
-                        }
-                    }
-                }
-            };
+            MainPage = new NavigationPage(new PeriodListPage { BindingContext = data, Periods = data.Periods });
+
         }
 
         protected override void OnStart()
         {
-            // Handle when your app starts
+
         }
 
         protected override void OnSleep()
         {
-            // Handle when your app sleeps
+            data.SaveData();
         }
 
         protected override void OnResume()
         {
-            // Handle when your app resumes
+            data.LoadData();
         }
     }
 }

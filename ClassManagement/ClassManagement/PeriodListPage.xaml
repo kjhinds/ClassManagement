@@ -1,0 +1,58 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
+			xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+			xmlns:toolkit="clr-namespace:ClassManagement;assembly:ClassManagement" 
+			x:Class="ClassManagement.PeriodListPage"
+			Title="All Periods">
+
+	<ContentPage.Resources>
+		<ResourceDictionary>
+			<Style TargetType="Label">
+				<Setter Property="FontSize" Value="Large" />
+				<Setter Property="HorizontalTextAlignment" Value="Center" />
+				<Setter Property="TextColor" Value="Green" />
+			</Style>
+		</ResourceDictionary>
+	</ContentPage.Resources>
+
+	<ContentPage.Padding>
+	    <OnPlatform x:TypeArguments="Thickness"
+			iOS="10, 5, 10, 5"
+	    	Android="10, 5, 10, 5" />
+	</ContentPage.Padding>
+
+	<ContentPage.ToolbarItems>
+		<ToolbarItem Name="Add" Activated="AddPeriod"></ToolbarItem>
+	</ContentPage.ToolbarItems>
+
+	<ContentPage.Content>
+		<ListView   ItemSelected="OnSelection"
+					SeparatorVisibility="None"
+					HasUnevenRows="true"
+					ItemsSource="{Binding Periods}">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+               		    <ViewCell.ContextActions>
+            				<MenuItem Clicked="OnDetails"
+           							    Text="Details" />
+         				    <MenuItem Clicked="OnDelete"
+           							    Text="Delete" IsDestructive="True" />
+     				    </ViewCell.ContextActions>
+     				    <ContentView Padding="5">
+     				    	<Frame OutlineColor="Accent"
+     				    			Padding="10">
+		                        <StackLayout Orientation="Vertical">
+		                            <StackLayout Orientation="Horizontal">
+		                                <Label Text="{Binding PeriodName}" />
+		                            </StackLayout>
+		                        </StackLayout>
+		                    </Frame>
+		                </ContentView>	
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+	</ContentPage.Content>
+
+</ContentPage>

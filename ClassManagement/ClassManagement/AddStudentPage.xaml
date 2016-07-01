@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
+			xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+			x:Class="ClassManagement.AddStudentPage"
+			Title="Add Student">
+
+	<ContentPage.Padding>
+	    <OnPlatform x:TypeArguments="Thickness"
+	    	iOS="10, 20, 10, 5"
+	    	Android="10, 5, 10, 5" />
+	</ContentPage.Padding>
+
+	<ContentPage.Content>
+		<StackLayout>
+			<Label Text="Add Student"
+					HorizontalOptions="Center"
+					VerticalOptions="Start"
+					FontAttributes="Bold"></Label>
+			<Entry Placeholder="First Name"
+					HorizontalOptions="FillAndExpand"
+					VerticalOptions="Start"
+					Completed="FirstNameCompleted"
+					TextChanged="Handle_TextChanged"
+					x:Name="FirstNameEntry"></Entry>
+			<Entry Placeholder="Last Name"
+					HorizontalOptions="FillAndExpand"
+					VerticalOptions="Start"
+					Completed="StudentEntryCompleted"
+					TextChanged="Handle_TextChanged"
+					x:Name="LastNameEntry"></Entry>
+			<StackLayout Orientation="Horizontal"
+					HorizontalOptions="End">
+				<Button Text="Cancel"
+						Clicked="CancelAddStudent"
+						HorizontalOptions="End"
+						VerticalOptions="Start"></Button>
+				<Button Text="Done" 
+						FontAttributes="Bold"
+						Clicked="StudentEntryCompleted"
+						HorizontalOptions="End"
+						VerticalOptions="Start"
+						x:Name="DoneButton"></Button>
+			</StackLayout>
+		</StackLayout>
+	</ContentPage.Content>
+
+</ContentPage>

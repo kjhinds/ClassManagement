@@ -1,0 +1,66 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
+			xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+			xmlns:toolkit="clr-namespace:ClassManagement;assembly=ClassManagement"
+			x:Class="ClassManagement.StudentListPage">
+
+	<ContentPage.Padding>
+	    <OnPlatform x:TypeArguments="Thickness"
+	    	iOS="10, 5, 10, 5"
+	    	Android="10, 5, 10, 5" />
+	</ContentPage.Padding>
+
+	<ContentPage.Resources>
+		<ResourceDictionary>
+			<toolkit:ThresholdToObjectConverter x:Key="thresholdConverter"
+												x:TypeArguments="Color"
+												TrueObject="Red"
+												FalseObject="Default" />
+		</ResourceDictionary>
+	</ContentPage.Resources>
+
+	<ContentPage.ToolbarItems>
+		<ToolbarItem Name="Add" Activated="AddStudent"></ToolbarItem>
+	</ContentPage.ToolbarItems>
+
+	<ContentPage.Content>
+	    <ListView	ItemSelected="OnSelection"
+					HasUnevenRows="true"
+					ItemsSource="{Binding Students}">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+               		    <ViewCell.ContextActions>
+            				<MenuItem Clicked="OnDetails"
+           							    Text="Details" />
+         				    <MenuItem Clicked="OnDelete"
+           							    Text="Delete" IsDestructive="True" />
+     				    </ViewCell.ContextActions>
+                        <StackLayout Orientation="Vertical"
+                        			Spacing="2"
+                        			Padding="5">
+                            <StackLayout Orientation="Horizontal">
+                                <Label Text="{Binding LastName}"
+                                		TextColor="Green"/>
+                                <Label Text="{Binding FirstName}"/>
+                            </StackLayout>
+							<StackLayout Orientation="Horizontal">
+								<Label Text="{Binding Incidents.Count, StringFormat='{0} Total Incidents'}"
+										x:Name="NumberOfIncidents"
+										HorizontalOptions="StartAndExpand"
+										FontSize="Small"/>
+								<Label Text="{Binding WorstNumAndType}"
+										x:Name="WorstNumAndType"
+										HorizontalOptions="EndAndExpand"
+										FontSize="Small"
+										TextColor="{Binding WorstBehaviorNum,
+													Converter={StaticResource thresholdConverter},
+													ConverterParameter=>3}"/>
+							</StackLayout>
+                        </StackLayout>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+	</ContentPage.Content>
+</ContentPage>
