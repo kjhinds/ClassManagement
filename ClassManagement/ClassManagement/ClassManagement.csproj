@@ -42,7 +42,6 @@
     <Compile Include="DataModel.cs" />
     <Compile Include="Incident.cs" />
     <Compile Include="IncidentListPage.xaml.cs" />
-    <Compile Include="ISaveAndLoad.cs" />
     <Compile Include="Period.cs" />
     <Compile Include="PeriodListPage.xaml.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -80,7 +79,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="GettingStarted.Xamarin" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
