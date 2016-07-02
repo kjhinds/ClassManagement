@@ -35,40 +35,23 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="AddIncidentPage.xaml.cs">
-      <DependentUpon>AddIncidentPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="AddPeriodPage.xaml.cs">
-      <DependentUpon>AddPeriodPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="AddStudentPage.xaml.cs">
-      <DependentUpon>AddStudentPage.xaml</DependentUpon>
-    </Compile>
+    <Compile Include="AddIncidentPage.xaml.cs" />
+    <Compile Include="AddPeriodPage.xaml.cs" />
+    <Compile Include="AddStudentPage.xaml.cs" />
     <Compile Include="App.cs" />
     <Compile Include="DataModel.cs" />
-    <Compile Include="Incident.cs">
-      <DependentUpon>Student.cs</DependentUpon>
-    </Compile>
-    <Compile Include="IncidentListPage.xaml.cs">
-      <DependentUpon>IncidentListPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Period.cs">
-      <DependentUpon>DataModel.cs</DependentUpon>
-    </Compile>
-    <Compile Include="PeriodListPage.xaml.cs">
-      <DependentUpon>PeriodListPage.xaml</DependentUpon>
-    </Compile>
+    <Compile Include="Incident.cs" />
+    <Compile Include="IncidentListPage.xaml.cs" />
+    <Compile Include="ISaveAndLoad.cs" />
+    <Compile Include="Period.cs" />
+    <Compile Include="PeriodListPage.xaml.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Helper Classes\SortableObservableCollection.cs" />
-    <Compile Include="Student.cs">
-      <DependentUpon>Period.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Helper Classes\ThresholdToObjectConverter.cs" />
-    <Compile Include="Helper Classes\Toolkit.cs" />
-    <Compile Include="Helper Classes\ViewModelBase.cs" />
-    <Compile Include="StudentListPage.xaml.cs">
-      <DependentUpon>StudentListPage.xaml</DependentUpon>
-    </Compile>
+    <Compile Include="SortableObservableCollection.cs" />
+    <Compile Include="Student.cs" />
+    <Compile Include="StudentListPage.xaml.cs" />
+    <Compile Include="ThresholdToObjectConverter.cs" />
+    <Compile Include="Toolkit.cs" />
+    <Compile Include="ViewModelBase.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
@@ -97,6 +80,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="GettingStarted.Xamarin" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
