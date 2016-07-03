@@ -19,20 +19,28 @@ namespace ClassManagement
             }
             var student = e.SelectedItem as Student;
             ((ListView)sender).SelectedItem = null; //uncomment line if you want to disable the visual selection state.
-            Navigation.PushModalAsync (new AddIncidentPage (student.FullName, student), false);
-            //DisplayAlert ("Student Selected", (e.SelectedItem as Student).LastFirstName, "OK");
+            Navigation.PushAsync(new AddIncidentPage
+            {
+                Title = student.FullName,
+                BindingContext = student,
+                Student = student
+            }, false);
         }
 
         public void OnDetails (object sender, EventArgs e) {
             var mi = ((MenuItem)sender);
-            var student = mi.CommandParameter as Student;
-            Navigation.PushAsync (new IncidentListPage(student.FullName, student), false);
-            //DisplayAlert("More Details Action", mi.CommandParameter + " more context action", "OK");
+            var student = mi.BindingContext as Student;
+            Navigation.PushAsync(new IncidentListPage
+            {
+                Title = student.FullName,
+                BindingContext = student,
+                Student = student
+            }, false);
         }
 
         public void OnDelete (object sender, EventArgs e) {
             var mi = ((MenuItem)sender);
-            var student = mi.CommandParameter as Student;
+            var student = mi.BindingContext as Student;
             Students.Remove(student);
         }
 
@@ -43,7 +51,7 @@ namespace ClassManagement
         }
 
         void AddStudent(object sender, EventArgs e) {
-            Navigation.PushModalAsync(new AddStudentPage(Students), false);
+            Navigation.PushModalAsync(new AddStudentPage { Students = Students }, false);
         }
     }
 }

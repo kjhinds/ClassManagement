@@ -1,38 +1,43 @@
 ﻿using System;
-using System.Collections.Generic;
-
 using Xamarin.Forms;
 
 namespace ClassManagement
 {
     public partial class AddIncidentPage : ContentPage
     {
-        Student student;
+        public Student Student;
+        bool isEditingIncident;
 
-        public AddIncidentPage (string title, Student student)
+        public AddIncidentPage (Incident incident = null, bool isEditingIncident = false)
         {
-            String [] BehaviorList = { "One", "Two", "Three" };
-            String [] InterventionList = { "A", "B", "C", "D", "E","F","G","H","I" };
             InitializeComponent ();
-            TitleText.Text = title;
-            DateEntry.Date = DateTime.Now.Date;
-            TimeEntry.Time = DateTime.Now.TimeOfDay;
-            this.student = student;
-            BehaviorListView.ItemsSource = BehaviorList;
-            InterventionListView.ItemsSource = InterventionList;
+            this.isEditingIncident = isEditingIncident;
+            if (isEditingIncident)
+            {
+                DateEntry.Date = incident.Date.Date;
+                TimeEntry.Time = incident.Date.TimeOfDay;
+                CommentsEntry.Text = incident.Comment;
+                BehaviorListView.SelectedItem = incident.Behavior;
+                InterventionListView.SelectedItem = incident.Intervention;
+            }
+            else
+            { 
+                DateEntry.Date = DateTime.Now.Date;
+                TimeEntry.Time = DateTime.Now.TimeOfDay;
+            }
         }
 
         void IncidentEntryCompleted ()
         {
             DateTime currentDateTime = new DateTime (DateEntry.Date.Ticks + TimeEntry.Time.Ticks);
             if (CommentsEntry.Text != "") {
-                student.Incidents.Add (new Incident (currentDateTime, 
+                Student.Incidents.Add (new Incident (currentDateTime, 
                                              BehaviorListView.SelectedItem.ToString(), 
                                              InterventionListView.SelectedItem.ToString(), 
                                              CommentsEntry.Text));
-                student.Incidents.Sort ();
-                student.UpdateWorstBehavior();
-                Navigation.PopModalAsync (false);
+                Student.Incidents.Sort ();
+                Student.UpdateWorstBehavior();
+                Navigation.PopAsync (false);
             }
         }
 
@@ -43,7 +48,7 @@ namespace ClassManagement
 
         void OnCancelButtonClicked (object sender, EventArgs e)
         {
-            Navigation.PopModalAsync (false);
+            Navigation.PopAsync (false);
         }
 
         void DateEntryCompleted (object sender, EventArgs e)
@@ -61,7 +66,7 @@ namespace ClassManagement
             if (e.SelectedItem == null) {
                 return; //ItemSelected is called on deselection, which results in SelectedItem being set to null
             }
-            if (BehaviorListView.SelectedItem != null && InterventionListView.SelectedItem != null) {
+            if (BehaviorListView.SelectedItem != null && InterventionListView.SelectedItem != null && !isEditingIncident) {
                 IncidentEntryCompleted ();
             }
         }

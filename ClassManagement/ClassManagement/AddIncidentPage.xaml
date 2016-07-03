@@ -1,59 +1,56 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
-		xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-		x:Class="ClassManagement.AddIncidentPage">
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ClassManagement.AddIncidentPage"
+             xmlns:Local="clr-namespace:ClassManagement">
 
-	<ContentPage.Padding>
-	    <OnPlatform x:TypeArguments="Thickness"
-	    	iOS="10, 20, 10, 5"
-	    	Android="10, 5, 10, 5" />
-	</ContentPage.Padding>
+  <ContentPage.Padding>
+    <OnPlatform x:TypeArguments="Thickness"
+                iOS="10, 20, 10, 5"
+                Android="10, 5, 10, 5" />
+  </ContentPage.Padding>
 
-	<ContentPage.Content>
-		<StackLayout>
-			<Label Text="Add Incident"
-					HorizontalOptions="Center"
-					VerticalOptions="Start"
-					FontAttributes="Bold"
-					x:Name="TitleText"/>
-			<StackLayout Orientation="Horizontal">
-				<DatePicker HorizontalOptions="CenterAndExpand"
-						VerticalOptions="Start"
-						x:Name="DateEntry"/>
-				<TimePicker
-						HorizontalOptions="CenterAndExpand"
-						VerticalOptions="Start"
-						x:Name="TimeEntry"/>
-			</StackLayout>	
-			<Entry Placeholder="Comments"
-					HorizontalOptions="FillAndExpand"
-					VerticalOptions="Start"
-					Completed="CommentsEntryCompleted"
-					x:Name="CommentsEntry"></Entry>
-			<StackLayout Orientation="Horizontal">
-				<StackLayout VerticalOptions="FillAndExpand">
-					<ListView  x:Name="BehaviorListView"
-								ItemSelected="OnSelection"
-								RowHeight="30"/>
-				</StackLayout>
-				<StackLayout VerticalOptions="FillAndExpand">
-					<ListView  x:Name="InterventionListView"
-								ItemSelected="OnSelection"
-								RowHeight="30"/>
-				</StackLayout>
-			</StackLayout>
-			<StackLayout Orientation="Horizontal"
-					HorizontalOptions="End">
-				<Button Text="Cancel"
-						Clicked="OnCancelButtonClicked"
-						HorizontalOptions="End"
-						VerticalOptions="Start"/>
-				<Button Text="Done" 
-						FontAttributes="Bold"
-						Clicked="OnAddButtonClicked"
-						HorizontalOptions="End"
-						VerticalOptions="Start"/>
-			</StackLayout>
-		</StackLayout>
-	</ContentPage.Content>
+  <ContentPage.Content>
+    <StackLayout>
+      <StackLayout Orientation="Horizontal">
+        <DatePicker HorizontalOptions="CenterAndExpand"
+                    VerticalOptions="Start"
+                    x:Name="DateEntry"/>
+        <TimePicker HorizontalOptions="CenterAndExpand"
+                    VerticalOptions="Start"
+                    x:Name="TimeEntry"/>
+      </StackLayout>
+      <Entry Placeholder="Comments"
+             HorizontalOptions="FillAndExpand"
+             VerticalOptions="Start"
+             Completed="CommentsEntryCompleted"
+             x:Name="CommentsEntry"></Entry>
+      <StackLayout Orientation="Horizontal">
+        <StackLayout VerticalOptions="FillAndExpand">
+          <ListView  x:Name="BehaviorListView"
+                     ItemSelected="OnSelection"
+                     RowHeight="30"
+                     ItemsSource="{Binding Source={x:Static Local:DataModel.BehaviorList}}"/>
+        </StackLayout>
+        <StackLayout VerticalOptions="FillAndExpand">
+          <ListView  x:Name="InterventionListView"
+                     ItemSelected="OnSelection"
+                     RowHeight="30"
+                     ItemsSource="{Binding Source={x:Static Local:DataModel.InterventionList}}"/>
+        </StackLayout>
+      </StackLayout>
+      <StackLayout Orientation="Horizontal"
+                   HorizontalOptions="End">
+        <Button Text="Cancel"
+                Clicked="OnCancelButtonClicked"
+                HorizontalOptions="End"
+                VerticalOptions="Start"/>
+        <Button Text="Done"
+                FontAttributes="Bold"
+                Clicked="OnAddButtonClicked"
+                HorizontalOptions="End"
+                VerticalOptions="Start"/>
+      </StackLayout>
+    </StackLayout>
+  </ContentPage.Content>
 </ContentPage>

@@ -8,12 +8,11 @@ namespace ClassManagement
 {
     public partial class AddPeriodPage : ContentPage
     {
-        SortableObservableCollection<Period> periods;
+        public SortableObservableCollection<Period> Periods;
 
-        public AddPeriodPage(SortableObservableCollection<Period> periods)
+        public AddPeriodPage()
         {
             InitializeComponent();
-            this.periods = periods;
         }
 
         protected override void OnAppearing ()
@@ -25,8 +24,8 @@ namespace ClassManagement
 
         void PeriodEntryCompleted(object sender, EventArgs e) {
             if (PeriodNameEntry.Text != "") {
-                periods.Add (new Period (PeriodNameEntry.Text));
-                periods.Sort (Period.GetSortPreference());
+                Periods.Add (new Period (PeriodNameEntry.Text));
+                Periods.Sort (Period.GetSortPreference());
                 Navigation.PopModalAsync (false);
             }
         }

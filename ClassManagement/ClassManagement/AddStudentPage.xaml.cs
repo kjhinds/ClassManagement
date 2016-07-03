@@ -1,19 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-
 using Xamarin.Forms;
 
 namespace ClassManagement
 {
     public partial class AddStudentPage : ContentPage
     {
-        SortableObservableCollection<Student> students;
+        public SortableObservableCollection<Student> Students;
 
-        public AddStudentPage(SortableObservableCollection<Student> students)
+        public AddStudentPage()
         {
             InitializeComponent();
-            this.students = students;
         }
 
         protected override void OnAppearing ()
@@ -25,8 +21,8 @@ namespace ClassManagement
 
         void StudentEntryCompleted(object sender, EventArgs e) {
             if (FirstNameEntry.Text != "" && LastNameEntry.Text != "") {
-                students.Add (new Student (LastNameEntry.Text, FirstNameEntry.Text));
-                students.Sort (Student.GetSortPreference());
+                Students.Add (new Student (LastNameEntry.Text, FirstNameEntry.Text));
+                Students.Sort (Student.GetSortPreference());
                 Navigation.PopModalAsync (false);
             }
         }
@@ -39,7 +35,7 @@ namespace ClassManagement
             Navigation.PopModalAsync (false);
         }
 
-        void Handle_TextChanged (object sender, Xamarin.Forms.TextChangedEventArgs e)
+        void Handle_TextChanged (object sender, TextChangedEventArgs e)
         {
             if (FirstNameEntry.Text != "" && LastNameEntry.Text != "") {
                 DoneButton.IsEnabled = true;

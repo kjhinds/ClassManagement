@@ -15,7 +15,8 @@
 	<ContentPage.Content>
 	    <ListView  x:Name="IncidentListView"
 					ItemSelected="OnSelection"
-					RowHeight="80">
+					HasUnevenRows="True"
+          ItemsSource="{Binding Incidents}">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <ViewCell>
