@@ -7,6 +7,8 @@ namespace ClassManagement
     {
         #region Private Fields
         private string _periodName;
+        private TimeSpan _periodStartTime;
+        private TimeSpan _periodEndTime;
         private SortableObservableCollection<Student> _students;
         #endregion
 
@@ -17,6 +19,18 @@ namespace ClassManagement
             set { SetProperty(ref _periodName, value); }
         }
 
+        public TimeSpan PeriodStartTime
+        {
+            get { return _periodStartTime; }
+            set { SetProperty(ref _periodStartTime, value); }
+        } 
+
+        public TimeSpan PeriodEndTime
+        {
+            get { return _periodEndTime; }
+            set { SetProperty(ref _periodEndTime, value); }
+        }
+
         public SortableObservableCollection<Student> Students {
             get { return _students; }
             set { SetProperty(ref _students, value); }
@@ -25,9 +39,9 @@ namespace ClassManagement
 
 
         #region Constructor
-        public Period (string PeriodName = "")
+        public Period (string periodName = "")
         {
-            this.PeriodName = PeriodName;
+            this.PeriodName = periodName;
             Students = new SortableObservableCollection<Student> ();
         }
         #endregion

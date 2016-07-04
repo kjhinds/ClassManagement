@@ -10,7 +10,7 @@
     <OutputType>Exe</OutputType>
     <RootNamespace>ClassManagement.iOS</RootNamespace>
     <IPhoneResourcePrefix>Resources</IPhoneResourcePrefix>
-    <AssemblyName>ClassManagementiOS</AssemblyName>
+    <AssemblyName>ClassManagement.iOS</AssemblyName>
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
   </PropertyGroup>

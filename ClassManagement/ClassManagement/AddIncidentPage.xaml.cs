@@ -6,6 +6,7 @@ namespace ClassManagement
     public partial class AddIncidentPage : ContentPage
     {
         public Student Student;
+        private Incident incident;
         bool isEditingIncident;
 
         public AddIncidentPage (Incident incident = null, bool isEditingIncident = false)
@@ -14,6 +15,7 @@ namespace ClassManagement
             this.isEditingIncident = isEditingIncident;
             if (isEditingIncident)
             {
+                this.incident = incident;
                 DateEntry.Date = incident.Date.Date;
                 TimeEntry.Time = incident.Date.TimeOfDay;
                 CommentsEntry.Text = incident.Comment;
@@ -21,7 +23,8 @@ namespace ClassManagement
                 InterventionListView.SelectedItem = incident.Intervention;
             }
             else
-            { 
+            {
+                incident = new Incident(); 
                 DateEntry.Date = DateTime.Now.Date;
                 TimeEntry.Time = DateTime.Now.TimeOfDay;
             }
@@ -30,15 +33,20 @@ namespace ClassManagement
         void IncidentEntryCompleted ()
         {
             DateTime currentDateTime = new DateTime (DateEntry.Date.Ticks + TimeEntry.Time.Ticks);
-            if (CommentsEntry.Text != "") {
-                Student.Incidents.Add (new Incident (currentDateTime, 
-                                             BehaviorListView.SelectedItem.ToString(), 
-                                             InterventionListView.SelectedItem.ToString(), 
-                                             CommentsEntry.Text));
-                Student.Incidents.Sort ();
-                Student.UpdateWorstBehavior();
-                Navigation.PopAsync (false);
+
+            incident.Date = currentDateTime;
+            incident.Behavior = BehaviorListView.SelectedItem.ToString();
+            incident.Intervention = InterventionListView.SelectedItem.ToString();
+            incident.Comment = CommentsEntry.Text;
+
+            if (!isEditingIncident)
+            {
+                Student.Incidents.Add(incident);
             }
+    
+            Student.Incidents.Sort ();
+            Student.UpdateWorstBehavior();
+            Navigation.PopAsync (false);
         }
 
         void OnAddButtonClicked (object sender, EventArgs e)

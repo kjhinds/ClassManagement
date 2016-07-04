@@ -22,7 +22,8 @@
 	</ContentPage.Padding>
 
 	<ContentPage.ToolbarItems>
-		<ToolbarItem Name="Add" Activated="AddPeriod"></ToolbarItem>
+    <ToolbarItem Name ="Settings" Activated="Settings"></ToolbarItem>
+    <ToolbarItem Name="Add" Activated="AddPeriod"></ToolbarItem>
 	</ContentPage.ToolbarItems>
 
 	<ContentPage.Content>

@@ -19,8 +19,7 @@ namespace ClassManagement
         /// <param name="e"></param>
         public void OnDetails (object sender, EventArgs e) {
             var menuItem = ((MenuItem)sender);
-            // TODO Add Period Details page
-            DisplayAlert("More Details Action", menuItem.BindingContext + " more context action", "OK");
+            Navigation.PushAsync(new AddPeriodPage(menuItem.BindingContext as Period, true) { Periods = Periods }, false);
         }
 
 
@@ -60,7 +59,12 @@ namespace ClassManagement
         /// <param name="sender"></param>
         /// <param name="e"></param>
         void AddPeriod(object sender, EventArgs e) {
-            Navigation.PushModalAsync(new AddPeriodPage { Periods = Periods }, false);
+            Navigation.PushAsync(new AddPeriodPage { Periods = Periods }, false);
+        }
+
+        void Settings(object sender, EventArgs e)
+        {
+            DisplayAlert("Settings", "Settings button clicked", "cancel");
         }
         
         // TODO Implement custom back button to remove animation

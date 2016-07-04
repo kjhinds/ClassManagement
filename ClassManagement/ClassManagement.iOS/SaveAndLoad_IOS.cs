@@ -2,7 +2,6 @@
 using Xamarin.Forms;
 using ClassManagement.iOS;
 using System.IO;
-using System.Threading.Tasks;
 using Foundation;
 using System.Linq;
 

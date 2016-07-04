@@ -12,28 +12,40 @@
 
 	<ContentPage.Content>
 		<StackLayout>
-			<Label Text="Add Period"
-					HorizontalOptions="Center"
-					VerticalOptions="Start"
-					FontAttributes="Bold"></Label>
 			<Entry Placeholder="Enter period name"
 					HorizontalOptions="FillAndExpand"
 					VerticalOptions="Start"
 					Completed="PeriodEntryCompleted"
 					TextChanged="Handle_TextChanged"
-					x:Name="PeriodNameEntry"></Entry>
+					x:Name="PeriodNameEntry"/>
+      <StackLayout Orientation="Horizontal">
+        <Label Text="Start Time"
+               HorizontalOptions="CenterAndExpand"
+               VerticalOptions="Start"/>
+        <Label Text="End Time"
+               HorizontalOptions="CenterAndExpand"
+               VerticalOptions="Start"/>
+      </StackLayout>
+      <StackLayout Orientation="Horizontal">
+        <TimePicker HorizontalOptions="CenterAndExpand"
+                    VerticalOptions="Start"
+                    x:Name="StartTimeEntry"/>
+        <TimePicker HorizontalOptions="CenterAndExpand"
+                    VerticalOptions="Start"
+                    x:Name="EndTimeEntry"/>
+      </StackLayout>
 			<StackLayout Orientation="Horizontal"
 					HorizontalOptions="End">
 				<Button Text="Cancel"
 						Clicked="CancelAddPeriod"
 						HorizontalOptions="End"
-						VerticalOptions="Start"></Button>
+						VerticalOptions="Start"/>
 				<Button Text="Done" 
 						FontAttributes="Bold"
 						Clicked="PeriodEntryCompleted"
 						HorizontalOptions="End"
 						VerticalOptions="Start"
-						x:Name="DoneButton"></Button>
+						x:Name="DoneButton"/>
 			</StackLayout>
 		</StackLayout>
 	</ContentPage.Content>

@@ -41,11 +41,14 @@ namespace ClassManagement
         public void LoadSettings()
         {
             string csvBehaviorString = CrossSettings.Current.GetValueOrDefault("BehaviorList",
-                    "Academic Dishonesty,Bullying,Disrespect,Disruption,Inappropriate Lang,Physical Aggression,Technology Violation,Other");
+                    "Academic Dishonesty,Bullying,Disrespect,Disruption,Inappropriate Lang," +
+                    "Physical Aggression,Technology Violation,Other");
             BehaviorList = csvBehaviorString.Split(',');
 
             string csvInterventionString = CrossSettings.Current.GetValueOrDefault("InterVentionList",
-                    "Apology,Campus Beautification, Classroom Detention, Loss of Privilege, Lunch Detention, Parent Contact, Prompting, Proximity, Redirection, Restitution, Seating Change, Student Conference, Other");
+                    "Apology,Campus Beautification,Classroom Detention,Loss of Privilege,Lunch Detention," +
+                    "Parent Contact,Prompting,Proximity,Redirection,Restitution,Seating Change," +
+                    "Student Conference,Other");
             InterventionList = csvInterventionString.Split(',');
         }
 
@@ -72,6 +75,7 @@ namespace ClassManagement
                     {
                         Incident incident = new Incident(DateTime.Now, "Naughty", "Talked", k.ToString());
                         student.Incidents.Add(incident);
+                        student.UpdateWorstBehavior();
                     }
                     period.Students.Add(student);
                 }
