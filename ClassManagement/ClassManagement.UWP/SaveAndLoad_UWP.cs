@@ -1,54 +1,60 @@
 ﻿using System;
-using System.IO;
-using System.Threading.Tasks;
-using Windows.Storage;
 using Xamarin.Forms;
 using ClassManagement.UWP;
+using System.IO;
+using Windows.Storage;
+using System.Threading.Tasks;
 
 [assembly: Dependency(typeof(SaveAndLoad_UWP))]
+
 namespace ClassManagement.UWP
 {
-    public class SaveAndLoad_UWP : ISaveAndLoad {
-    public string LoadText(string filename)
+    public class SaveAndLoad_UWP : ISaveAndLoad
     {
-        var task = LoadTextAsync(filename);
-        task.Wait(); // HACK: to keep Interface return types simple (sorry!)
-        return task.Result;
-    }
-        public async Task<string> LoadTextAsync(string filename)
-        {
-            StorageFolder localFolder = ApplicationData.Current.LocalFolder;
-            IStorageFile file = await localFolder.GetFileAsync(filename);
-            string text;
+        #region ISaveAndLoad implementation
 
-            using (StreamReader streamReader = new StreamReader(file.Path))
-            {
-                text = await streamReader.ReadToEndAsync();
-            }
-            return text;
-        }
         public async void SaveText(string filename, string text)
-    {
-        StorageFolder local = Windows.Storage.ApplicationData.Current.LocalFolder;
-        var file = await local.CreateFileAsync(filename, CreationCollisionOption.ReplaceExisting);
-        using (StreamWriter writer = new StreamWriter(await file.OpenStreamForWriteAsync()))
         {
-            writer.Write(text);
+            StorageFolder local = ApplicationData.Current.LocalFolder;
+            var file = await local.CreateFileAsync(filename, CreationCollisionOption.ReplaceExisting);
+            using (StreamWriter writer = new StreamWriter(await file.OpenStreamForWriteAsync()))
+            {
+                writer.Write(text);
+            }
         }
-    }
 
-    public bool FileExists(string filename)
+        public string LoadText(string filename)
         {
-            StorageFolder localFolder = ApplicationData.Current.LocalFolder;
-            try
+            var task = LoadTextAsync(filename);
+            task.Wait(); // HACK: to keep Interface return types simple (sorry!)
+            return task.Result;
+        }
+        async Task<string> LoadTextAsync(string filename)
+        {
+            StorageFolder local = ApplicationData.Current.LocalFolder;
+            if (local != null)
             {
-                localFolder.GetFileAsync(filename).AsTask().Wait();
-                return true;
+                var file = await local.GetItemAsync(filename);
+                using (StreamReader streamReader = new StreamReader(new FileStream(file.Path, FileMode.OpenOrCreate, FileAccess.Read)))
+                {
+                    var text = streamReader.ReadToEnd();
+                    return text;
+                }
             }
-            catch
-            {
-                return false;
-            }
+            return "";
+        }
+
+        public bool FileExists(string filename)
+        {
+            return File.Exists(CreatePathToFile(filename));
+        }
+
+        #endregion
+
+        string CreatePathToFile(string filename)
+        {
+            StorageFolder local = ApplicationData.Current.LocalFolder;
+            return Path.Combine(local.ToString(), filename);
         }
     }
 }

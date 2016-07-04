@@ -9,7 +9,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClassManagement.iOS", "Clas
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClassManagement", "ClassManagement\ClassManagement\ClassManagement.csproj", "{CC56DB91-66BC-47F8-A13B-730655778C88}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClassManagement.UWP", "ClassManagement.UWP\ClassManagement.UWP.csproj", "{4C9D2D7A-CA2F-48FE-845D-628D03A3610D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClassManagement.UWP", "ClassManagement\ClassManagement.UWP\ClassManagement.UWP.csproj", "{4C9D2D7A-CA2F-48FE-845D-628D03A3610D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

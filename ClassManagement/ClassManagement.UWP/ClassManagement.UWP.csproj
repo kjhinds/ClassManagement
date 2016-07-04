@@ -99,6 +99,7 @@
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SaveAndLoad_UWP.cs" />
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">
@@ -127,7 +128,7 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ClassManagement\ClassManagement\ClassManagement.csproj">
+    <ProjectReference Include="..\ClassManagement\ClassManagement.csproj">
       <Project>{cc56db91-66bc-47f8-a13b-730655778c88}</Project>
       <Name>ClassManagement</Name>
     </ProjectReference>
