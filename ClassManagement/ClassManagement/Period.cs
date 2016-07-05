@@ -41,7 +41,7 @@ namespace ClassManagement
         #region Constructor
         public Period (string periodName = "")
         {
-            this.PeriodName = periodName;
+            PeriodName = periodName;
             Students = new SortableObservableCollection<Student> ();
         }
         #endregion

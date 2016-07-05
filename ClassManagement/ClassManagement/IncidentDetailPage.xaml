@@ -1,38 +1,41 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="ClassManagement.AddIncidentPage"
+             x:Class="ClassManagement.IncidentDetailPage"
              xmlns:Local="clr-namespace:ClassManagement">
 
   <ContentPage.Padding>
     <OnPlatform x:TypeArguments="Thickness"
                 iOS="10, 20, 10, 5"
-                Android="10, 5, 10, 5" />
+                Android="10, 5, 10, 5"
+                WinPhone="10,5,10,5"/>
   </ContentPage.Padding>
 
   <ContentPage.Content>
     <StackLayout>
       <StackLayout Orientation="Horizontal">
-        <DatePicker HorizontalOptions="CenterAndExpand"
+        <DatePicker HorizontalOptions="StartAndExpand"
                     VerticalOptions="Start"
                     x:Name="DateEntry"/>
-        <TimePicker HorizontalOptions="CenterAndExpand"
+        <TimePicker HorizontalOptions="EndAndExpand"
                     VerticalOptions="Start"
                     x:Name="TimeEntry"/>
       </StackLayout>
       <Entry Placeholder="Comments"
              HorizontalOptions="FillAndExpand"
              VerticalOptions="Start"
-             Completed="CommentsEntryCompleted"
+             Completed="OnCommentsEntryCompleted"
              x:Name="CommentsEntry"></Entry>
       <StackLayout Orientation="Horizontal">
-        <StackLayout VerticalOptions="FillAndExpand">
+        <StackLayout VerticalOptions="FillAndExpand"
+                     HorizontalOptions="StartAndExpand">
           <ListView  x:Name="BehaviorListView"
                      ItemSelected="OnSelection"
                      RowHeight="30"
                      ItemsSource="{Binding Source={x:Static Local:DataModel.BehaviorList}}"/>
         </StackLayout>
-        <StackLayout VerticalOptions="FillAndExpand">
+        <StackLayout VerticalOptions="FillAndExpand"
+                     HorizontalOptions="EndAndExpand">
           <ListView  x:Name="InterventionListView"
                      ItemSelected="OnSelection"
                      RowHeight="30"
@@ -47,7 +50,7 @@
                 VerticalOptions="Start"/>
         <Button Text="Done"
                 FontAttributes="Bold"
-                Clicked="OnAddButtonClicked"
+                Clicked="OnDoneButtonClicked"
                 HorizontalOptions="End"
                 VerticalOptions="Start"/>
       </StackLayout>

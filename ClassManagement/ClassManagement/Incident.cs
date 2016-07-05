@@ -2,49 +2,53 @@
 
 namespace ClassManagement
 {
-    public class Incident : IComparable<Incident>
+    public class Incident : ViewModelBase, IComparable<Incident>
     {
+        #region Private fields
+        private DateTime _date;
+        private string _behavior;
+        private string _intervention;
+        private string _comment;
+        #endregion
 
+        #region Public properties
         public DateTime Date {
-            get;
-            set;
+            get { return _date; }
+            set { SetProperty(ref _date, value); }
         }
 
         public string Behavior {
-            get;
-            set;
+            get { return _behavior; }
+            set { SetProperty(ref _behavior, value); }
         }
 
         public string Intervention {
-            get;
-            set;
+            get { return _intervention; }
+            set { SetProperty(ref _intervention, value); }
         }
 
         public string Comment {
-            get;
-            set;
+            get { return _comment; }
+            set { SetProperty(ref _comment, value); }
         }
+        #endregion
 
-        public Incident ()
+        #region Constructor
+        public Incident(DateTime date, string behavior = "", string intervention = "", string comment = "" )
         {
-            Date = DateTime.Now;
-            Behavior = "";
-            Intervention = "";
-            Comment = "";
+            Date = date;
+            Behavior = behavior;
+            Intervention = intervention;
+            Comment = comment;
         }
+        #endregion
 
-        public Incident (DateTime Date, String Behavior, String Intervention, String Comment)
-        {
-            this.Date = Date;
-            this.Behavior = Behavior;
-            this.Intervention = Intervention;
-            this.Comment = Comment;
-        }
-
+        #region IComparer implementation
         public int CompareTo (Incident other)
         {
             return DateTime.Compare (Date, other.Date);
         }
+        #endregion
 
     }
 }

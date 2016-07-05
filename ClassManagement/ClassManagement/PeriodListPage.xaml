@@ -18,12 +18,13 @@
 	<ContentPage.Padding>
 	    <OnPlatform x:TypeArguments="Thickness"
 			iOS="10, 5, 10, 5"
-	    	Android="10, 5, 10, 5" />
+	    	Android="10, 5, 10, 5"
+      WinPhone="10, 5, 10, 5"/>
 	</ContentPage.Padding>
 
 	<ContentPage.ToolbarItems>
-    <ToolbarItem Name ="Settings" Activated="Settings"></ToolbarItem>
-    <ToolbarItem Name="Add" Activated="AddPeriod"></ToolbarItem>
+    <ToolbarItem Name ="Settings" Activated="OnSettingsToolbarItemClicked"></ToolbarItem>
+    <ToolbarItem Name="Add" Activated="OnAddToolbarItemClicked"></ToolbarItem>
 	</ContentPage.ToolbarItems>
 
 	<ContentPage.Content>
@@ -35,9 +36,9 @@
                 <DataTemplate>
                     <ViewCell>
                		    <ViewCell.ContextActions>
-            				<MenuItem Clicked="OnDetails"
+            				<MenuItem Clicked="OnDetailsMenuItemClicked"
            							    Text="Details" />
-         				    <MenuItem Clicked="OnDelete"
+         				    <MenuItem Clicked="OnDeleteMenuItemClicked"
            							    Text="Delete" IsDestructive="True" />
      				    </ViewCell.ContextActions>
      				    <ContentView Padding="5">

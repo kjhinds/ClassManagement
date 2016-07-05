@@ -5,11 +5,12 @@
 	<ContentPage.Padding>
 	    <OnPlatform x:TypeArguments="Thickness"
 	    	iOS="10, 5, 10, 5"
-	    	Android="10, 5, 10, 5" />
+	    	Android="10, 5, 10, 5" 
+        WinPhone="10, 5, 10, 5"/>
 	</ContentPage.Padding>
 
 	<ContentPage.ToolbarItems>
-		<ToolbarItem Name="Add" Activated="AddIncident"></ToolbarItem>
+		<ToolbarItem Name="Add" Activated="OnAddToolbarItemClicked"></ToolbarItem>
 	</ContentPage.ToolbarItems>
 
 	<ContentPage.Content>
@@ -21,7 +22,7 @@
                 <DataTemplate>
                     <ViewCell>
                		    <ViewCell.ContextActions>
-         				    <MenuItem Clicked="OnDelete" CommandParameter="{Binding .}"
+         				    <MenuItem Clicked="OnDeleteMenuItemClicked"
            							    Text="Delete" IsDestructive="True" />
      				    </ViewCell.ContextActions>
                         <StackLayout Orientation="Vertical">

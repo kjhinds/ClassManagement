@@ -5,44 +5,63 @@ namespace ClassManagement
 {
     public partial class IncidentListPage : ContentPage
     {
-        public Student Student;
+        #region Private fields
+        private Student _student;
+        #endregion
 
-        public IncidentListPage ()
+        #region Constructor
+        /// <summary>
+        /// Create page to list student incidents
+        /// </summary>
+        /// <param name="student"></param>
+        public IncidentListPage(Student student)
         {
             InitializeComponent ();
+            _student = student;
+            Title = _student.FullName;
+            BindingContext = _student;
         }
+        #endregion
 
-        public void OnDelete (object sender, EventArgs e)
+        #region Private methods
+        /// <summary>
+        /// Delete clicked, remove selected incident from collection and
+        /// update collection.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void OnDeleteMenuItemClicked (object sender, EventArgs e)
         {
-            var mi = ((MenuItem)sender);
-            var incident = mi.CommandParameter as Incident;
-            Student.Incidents.Remove (incident);
-            Student.UpdateWorstBehavior();
+            var selectedIncident = ((MenuItem)sender).BindingContext as Incident;
+            _student.Incidents.Remove(selectedIncident);
+            _student.UpdateWorstBehavior();
         }
 
-        public void OnSelection (object sender, SelectedItemChangedEventArgs e)
+        /// <summary>
+        /// Incident selected, go to incident page to edit incident.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void OnSelection (object sender, SelectedItemChangedEventArgs e)
         {
             if (e.SelectedItem == null) {
-                return; //ItemSelected is called on deselection, which results in SelectedItem being set to null
+                return;
             }
-            ((ListView)sender).SelectedItem = null; //uncomment line if you want to disable the visual selection state.
-            Navigation.PushAsync(new AddIncidentPage(e.SelectedItem as Incident, true)
-            {
-                Title = Student.FullName,
-                BindingContext = Student,
-                Student = Student
-            }, false);
+            ((ListView)sender).SelectedItem = null;
+            var selectedIncident = e.SelectedItem as Incident;
+            Navigation.PushAsync(new IncidentDetailPage(_student, selectedIncident, true), false);
         }
 
-        void AddIncident (object sender, EventArgs e)
+        /// <summary>
+        /// Add button clicked, go to incident detail page to add new incident.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void OnAddToolbarItemClicked (object sender, EventArgs e)
         {
-            Navigation.PushAsync(new AddIncidentPage
-            {
-                Title = Student.FullName,
-                BindingContext = Student,
-                Student = Student
-            }, false);
+            Navigation.PushAsync(new IncidentDetailPage(_student), false);
         }
+        #endregion
     }
 }
 

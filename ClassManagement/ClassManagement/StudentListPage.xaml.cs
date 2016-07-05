@@ -5,54 +5,71 @@ namespace ClassManagement
 {
     public partial class StudentListPage : ContentPage
     {
-        public SortableObservableCollection<Student> Students;
+        #region Private fields
+        private SortableObservableCollection<Student> _students;
+        #endregion
 
-        public StudentListPage()
+        #region Constructor
+        /// <summary>
+        /// Create page to list students in period
+        /// </summary>
+        /// <param name="period"></param>
+        public StudentListPage(Period period)
         {
             InitializeComponent();
+            Title = period.PeriodName;
+            BindingContext = period;
+            _students = period.Students;
         }
+        #endregion
 
-        void OnSelection (object sender, SelectedItemChangedEventArgs e)
+        #region Private methods
+        /// <summary>
+        /// Student selected, push page to add new incident to the stack
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void OnSelection (object sender, SelectedItemChangedEventArgs e)
         {
             if (e.SelectedItem == null) {
-                return; //ItemSelected is called on deselection, which results in SelectedItem being set to null
+                return;
             }
             var student = e.SelectedItem as Student;
-            ((ListView)sender).SelectedItem = null; //uncomment line if you want to disable the visual selection state.
-            Navigation.PushAsync(new AddIncidentPage
-            {
-                Title = student.FullName,
-                BindingContext = student,
-                Student = student
-            }, false);
+            ((ListView)sender).SelectedItem = null;
+            Navigation.PushAsync(new IncidentDetailPage(student), false);
         }
 
-        public void OnDetails (object sender, EventArgs e) {
+        /// <summary>
+        /// Details button pushed, go to list of student's incidents
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void OnDetailsMenuItemClicked (object sender, EventArgs e) {
+            var mi = ((MenuItem)sender);
+            var selectedStudent = mi.BindingContext as Student;
+            Navigation.PushAsync(new IncidentListPage(selectedStudent), false);
+        }
+
+        /// <summary>
+        /// Delete button pushed, delete that student from the period.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void OnDeleteMenuItemClicked (object sender, EventArgs e) {
             var mi = ((MenuItem)sender);
             var student = mi.BindingContext as Student;
-            Navigation.PushAsync(new IncidentListPage
-            {
-                Title = student.FullName,
-                BindingContext = student,
-                Student = student
-            }, false);
+            _students.Remove(student);
         }
 
-        public void OnDelete (object sender, EventArgs e) {
-            var mi = ((MenuItem)sender);
-            var student = mi.BindingContext as Student;
-            Students.Remove(student);
+        /// <summary>
+        /// Add button pushed, push page to add a new student to the stack
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void OnAddToolbarItemClicked(object sender, EventArgs e) {
+            Navigation.PushAsync(new StudentDetailPage(_students), false);
         }
-
-        void OnPreviousPageButtonClicked (object sender, EventArgs e)
-        {
-            // Page appearance not animated
-            Navigation.PopAsync (false);
-        }
-
-        void AddStudent(object sender, EventArgs e) {
-            Navigation.PushModalAsync(new AddStudentPage { Students = Students }, false);
-        }
+        #endregion
     }
 }
 

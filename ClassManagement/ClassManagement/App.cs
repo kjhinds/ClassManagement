@@ -13,7 +13,7 @@ namespace ClassManagement
             data = new DataModel();
 
             // The root page of your application
-            MainPage = new NavigationPage(new PeriodListPage { BindingContext = data, Periods = data.Periods });
+            MainPage = new NavigationPage(new PeriodListPage(data));
 
             // TODO: Add check for going to current period once settings are implemented
             double currentTimeMinutes = DateTime.Now.TimeOfDay.TotalMinutes;
@@ -21,12 +21,7 @@ namespace ClassManagement
             {
                 if (currentTimeMinutes >= period.PeriodStartTime.TotalMinutes && currentTimeMinutes <= period.PeriodEndTime.TotalMinutes)
                 {
-                    MainPage.Navigation.PushAsync(new StudentListPage
-                                {
-                                    Title = period.PeriodName,
-                                    BindingContext = period,
-                                    Students = period.Students
-                                }, false);
+                    MainPage.Navigation.PushAsync(new StudentListPage(period), false);
                     break;
                 }
             }

@@ -1,13 +1,14 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
 			xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
-			x:Class="ClassManagement.AddPeriodPage"
+			x:Class="ClassManagement.PeriodDetailPage"
 			Title="Add Period">
 
 	<ContentPage.Padding>
 	    <OnPlatform x:TypeArguments="Thickness"
 	    	iOS="10, 20, 10, 5"
-	    	Android="10, 5, 10, 5" />
+	    	Android="10, 5, 10, 5" 
+        WinPhone="10, 5, 10, 5"/>
 	</ContentPage.Padding>
 
 	<ContentPage.Content>
@@ -15,8 +16,8 @@
 			<Entry Placeholder="Enter period name"
 					HorizontalOptions="FillAndExpand"
 					VerticalOptions="Start"
-					Completed="PeriodEntryCompleted"
-					TextChanged="Handle_TextChanged"
+					Completed="PeriodNameEntryCompleted"
+					TextChanged="HandleTextChanged"
 					x:Name="PeriodNameEntry"/>
       <StackLayout Orientation="Horizontal">
         <Label Text="Start Time"
@@ -37,12 +38,12 @@
 			<StackLayout Orientation="Horizontal"
 					HorizontalOptions="End">
 				<Button Text="Cancel"
-						Clicked="CancelAddPeriod"
+						Clicked="OnCancelButtonClicked"
 						HorizontalOptions="End"
 						VerticalOptions="Start"/>
 				<Button Text="Done" 
 						FontAttributes="Bold"
-						Clicked="PeriodEntryCompleted"
+						Clicked="OnDoneButtonClicked"
 						HorizontalOptions="End"
 						VerticalOptions="Start"
 						x:Name="DoneButton"/>

@@ -35,14 +35,14 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="AddIncidentPage.xaml.cs">
-      <DependentUpon>AddIncidentPage.xaml</DependentUpon>
+    <Compile Include="IncidentDetailPage.xaml.cs">
+      <DependentUpon>IncidentDetailPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="AddPeriodPage.xaml.cs">
-      <DependentUpon>AddPeriodPage.xaml</DependentUpon>
+    <Compile Include="PeriodDetailPage.xaml.cs">
+      <DependentUpon>PeriodDetailPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="AddStudentPage.xaml.cs">
-      <DependentUpon>AddStudentPage.xaml</DependentUpon>
+    <Compile Include="StudentDetailPage.xaml.cs">
+      <DependentUpon>StudentDetailPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="App.cs" />
     <Compile Include="DataModel.cs" />
@@ -104,14 +104,14 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="AddIncidentPage.xaml">
+    <EmbeddedResource Include="IncidentDetailPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="AddPeriodPage.xaml">
+    <EmbeddedResource Include="PeriodDetailPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Include="AddStudentPage.xaml">
+    <EmbeddedResource Include="StudentDetailPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Include="IncidentListPage.xaml">
