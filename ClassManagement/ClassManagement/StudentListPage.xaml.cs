@@ -20,6 +20,7 @@ namespace ClassManagement
             Title = period.PeriodName;
             BindingContext = period;
             _students = period.Students;
+            _students.Sort(Student.GetSortPreference());
         }
         #endregion
 

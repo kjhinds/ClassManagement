@@ -76,7 +76,7 @@ namespace ClassManagement
         /// <param name="e"></param>
         private void OnSettingsToolbarItemClicked(object sender, EventArgs e)
         {
-            DisplayAlert("Settings", "Settings button clicked", "cancel");
+            Navigation.PushAsync(new SettingsPage(BindingContext  as DataModel));
         }
         #endregion
     }

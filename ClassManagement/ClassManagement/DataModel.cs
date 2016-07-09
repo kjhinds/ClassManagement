@@ -1,15 +1,12 @@
 ﻿using System;
 using Newtonsoft.Json;
 using Xamarin.Forms;
-using Plugin.Settings;
 
 namespace ClassManagement
 {
     public class DataModel : ViewModelBase
     {
         private const string DATA_FILE = "data.txt";
-        public static string[] BehaviorList;
-        public static string[] InterventionList;
 
         private SortableObservableCollection<Period> _periods;
 
@@ -20,36 +17,13 @@ namespace ClassManagement
 
         public DataModel()
         {
-            LoadSettings();
+            SettingsData.LoadSettings();
             LoadData();
-        }
-
-        public void SaveSettings()
-        {
-            string csvBehaviorString = string.Join(",", BehaviorList);
-            CrossSettings.Current.AddOrUpdateValue("BehaviorList", csvBehaviorString);
-
-            string csvInterventionString = string.Join(",", InterventionList);
-            CrossSettings.Current.AddOrUpdateValue("InterventionList", csvInterventionString);
         }
 
         public void SaveData() {
             string json = JsonConvert.SerializeObject (_periods);
             DependencyService.Get<ISaveAndLoad>().SaveText(DATA_FILE, json);
-        }
-
-        public void LoadSettings()
-        {
-            string csvBehaviorString = CrossSettings.Current.GetValueOrDefault("BehaviorList",
-                    "Academic Dishonesty,Bullying,Disrespect,Disruption,Inappropriate Lang," +
-                    "Physical Aggression,Technology Violation,Other");
-            BehaviorList = csvBehaviorString.Split(',');
-
-            string csvInterventionString = CrossSettings.Current.GetValueOrDefault("InterVentionList",
-                    "Apology,Campus Beautification,Classroom Detention,Loss of Privilege,Lunch Detention," +
-                    "Parent Contact,Prompting,Proximity,Redirection,Restitution,Seating Change," +
-                    "Student Conference,Other");
-            InterventionList = csvInterventionString.Split(',');
         }
 
         public void LoadData()

@@ -14,9 +14,8 @@
 	</ContentPage.ToolbarItems>
 
 	<ContentPage.Content>
-	    <ListView  x:Name="IncidentListView"
-					ItemSelected="OnSelection"
-					HasUnevenRows="True"
+	    <ListView ItemSelected="OnSelection"
+				  HasUnevenRows="True"
           ItemsSource="{Binding Incidents}">
             <ListView.ItemTemplate>
                 <DataTemplate>

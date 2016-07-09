@@ -107,7 +107,8 @@ namespace ClassManagement
                 return;
             }
             // TODO: Add check for quick-add setting
-            if (BehaviorListView.SelectedItem != null &&
+            if (SettingsData.QuickAddMode &&
+                BehaviorListView.SelectedItem != null &&
                 InterventionListView.SelectedItem != null &&
                 !isEditingIncident)
             {

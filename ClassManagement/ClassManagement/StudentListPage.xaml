@@ -40,11 +40,8 @@
                         <StackLayout Orientation="Vertical"
                         			Spacing="2"
                         			Padding="5">
-                            <StackLayout Orientation="Horizontal">
-                                <Label Text="{Binding LastName}"
+                                <Label Text="{Binding FullName}"
                                 		TextColor="Green"/>
-                                <Label Text="{Binding FirstName}"/>
-                            </StackLayout>
 							<StackLayout Orientation="Horizontal">
 								<Label Text="{Binding Incidents.Count, StringFormat='{0} Total Incidents'}"
 										x:Name="NumberOfIncidents"

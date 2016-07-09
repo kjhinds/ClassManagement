@@ -32,14 +32,14 @@
           <ListView  x:Name="BehaviorListView"
                      ItemSelected="OnSelection"
                      RowHeight="30"
-                     ItemsSource="{Binding Source={x:Static Local:DataModel.BehaviorList}}"/>
+                     ItemsSource="{Binding Source={x:Static Local:SettingsData.BehaviorList}}"/>
         </StackLayout>
         <StackLayout VerticalOptions="FillAndExpand"
                      HorizontalOptions="EndAndExpand">
           <ListView  x:Name="InterventionListView"
                      ItemSelected="OnSelection"
                      RowHeight="30"
-                     ItemsSource="{Binding Source={x:Static Local:DataModel.InterventionList}}"/>
+                     ItemsSource="{Binding Source={x:Static Local:SettingsData.InterventionList}}"/>
         </StackLayout>
       </StackLayout>
       <StackLayout Orientation="Horizontal"
