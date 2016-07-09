@@ -29,6 +29,8 @@
       <StackLayout Orientation="Horizontal">
         <StackLayout VerticalOptions="FillAndExpand"
                      HorizontalOptions="StartAndExpand">
+          <Label HorizontalOptions="Center" 
+                 Text="Behavior"/>
           <ListView  x:Name="BehaviorListView"
                      ItemSelected="OnSelection"
                      RowHeight="30"
@@ -36,6 +38,8 @@
         </StackLayout>
         <StackLayout VerticalOptions="FillAndExpand"
                      HorizontalOptions="EndAndExpand">
+          <Label HorizontalOptions="Center"
+                  Text="Intervention"/>
           <ListView  x:Name="InterventionListView"
                      ItemSelected="OnSelection"
                      RowHeight="30"

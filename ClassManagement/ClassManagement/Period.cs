@@ -46,7 +46,6 @@ namespace ClassManagement
         }
         #endregion
 
-
         #region IComparable required methods
         public int CompareTo (Period other)
         {

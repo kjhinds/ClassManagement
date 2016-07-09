@@ -21,6 +21,31 @@ namespace ClassManagement
             LoadData();
         }
 
+        public string csvSerialize()
+        {
+            string csv = "Period,Last Name,First Name,Incident Date,Incident Time,Behavior,Intervention,Comment" + Environment.NewLine;
+
+            foreach (var period in _periods)
+            {
+                foreach (var student in period.Students)
+                {
+                    foreach (var incident in student.Incidents)
+                    {
+                        csv += period.PeriodName + "," +
+                                student.LastName + "," +
+                                student.FirstName + "," +
+                                incident.Date.ToString("d") + "," +
+                                incident.Date.ToString("t") + "," +
+                                incident.Behavior + "," +
+                                incident.Intervention + "," +
+                                incident.Comment + Environment.NewLine;
+                    }
+                }
+            }
+
+            return csv;
+        }
+
         public void SaveData() {
             string json = JsonConvert.SerializeObject (_periods);
             DependencyService.Get<ISaveAndLoad>().SaveText(DATA_FILE, json);
@@ -28,11 +53,14 @@ namespace ClassManagement
 
         public void LoadData()
         {
-            if (DependencyService.Get<ISaveAndLoad>().FileExists(DATA_FILE)) {
-                string data = DependencyService.Get<ISaveAndLoad>().LoadText(DATA_FILE);
-                _periods = JsonConvert.DeserializeObject<SortableObservableCollection<Period>>(data);
-            } else {
+            string data = DependencyService.Get<ISaveAndLoad>().LoadText(DATA_FILE);
+            if (data == "")
+            {
                 LoadDefaults();
+            }
+            else
+            { 
+                _periods = JsonConvert.DeserializeObject<SortableObservableCollection<Period>>(data);
             }
         }
 

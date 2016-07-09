@@ -10,6 +10,7 @@ namespace ClassManagement
         private string _firstName;
         private SortableObservableCollection<Incident> _incidents;
         private string _worstNumAndType;
+        private int _worstBehaviorNum;  // Needed to update color coding on student list
         #endregion
 
         #region Public Properties
@@ -45,6 +46,12 @@ namespace ClassManagement
         public string WorstNumAndType {
             get { return _worstNumAndType; }
             set { SetProperty(ref _worstNumAndType, value); }
+        }
+
+        public int WorstBehaviorNum
+        {
+            get { return _worstBehaviorNum; }
+            set { SetProperty(ref _worstBehaviorNum, value); }
         }
         #endregion
 
@@ -82,6 +89,7 @@ namespace ClassManagement
                     highestCount = pair.Value;
                 }
             }
+            WorstBehaviorNum = highestCount;
             WorstNumAndType = highestCount + " " + highestBehavior;
         }
         #endregion

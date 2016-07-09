@@ -26,6 +26,13 @@ namespace ClassManagement
         {
             SettingsData.QuickAddMode = QuickAddSwitchCell.On;
         }
+
+        private void OnExportCSVTapped(object sender, EventArgs e)
+        {
+            string csv = _data.csvSerialize();
+            DependencyService.Get<ISaveAndLoad>().SaveText("ClassManagement.csv", csv);
+            DependencyService.Get<IExportCSVFile>().ExportCSVFile("ClassManagement.csv");
+        }
     }
 }
 

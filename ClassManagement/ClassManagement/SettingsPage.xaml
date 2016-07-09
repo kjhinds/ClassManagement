@@ -17,6 +17,9 @@
 
 				<TableRoot>
 					<TableSection>
+            <TextCell Text="Export CSV"
+                      TextColor="Green"
+                      Tapped="OnExportCSVTapped"/>
 						<SwitchCell Text="Quick-Add mode:"
 								On="{x:Static local:SettingsData.QuickAddMode}"
 								OnChanged="OnQuickAddChanged"
