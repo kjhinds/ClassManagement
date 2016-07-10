@@ -10,7 +10,7 @@
 	    	Android="10, 5, 10, 5"
       		WinPhone="10, 5, 10, 5"/>
 	</ContentPage.Padding>
-
+  
 	<ContentPage.Content>
 		<StackLayout>
 			<TableView Intent="Settings">
@@ -28,7 +28,12 @@
 								On="{x:Static local:SettingsData.LastNameFirstSetting}"
 								OnChanged="OnSortPreferenceChanged"
 								x:Name="SortOrderSwitchCell"/>
-
+            <EntryCell Label="Referral Threshold" 
+                       Text="{x:Static local:SettingsData.ODRThreshold}"
+                       Completed="OnReferralThresholdCompleted"
+                       Keyboard="Numeric"
+                       HorizontalTextAlignment="End"
+                       x:Name="ReferralThresholdCell"/>
 					</TableSection>
 				</TableRoot>
 			</TableView>

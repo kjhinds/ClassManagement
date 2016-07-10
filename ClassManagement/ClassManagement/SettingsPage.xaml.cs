@@ -33,6 +33,19 @@ namespace ClassManagement
             DependencyService.Get<ISaveAndLoad>().SaveText("ClassManagement.csv", csv);
             DependencyService.Get<IExportCSVFile>().ExportCSVFile("ClassManagement.csv");
         }
+
+        private void OnReferralThresholdCompleted(object sender, EventArgs e)
+        {
+            int threshold;
+            if (int.TryParse(ReferralThresholdCell.Text, out threshold))
+            {
+                SettingsData.ODRThreshold = ReferralThresholdCell.Text;
+            }
+            else
+            {
+                DisplayAlert("Error", "Please enter a whole number", "OK");
+            }
+        }
     }
 }
 

@@ -2,6 +2,7 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
 			xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
 			xmlns:toolkit="clr-namespace:ClassManagement;assembly=ClassManagement"
+      xmlns:local="clr-namespace:ClassManagement"
 			x:Class="ClassManagement.StudentListPage">
 
 	<ContentPage.Padding>
@@ -53,7 +54,7 @@
 										FontSize="Small"
 										TextColor="{Binding WorstBehaviorNum,
 													Converter={StaticResource thresholdConverter},
-													ConverterParameter=>3}"/>
+													ConverterParameter={x:Static local:SettingsData.ODRThresholdCompare}}"/>
 							</StackLayout>
                         </StackLayout>
                     </ViewCell>

@@ -17,7 +17,6 @@ namespace ClassManagement
 
         public DataModel()
         {
-            SettingsData.LoadSettings();
             LoadData();
         }
 
