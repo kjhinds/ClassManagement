@@ -2,8 +2,7 @@
 using Xamarin.Forms;
 using ClassManagement.Droid;
 using System.IO;
-using System.Threading.Tasks;
-using ClassManagement;
+using Android.Content;
 
 [assembly: Dependency(typeof(ExportCSVFile_Android))]
 
@@ -17,8 +16,20 @@ namespace ClassManagement.Droid
         {
             var documentsPath = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
             var filePath = Path.Combine(documentsPath, filename);
-            //return System.IO.File.ReadAllText(filePath);
-            
+            SendFile(filePath);
+        }
+
+        public void SendFile(String filePath)
+        {
+            Java.IO.File file = new Java.IO.File(filePath);
+            Android.Net.Uri uri = Android.Net.Uri.FromFile(file);
+            file.SetReadable(true, false); 
+
+            var intent = new Intent(Intent.ActionSend);
+            intent.SetType("text/plain");
+            intent.PutExtra(Intent.ExtraStream, uri);
+
+            Forms.Context.StartActivity(Intent.CreateChooser(intent, "Send Data"));
         }
 
         public bool FileExists(string filename)
