@@ -16,7 +16,7 @@ namespace ClassManagement
 
         private void OnSortPreferenceChanged(object sender, EventArgs e)
         {
-            SettingsData.LastNameFirstSetting = SortOrderSwitchCell.On;
+            Settings.LastNameFirstSetting = SortOrderSwitchCell.On;
             foreach (var period in _data.Periods) {
                 period.Students.Sort(Student.GetSortPreference());
             }
@@ -24,7 +24,7 @@ namespace ClassManagement
 
         private void OnQuickAddChanged(object sender, EventArgs e)
         {
-            SettingsData.QuickAddMode = QuickAddSwitchCell.On;
+            Settings.QuickAddMode = QuickAddSwitchCell.On;
         }
 
         private void OnExportCSVTapped(object sender, EventArgs e)
@@ -39,12 +39,22 @@ namespace ClassManagement
             int threshold;
             if (int.TryParse(ReferralThresholdCell.Text, out threshold))
             {
-                SettingsData.ODRThreshold = ReferralThresholdCell.Text;
+                Settings.ODRThreshold = threshold;
             }
             else
             {
                 DisplayAlert("Error", "Please enter a whole number", "OK");
             }
+        }
+
+        private void OnEditBehaviorListTapped(object sender, EventArgs e)
+        {
+            Navigation.PushAsync(new EditListPage("Edit Behavior List"), false);
+        }
+
+        private void OnCreditsTapped(object sender, EventArgs e)
+        {
+            DisplayAlert("Credits", "Icons by: pixel-mixer.com", "Close");
         }
     }
 }

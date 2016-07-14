@@ -28,6 +28,15 @@ namespace ClassManagement
                 this [j] = index;
             }
         }
+
+        //public T[] ToArray()
+        //{
+        //    T[] array = new T[];
+        //    for (int i = 0; i <= Count; i++)
+        //    {
+        //        array[i] = this[i];
+        //    }
+        //}
     }
 }
 

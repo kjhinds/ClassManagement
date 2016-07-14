@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:ClassManagement"
+             x:Class="ClassManagement.EditListPage">
+  
+  <ContentPage.Padding>
+    <OnPlatform x:TypeArguments="Thickness"
+    iOS="10, 5, 10, 5"
+      Android="10, 5, 10, 5"
+        WinPhone="10, 5, 10, 5"/>
+  </ContentPage.Padding>
+  
+  <ContentPage.Content>
+    <ListView HasUnevenRows="true"
+					    ItemsSource="{Binding Item1}">
+      <ListView.ItemTemplate>
+        <DataTemplate>
+          <ViewCell>
+                <StackLayout Orientation="Vertical">
+                  <StackLayout Orientation="Horizontal">
+                    <Label Text="{Binding .}"
+                           HorizontalOptions="StartAndExpand"/>
+                    <Button Text="Delete"
+                           HorizontalOptions="End"
+                           Clicked="OnDeleteButtonClicked"/>
+                  </StackLayout>
+                </StackLayout>
+          </ViewCell>
+        </DataTemplate>
+      </ListView.ItemTemplate>
+    </ListView>
+  </ContentPage.Content>
+  
+</ContentPage>

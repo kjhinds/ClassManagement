@@ -27,7 +27,7 @@ namespace ClassManagement
         public string FullName {
             get 
             {
-                if (SettingsData.LastNameFirstSetting) 
+                if (Settings.LastNameFirstSetting) 
                 {
                     return _lastName + ", " + _firstName;
                 } else 
@@ -101,7 +101,7 @@ namespace ClassManagement
 
         public static IComparer<Student> GetSortPreference ()
         {
-            if (SettingsData.LastNameFirstSetting) {
+            if (Settings.LastNameFirstSetting) {
                 return sortStudentLastName ();
             }
             return sortStudentFirstName ();

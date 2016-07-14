@@ -54,7 +54,7 @@
 										FontSize="Small"
 										TextColor="{Binding WorstBehaviorNum,
 													Converter={StaticResource thresholdConverter},
-													ConverterParameter={x:Static local:SettingsData.ODRThresholdCompare}}"/>
+													ConverterParameter={x:Static local:Settings.ODRThresholdCompare}}"/>
 							</StackLayout>
                         </StackLayout>
                     </ViewCell>

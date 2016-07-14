@@ -21,19 +21,25 @@
                       TextColor="Green"
                       Tapped="OnExportCSVTapped"/>
 						<SwitchCell Text="Quick-Add mode:"
-								On="{x:Static local:SettingsData.QuickAddMode}"
+								On="{x:Static local:Settings.QuickAddMode}"
 								OnChanged="OnQuickAddChanged"
 								x:Name="QuickAddSwitchCell"/>						
 						<SwitchCell Text="Sort students by last name:"
-								On="{x:Static local:SettingsData.LastNameFirstSetting}"
+								On="{x:Static local:Settings.LastNameFirstSetting}"
 								OnChanged="OnSortPreferenceChanged"
 								x:Name="SortOrderSwitchCell"/>
             <EntryCell Label="Referral Threshold" 
-                       Text="{x:Static local:SettingsData.ODRThreshold}"
+                       Text="{x:Static local:Settings.ODRThresholdString}"
                        Completed="OnReferralThresholdCompleted"
                        Keyboard="Numeric"
                        HorizontalTextAlignment="End"
                        x:Name="ReferralThresholdCell"/>
+            <TextCell Text="Edit Behavior List"
+                      TextColor="Green"
+                      Tapped="OnEditBehaviorListTapped"/>
+            <TextCell Text="Credits"
+                      TextColor="Green"
+                      Tapped="OnCreditsTapped"/>
 					</TableSection>
 				</TableRoot>
 			</TableView>
