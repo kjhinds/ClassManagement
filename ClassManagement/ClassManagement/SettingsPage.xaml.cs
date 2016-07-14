@@ -46,21 +46,6 @@ namespace ClassManagement
                 DisplayAlert("Error", "Please enter a whole number", "OK");
             }
         }
-
-        private void OnEditBehaviorListTapped(object sender, EventArgs e)
-        {
-            Navigation.PushAsync(new EditList("Edit Behavior List"));
-        }
-
-        private void OnEditInterventionListTapped(object sender, EventArgs e)
-        {
-
-        }
-
-        private void OnCreditsTapped(object sender, EventArgs e)
-        {
-            DisplayAlert("Credits", "Icons by: pixel-mixer.com", "Close");
-        }
     }
 }
 
