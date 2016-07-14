@@ -13,7 +13,13 @@ namespace ClassManagement.UWP
     {
         #region ISaveAndLoad implementation
 
-        public async void SaveText(string filename, string text)
+        public void SaveText(string filename, string text)
+        {
+            var task = SaveTextAsync(filename, text);
+            task.Wait();
+        }
+
+        public async Task<bool> SaveTextAsync(string filename, string text)
         {
             StorageFolder local = ApplicationData.Current.LocalFolder;
             var file = await local.CreateFileAsync(filename, CreationCollisionOption.ReplaceExisting);
@@ -21,13 +27,18 @@ namespace ClassManagement.UWP
             {
                 writer.Write(text);
             }
+            return true;
         }
 
         public string LoadText(string filename)
         {
-            var task = LoadTextAsync(filename);
-            task.Wait(); // HACK: to keep Interface return types simple (sorry!)
-            return task.Result;
+            if (FileExists(filename))
+            {
+                var task = LoadTextAsync(filename);
+                task.Wait(); // HACK: to keep Interface return types simple (sorry!)
+                return task.Result;
+            }
+            return "";
         }
         async Task<string> LoadTextAsync(string filename)
         {
