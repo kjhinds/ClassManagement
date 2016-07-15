@@ -54,7 +54,8 @@ namespace ClassManagement
             }
             set
             {
-                AppSettings.AddOrUpdateValue(behaviorListKey, value);
+                string jsonString = JsonConvert.SerializeObject(value);
+                AppSettings.AddOrUpdateValue(behaviorListKey, jsonString);
             }
         }
 
@@ -67,7 +68,8 @@ namespace ClassManagement
             }
             set
             {
-                AppSettings.AddOrUpdateValue(interventionListKey, value);
+                string jsonString = JsonConvert.SerializeObject(value);
+                AppSettings.AddOrUpdateValue(interventionListKey, jsonString);
             }
         }
 
@@ -117,5 +119,13 @@ namespace ClassManagement
             }
         }
 
+        public static void ResetSettings()
+        {
+            AppSettings.AddOrUpdateValue(behaviorListKey, behaviorListDefault);
+            AppSettings.AddOrUpdateValue(interventionListKey, interventionListDefault);
+            AppSettings.AddOrUpdateValue(odrThresholdKey, odrThresholdDefault);
+            AppSettings.AddOrUpdateValue(quickAddModeKey, quickAddModeDefault);
+            AppSettings.AddOrUpdateValue(lastNameFirstKey, lastNameFirstDefault);
+        }
     }
 }

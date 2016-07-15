@@ -1,30 +1,26 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+using System.Windows.Input;
 using Xamarin.Forms;
 
 namespace ClassManagement
 {
     public partial class EditListPage : ContentPage
     {
-        public EditListPage(String whichList)
+       
+
+        public EditListPage(string listType)
         {
             InitializeComponent();
-            if (whichList == "Edit Behavior List")
-            {
-                var listToEdit = new Tuple<SortableObservableCollection<string>>(Settings.BehaviorList);
-                BindingContext = listToEdit;
-            }
-       
+            
+
+            BindingContext = new EditListViewModel(listType);
+            
         }
 
-        private void OnDeleteButtonClicked(object sender, EventArgs e)
+        public void AddItem(object sender, EventArgs e)
         {
-            //var period = ((MenuItem)sender).BindingContext as Period;
-            //SettingsData.BehaviorList.Remove(period);
+            ((EditListViewModel)BindingContext).AddItem(sender, e);
+            ((Entry)sender).Text = "";
         }
     }
 }

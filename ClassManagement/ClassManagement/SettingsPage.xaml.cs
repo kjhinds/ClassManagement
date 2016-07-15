@@ -49,7 +49,26 @@ namespace ClassManagement
 
         private void OnEditBehaviorListTapped(object sender, EventArgs e)
         {
-            Navigation.PushAsync(new EditListPage("Edit Behavior List"), false);
+            Navigation.PushAsync(new EditListPage("Behavior"), false);
+        }
+
+        private void OnEditInterventionListTapped(object sender, EventArgs e)
+        {
+            Navigation.PushAsync(new EditListPage("Intervention"), false);
+        }
+
+        private async void OnResetDefaultsTapped(object sender, EventArgs e)
+        {
+            bool choice = await DisplayAlert("Reset Defaults", 
+                    "'Accept' will reset defaults, but not student data.", 
+                    "Accept", "Cancel");
+            if (choice)
+            {
+                Settings.ResetSettings();
+                //TODO: Need to change implementation to MVVM and reassign viewmodel
+                Navigation.PopAsync();
+                Navigation.PushAsync(new SettingsPage(_data));
+            }
         }
 
         private void OnCreditsTapped(object sender, EventArgs e)

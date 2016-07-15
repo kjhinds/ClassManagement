@@ -1,8 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:local="clr-namespace:ClassManagement"
-             x:Class="ClassManagement.EditListPage">
+             xmlns:local="clr-namespace:ClassManagement;assembly:ClassManagement"
+             x:Class="ClassManagement.EditListPage"
+             x:Name="EditListPage">
   
   <ContentPage.Padding>
     <OnPlatform x:TypeArguments="Thickness"
@@ -12,24 +13,59 @@
   </ContentPage.Padding>
   
   <ContentPage.Content>
-    <ListView HasUnevenRows="true"
-					    ItemsSource="{Binding Item1}">
-      <ListView.ItemTemplate>
-        <DataTemplate>
-          <ViewCell>
-                <StackLayout Orientation="Vertical">
+    <StackLayout Orientation="Vertical">
+          <ListView RowHeight="30"
+                    ItemsSource="{Binding ListToEdit}">
+            <ListView.ItemTemplate>
+              <DataTemplate>
+                <ViewCell>
                   <StackLayout Orientation="Horizontal">
                     <Label Text="{Binding .}"
-                           HorizontalOptions="StartAndExpand"/>
-                    <Button Text="Delete"
+                           FontSize="Medium"
+                           HorizontalOptions="FillAndExpand"/>
+                    <Image Source="{local:ImageResource ClassManagement.Resources.uparrow.png}"
+                            HorizontalOptions="End"
+                            WidthRequest="25"
+                            HeightRequest="25"
+                            Aspect="AspectFill">
+                      <Image.GestureRecognizers>
+                        <TapGestureRecognizer
+                            Command="{x:Static local:EditListViewModel.TapUpCommand}"
+                            CommandParameter="{Binding .}"/>
+                      </Image.GestureRecognizers>
+                    </Image>
+                    <Image Source="{local:ImageResource ClassManagement.Resources.downarrow.png}"
+                            HorizontalOptions="End"
+                            WidthRequest="25"
+                            HeightRequest="25"
+                            Aspect="AspectFill">
+                      <Image.GestureRecognizers>
+                        <TapGestureRecognizer
+                            Command="{x:Static local:EditListViewModel.TapDownCommand}"
+                            CommandParameter="{Binding .}"/>
+                      </Image.GestureRecognizers>
+                    </Image>
+                    <Image Source="{local:ImageResource ClassManagement.Resources.delete.png}"
                            HorizontalOptions="End"
-                           Clicked="OnDeleteButtonClicked"/>
+                           WidthRequest="25"
+                           HeightRequest="25"
+                           Aspect="AspectFill">
+                      <Image.GestureRecognizers>
+                        <TapGestureRecognizer
+                            Command="{x:Static local:EditListViewModel.TapDeleteCommand}"
+                            CommandParameter="{Binding .}"/>
+                      </Image.GestureRecognizers>
+                    </Image>
                   </StackLayout>
-                </StackLayout>
-          </ViewCell>
-        </DataTemplate>
-      </ListView.ItemTemplate>
-    </ListView>
+                </ViewCell>
+              </DataTemplate>
+            </ListView.ItemTemplate>
+          </ListView>
+      <Entry Placeholder ="Add New Item"
+              HorizontalOptions="FillAndExpand"
+              VerticalOptions="Start"
+              Completed="AddItem"/>
+    </StackLayout>
   </ContentPage.Content>
   
 </ContentPage>

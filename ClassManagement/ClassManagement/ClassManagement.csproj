@@ -38,6 +38,8 @@
     <Compile Include="EditListPage.xaml.cs">
       <DependentUpon>EditListPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="EditListViewModel.cs" />
+    <Compile Include="Helper Classes\EmbeddedImageResourceExtension.cs" />
     <Compile Include="Helper Classes\IExportCSVFile.cs" />
     <Compile Include="IncidentDetailPage.xaml.cs">
       <DependentUpon>IncidentDetailPage.xaml</DependentUpon>
@@ -142,14 +144,14 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Resources\add.png" />
-    <Content Include="Resources\delete.png" />
-    <Content Include="Resources\details.png" />
-    <Content Include="Resources\downarrow.png" />
-    <Content Include="Resources\edit.png" />
-    <Content Include="Resources\search.png" />
-    <Content Include="Resources\settings.png" />
-    <Content Include="Resources\uparrow.png" />
+    <EmbeddedResource Include="Resources\add.png" />
+    <EmbeddedResource Include="Resources\delete.png" />
+    <EmbeddedResource Include="Resources\details.png" />
+    <EmbeddedResource Include="Resources\downarrow.png" />
+    <EmbeddedResource Include="Resources\edit.png" />
+    <EmbeddedResource Include="Resources\search.png" />
+    <EmbeddedResource Include="Resources\settings.png" />
+    <EmbeddedResource Include="Resources\uparrow.png" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

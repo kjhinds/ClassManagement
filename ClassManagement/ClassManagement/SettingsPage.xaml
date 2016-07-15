@@ -37,6 +37,12 @@
             <TextCell Text="Edit Behavior List"
                       TextColor="Green"
                       Tapped="OnEditBehaviorListTapped"/>
+            <TextCell Text="Edit Intervention List"
+                      TextColor="Green"
+                      Tapped="OnEditInterventionListTapped"/>
+            <TextCell Text="Reset Defaults"
+                      TextColor="Red"
+                      Tapped="OnResetDefaultsTapped"/>
             <TextCell Text="Credits"
                       TextColor="Green"
                       Tapped="OnCreditsTapped"/>
