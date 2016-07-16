@@ -65,23 +65,15 @@ namespace ClassManagement
 
         public void LoadDefaults()
         {
-            _periods = new SortableObservableCollection<Period>();
-            for (int i = 0; i < 3; i++)
-            {
-                Period period = new Period("Period " + i);
-                for (int j = 0; j < 3; j++)
-                {
-                    Student student = new Student("Student", j.ToString());
-                    for (int k = 0; k < 3; k++)
-                    {
-                        Incident incident = new Incident(DateTime.Now, "Naughty", "Talked", k.ToString());
-                        student.Incidents.Add(incident);
-                        student.UpdateWorstBehavior();
-                    }
-                    period.Students.Add(student);
-                }
-                _periods.Add(period);
-            }
+            Periods = new SortableObservableCollection<Period>();
+            Period period = new Period("Sample Period (Tap to see student list)");
+            Student student = new Student("(Tap to add behavior incident)", "Sample Student");
+            Incident incident = new Incident(DateTime.Now, "Sample Behavior", "Sample Intervention", "Sample Comment");
+            student.Incidents.Add(incident);
+            student.UpdateWorstBehavior();
+            period.Students.Add(student);
+            Periods.Add(period);
+            SaveData();
         }
 
 

@@ -71,6 +71,20 @@ namespace ClassManagement
             }
         }
 
+        private async void OnDeleteStudentDataTapped(object sender, EventArgs e)
+        {
+            bool choice = await DisplayAlert("Delete Student Data",
+                    "'Accept' will delete all student data, but keep your settings.",
+                    "Accept", "Cancel");
+            if (choice)
+            {
+                _data.LoadDefaults();
+                //TODO: Need to change implementation to MVVM and reassign viewmodel
+                Navigation.PopAsync();
+                Navigation.PushAsync(new SettingsPage(_data));
+            }
+        }
+
         private void OnCreditsTapped(object sender, EventArgs e)
         {
             DisplayAlert("Credits", "Icons by: pixel-mixer.com", "Close");

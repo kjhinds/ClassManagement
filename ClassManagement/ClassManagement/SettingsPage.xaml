@@ -43,6 +43,9 @@
             <TextCell Text="Reset Defaults"
                       TextColor="Red"
                       Tapped="OnResetDefaultsTapped"/>
+            <TextCell Text="Delete Student Data"
+                      TextColor="Red"
+                      Tapped="OnDeleteStudentDataTapped"/>
             <TextCell Text="Credits"
                       TextColor="Green"
                       Tapped="OnCreditsTapped"/>
