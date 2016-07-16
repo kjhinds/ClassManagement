@@ -20,29 +20,31 @@
               <DataTemplate>
                 <ViewCell>
                   <StackLayout Orientation="Horizontal">
-                    <Label Text="{Binding .}"
+                    <Label Text="{Binding ListItem}"
                            FontSize="Medium"
                            HorizontalOptions="FillAndExpand"/>
                     <Image Source="{local:ImageResource ClassManagement.Resources.uparrow.png}"
                             HorizontalOptions="End"
                             WidthRequest="25"
                             HeightRequest="25"
-                            Aspect="AspectFill">
+                            Aspect="AspectFill"
+                           Opacity="{Binding UpOpacity}">
                       <Image.GestureRecognizers>
                         <TapGestureRecognizer
                             Command="{x:Static local:EditListViewModel.TapUpCommand}"
-                            CommandParameter="{Binding .}"/>
+                            CommandParameter="{Binding ListItem}"/>
                       </Image.GestureRecognizers>
                     </Image>
                     <Image Source="{local:ImageResource ClassManagement.Resources.downarrow.png}"
                             HorizontalOptions="End"
                             WidthRequest="25"
                             HeightRequest="25"
-                            Aspect="AspectFill">
+                            Aspect="AspectFill"
+                           Opacity="{Binding DownOpacity}">
                       <Image.GestureRecognizers>
                         <TapGestureRecognizer
                             Command="{x:Static local:EditListViewModel.TapDownCommand}"
-                            CommandParameter="{Binding .}"/>
+                            CommandParameter="{Binding ListItem}"/>
                       </Image.GestureRecognizers>
                     </Image>
                     <Image Source="{local:ImageResource ClassManagement.Resources.delete.png}"
@@ -53,7 +55,7 @@
                       <Image.GestureRecognizers>
                         <TapGestureRecognizer
                             Command="{x:Static local:EditListViewModel.TapDeleteCommand}"
-                            CommandParameter="{Binding .}"/>
+                            CommandParameter="{Binding ListItem}"/>
                       </Image.GestureRecognizers>
                     </Image>
                   </StackLayout>

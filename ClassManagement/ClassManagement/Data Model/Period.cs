@@ -11,8 +11,7 @@ namespace ClassManagement
         private TimeSpan _periodEndTime;
         private SortableObservableCollection<Student> _students;
         #endregion
-
-
+        
         #region Public Properties
         public string PeriodName {
             get { return _periodName; }

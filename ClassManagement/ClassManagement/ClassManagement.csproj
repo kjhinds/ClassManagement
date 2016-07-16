@@ -35,50 +35,44 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Data Model\Incident.cs" />
+    <Compile Include="Data Model\Period.cs" />
+    <Compile Include="Data Model\Student.cs" />
     <Compile Include="EditListPage.xaml.cs">
       <DependentUpon>EditListPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="EditListViewModel.cs" />
-    <Compile Include="Helper Classes\EmbeddedImageResourceExtension.cs" />
-    <Compile Include="Helper Classes\IExportCSVFile.cs" />
+    <Compile Include="Helpers\EmbeddedImageResourceExtension.cs" />
+    <Compile Include="Helpers\IExportCSVFile.cs" />
     <Compile Include="IncidentDetailPage.xaml.cs">
       <DependentUpon>IncidentDetailPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="PeriodDetailPage.xaml.cs">
-      <DependentUpon>PeriodDetailPage.xaml</DependentUpon>
+    <Compile Include="PeriodDetailView.xaml.cs">
+      <DependentUpon>PeriodDetailView.xaml</DependentUpon>
     </Compile>
     <Compile Include="StudentDetailPage.xaml.cs">
       <DependentUpon>StudentDetailPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="App.cs" />
-    <Compile Include="DataModel.cs" />
+    <Compile Include="Data Model\DataModel.cs" />
     <Compile Include="Helpers\Settings.cs" />
-    <Compile Include="Incident.cs">
-      <DependentUpon>Student.cs</DependentUpon>
-    </Compile>
     <Compile Include="IncidentListPage.xaml.cs">
       <DependentUpon>IncidentListPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Helper Classes\ISaveAndLoad.cs" />
-    <Compile Include="Period.cs">
-      <DependentUpon>DataModel.cs</DependentUpon>
-    </Compile>
+    <Compile Include="Helpers\ISaveAndLoad.cs" />
     <Compile Include="PeriodListPage.xaml.cs">
       <DependentUpon>PeriodListPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Helper Classes\SortableObservableCollection.cs" />
-    <Compile Include="Student.cs">
-      <DependentUpon>Period.cs</DependentUpon>
-    </Compile>
+    <Compile Include="Helpers\SortableObservableCollection.cs" />
     <Compile Include="StudentListPage.xaml.cs">
       <DependentUpon>StudentListPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Helper Classes\ThresholdToObjectConverter.cs" />
-    <Compile Include="Helper Classes\Toolkit.cs">
+    <Compile Include="Helpers\ThresholdToObjectConverter.cs" />
+    <Compile Include="Helpers\Toolkit.cs">
       <DependentUpon>ThresholdToObjectConverter.cs</DependentUpon>
     </Compile>
-    <Compile Include="Helper Classes\ViewModelBase.cs" />
+    <Compile Include="Helpers\ViewModelBase.cs" />
     <Compile Include="SettingsPage.xaml.cs">
       <DependentUpon>SettingsPage.xaml</DependentUpon>
     </Compile>
@@ -117,7 +111,7 @@
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="PeriodDetailPage.xaml">
+    <EmbeddedResource Include="PeriodDetailView.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Include="StudentDetailPage.xaml">
