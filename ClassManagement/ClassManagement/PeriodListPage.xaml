@@ -1,9 +1,10 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
 			xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-			xmlns:toolkit="clr-namespace:ClassManagement;assembly:ClassManagement" 
+			xmlns:local="clr-namespace:ClassManagement;assembly:ClassManagement" 
 			x:Class="ClassManagement.PeriodListPage"
-			Title="All Periods">
+			Title="All Periods"
+      x:Name="Page">
 
 	<ContentPage.Resources>
 		<ResourceDictionary>
@@ -12,6 +13,13 @@
 				<Setter Property="HorizontalTextAlignment" Value="Center" />
 				<Setter Property="TextColor" Value="Green" />
 			</Style>
+      <Style TargetType="Image">
+        <Setter Property="HorizontalOptions" Value="End" />
+        <Setter Property="WidthRequest" Value="25" />
+        <Setter Property="HeightRequest" Value="25" />
+        <Setter Property="Aspect" Value="AspectFill" />
+        <Setter Property="IsVisible" Value="{Binding Path=BindingContext.EditMode, Source={x:Reference Page}}" />
+      </Style>
 		</ResourceDictionary>
 	</ContentPage.Resources>
 
@@ -23,8 +31,12 @@
 	</ContentPage.Padding>
 
 	<ContentPage.ToolbarItems>
-    <ToolbarItem Name ="Settings" Activated="OnSettingsToolbarItemClicked"></ToolbarItem>
-    <ToolbarItem Name="Add" Activated="OnAddToolbarItemClicked"></ToolbarItem>
+    <ToolbarItem Icon="settings.png"
+                 Activated="OnSettingsToolbarItemClicked"/>
+    <ToolbarItem Icon="edit.png"
+                 Activated="OnEditToolbarItemClicked"/>
+    <ToolbarItem Icon="add.png" 
+                 Activated="OnAddToolbarItemClicked"/>
 	</ContentPage.ToolbarItems>
 
 	<ContentPage.Content>
@@ -35,18 +47,27 @@
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <ViewCell>
-               		    <ViewCell.ContextActions>
-            				<MenuItem Clicked="OnDetailsMenuItemClicked"
-           							    Text="Details" />
-         				    <MenuItem Clicked="OnDeleteMenuItemClicked"
-           							    Text="Delete" IsDestructive="True" />
-     				    </ViewCell.ContextActions>
      				    <ContentView Padding="5">
      				    	<Frame OutlineColor="Accent"
      				    			Padding="10">
 		                        <StackLayout Orientation="Vertical">
 		                            <StackLayout Orientation="Horizontal">
-		                                <Label Text="{Binding PeriodName}" />
+		                                <Label Text="{Binding PeriodName}"
+                                           HorizontalOptions="FillAndExpand"/>
+                                  <Image Source="{local:ImageResource ClassManagement.Resources.details.png}">
+                                    <Image.GestureRecognizers>
+                                      <TapGestureRecognizer
+                                          Command="{x:Static local:PeriodListViewModel.TapDetailsCommand}"
+                                          CommandParameter="{Binding PeriodName}"/>
+                                    </Image.GestureRecognizers>
+                                  </Image>
+                                  <Image Source="{local:ImageResource ClassManagement.Resources.delete.png}">
+                                    <Image.GestureRecognizers>
+                                      <TapGestureRecognizer
+                                          Command="{x:Static local:PeriodListViewModel.TapDeleteCommand}"
+                                          CommandParameter="{Binding PeriodName}"/>
+                                    </Image.GestureRecognizers>
+                                  </Image>
 		                            </StackLayout>
 		                        </StackLayout>
 		                    </Frame>

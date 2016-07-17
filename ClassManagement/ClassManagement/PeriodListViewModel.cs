@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Xamarin.Forms;
+﻿using Xamarin.Forms;
+using System.Windows.Input;
 
 namespace ClassManagement
 {
@@ -11,13 +7,14 @@ namespace ClassManagement
     {
         #region Private Fields
         private SortableObservableCollection<Period> periods;
-        //private string periodName;
-        //private TimeSpan _periodStartTime;
-        //private TimeSpan _periodEndTime;
-        //private SortableObservableCollection<Student> _students;
+        private bool editMode;
+        private INavigation navigation;
         #endregion
 
         #region Public Properties
+
+        public static Command TapDeleteCommand;
+        public static Command TapDetailsCommand;
 
         public SortableObservableCollection<Period> Periods
         {
@@ -25,40 +22,51 @@ namespace ClassManagement
             set { SetProperty(ref periods, value); }
         }
 
-
-
-        //public string PeriodName
-        //{
-        //    get { return periodName; }
-        //    set { SetProperty(ref periodName, value); }
-        //}
-
-        //public TimeSpan PeriodStartTime
-        //{
-        //    get { return _periodStartTime; }
-        //    set { SetProperty(ref _periodStartTime, value); }
-        //}
-
-        //public TimeSpan PeriodEndTime
-        //{
-        //    get { return _periodEndTime; }
-        //    set { SetProperty(ref _periodEndTime, value); }
-        //}
-
-        //public SortableObservableCollection<Student> Students
-        //{
-        //    get { return _students; }
-        //    set { SetProperty(ref _students, value); }
-        //}
+        public bool EditMode
+        {
+            get { return editMode; }
+            set { SetProperty(ref editMode, value); }
+        }
         #endregion
 
 
         #region Constructor
-        public PeriodListViewModel(SortableObservableCollection<Period> periods)
+        public PeriodListViewModel(SortableObservableCollection<Period> periods, INavigation navigation)
         {
             Periods = periods;
-            //PeriodName = Period.PeriodName;
+            this.navigation = navigation;
+            EditMode = false;
+            TapDeleteCommand = new Command(arg => DeleteItem(arg));
+            TapDetailsCommand = new Command<string>(arg => ItemDetails(arg));
         }
         #endregion
+
+        private void DeleteItem(object arg)
+        {
+            foreach (var item in Periods)
+            {
+                if (item.PeriodName == arg.ToString())
+                {
+                    Periods.Remove(item);
+                    break;
+                }
+            }
+        }
+
+        private void ItemDetails(object arg)
+        {
+            foreach (var period in Periods)
+            {
+                if (period.PeriodName == arg.ToString())
+                {
+                    navigation.PushAsync(new PeriodDetailPage(Periods, period, true),false);
+                }
+            }
+        }
+
+        public void ToggleEditMode()
+        {
+            EditMode = EditMode ? false : true;
+        }
     }
 }
