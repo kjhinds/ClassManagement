@@ -30,7 +30,7 @@ namespace ClassManagement
         /// <param name="e"></param>
         private void OnDetailsMenuItemClicked (object sender, EventArgs e) {
             var selectedPeriod = ((MenuItem)sender).BindingContext as Period;
-            Navigation.PushAsync(new PeriodDetailView(_periods, selectedPeriod, true), false);
+            Navigation.PushAsync(new PeriodDetailPage(_periods, selectedPeriod, true), false);
         }
 
 
@@ -65,7 +65,7 @@ namespace ClassManagement
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void OnAddToolbarItemClicked(object sender, EventArgs e) {
-            Navigation.PushAsync(new PeriodDetailView(_periods), false);
+            Navigation.PushAsync(new PeriodDetailPage(_periods), false);
         }
 
         // TODO: Implement settings page.

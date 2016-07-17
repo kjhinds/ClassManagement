@@ -3,7 +3,7 @@ using Xamarin.Forms;
 
 namespace ClassManagement
 {
-    public partial class PeriodDetailView : ContentPage
+    public partial class PeriodDetailPage : ContentPage
     {
         #region Private fields
         private SortableObservableCollection<Period> _periods;
@@ -18,7 +18,7 @@ namespace ClassManagement
         /// <param name="periods"></param>
         /// <param name="period"></param>
         /// <param name="isEditingPeriod"></param>
-        public PeriodDetailView(SortableObservableCollection<Period> periods, 
+        public PeriodDetailPage(SortableObservableCollection<Period> periods, 
                                 Period period = null, 
                                 bool isEditingPeriod = false)
         {

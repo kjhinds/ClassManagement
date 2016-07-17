@@ -47,9 +47,10 @@
     <Compile Include="IncidentDetailPage.xaml.cs">
       <DependentUpon>IncidentDetailPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="PeriodDetailView.xaml.cs">
-      <DependentUpon>PeriodDetailView.xaml</DependentUpon>
+    <Compile Include="PeriodDetailPage.xaml.cs">
+      <DependentUpon>PeriodDetailPage.xaml</DependentUpon>
     </Compile>
+    <None Include="PeriodListViewModel.cs" />
     <Compile Include="StudentDetailPage.xaml.cs">
       <DependentUpon>StudentDetailPage.xaml</DependentUpon>
     </Compile>
@@ -111,7 +112,7 @@
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="PeriodDetailView.xaml">
+    <EmbeddedResource Include="PeriodDetailPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Include="StudentDetailPage.xaml">
