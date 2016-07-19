@@ -5,59 +5,20 @@ namespace ClassManagement
 {
     public partial class SettingsPage : ContentPage
     {
-        private DataModel _data;
+        private DataModel dataModel;
 
-        public SettingsPage (DataModel data)
+        public SettingsPage (DataModel dataModel)
         {
             InitializeComponent ();
-            _data = data;
-            Title = "Settings";
+
+            SubscribeToMessages();
+
+            BindingContext = new SettingsViewModel(dataModel);
+
+            this.dataModel = dataModel;
         }
 
-        private void OnSortPreferenceChanged(object sender, EventArgs e)
-        {
-            Settings.LastNameFirstSetting = SortOrderSwitchCell.On;
-            foreach (var period in _data.Periods) {
-                period.Students.Sort(Student.GetSortPreference());
-            }
-        }
-
-        private void OnQuickAddChanged(object sender, EventArgs e)
-        {
-            Settings.QuickAddMode = QuickAddSwitchCell.On;
-        }
-
-        private void OnExportCSVTapped(object sender, EventArgs e)
-        {
-            string csv = _data.csvSerialize();
-            DependencyService.Get<ISaveAndLoad>().SaveText("ClassManagement.csv", csv);
-            DependencyService.Get<IExportCSVFile>().ExportCSVFile("ClassManagement.csv");
-        }
-
-        private void OnReferralThresholdCompleted(object sender, EventArgs e)
-        {
-            int threshold;
-            if (int.TryParse(ReferralThresholdCell.Text, out threshold))
-            {
-                Settings.ODRThreshold = threshold;
-            }
-            else
-            {
-                DisplayAlert("Error", "Please enter a whole number", "OK");
-            }
-        }
-
-        private void OnEditBehaviorListTapped(object sender, EventArgs e)
-        {
-            Navigation.PushAsync(new EditListPage("Behavior"), false);
-        }
-
-        private void OnEditInterventionListTapped(object sender, EventArgs e)
-        {
-            Navigation.PushAsync(new EditListPage("Intervention"), false);
-        }
-
-        private async void OnResetDefaultsTapped(object sender, EventArgs e)
+        private async void ResetDefaults()
         {
             bool choice = await DisplayAlert("Reset Defaults", 
                     "'Accept' will reset defaults, but not student data.", 
@@ -65,29 +26,77 @@ namespace ClassManagement
             if (choice)
             {
                 Settings.ResetSettings();
-                //TODO: Need to change implementation to MVVM and reassign viewmodel
-                Navigation.PopAsync();
-                Navigation.PushAsync(new SettingsPage(_data));
+
+                BindingContext = new SettingsViewModel(dataModel);
             }
         }
 
-        private async void OnDeleteStudentDataTapped(object sender, EventArgs e)
+        private async void DeleteStudentData()
         {
             bool choice = await DisplayAlert("Delete Student Data",
                     "'Accept' will delete all student data, but keep your settings.",
                     "Accept", "Cancel");
             if (choice)
             {
-                _data.LoadDefaults();
-                //TODO: Need to change implementation to MVVM and reassign viewmodel
-                Navigation.PopAsync();
-                Navigation.PushAsync(new SettingsPage(_data));
+                dataModel.LoadDefaults();
+
+                BindingContext = new SettingsViewModel(dataModel);
             }
         }
 
-        private void OnCreditsTapped(object sender, EventArgs e)
+        private void SubscribeToMessages()
+        {
+            MessagingCenter.Subscribe<SettingsViewModel, string>(this, "Message",
+                (sender, msg) => HandleMessage(msg));
+        }
+
+        private void HandleMessage(string msg)
+        {
+            switch (msg)
+            {
+                case "Done":
+                    CloseSettingsPage();
+                    break;
+                case "Credits":
+                    ShowCredits();
+                    break;
+                case "DeleteStudentData":
+                    DeleteStudentData();
+                    break;
+                case "ResetDefaults":
+                    ResetDefaults();
+                    break;
+                case "EditBehaviorList":
+                case "EditInterventionList":
+                    ShowEditListPage(msg);
+                    break;
+                case "ThresholdError":
+                    ShowThresholdError();
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        private void CloseSettingsPage()
+        {
+            MessagingCenter.Unsubscribe<SettingsViewModel, string>(this, "Message");
+            Navigation.PopModalAsync(false);
+        }
+
+        private void ShowCredits()
         {
             DisplayAlert("Credits", "Icons by: pixel-mixer.com", "Close");
+        }
+
+        private void ShowEditListPage(string list)
+        {
+            Navigation.PushModalAsync(new EditListPage(list), false);
+        }
+
+        private void ShowThresholdError()
+        {
+            DisplayAlert("Error", "Threshold must be a number", "Close");
         }
     }
 }

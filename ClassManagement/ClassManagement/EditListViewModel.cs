@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using Xamarin.Forms;
+using System.Windows.Input;
 
 namespace ClassManagement
 {
@@ -8,10 +9,7 @@ namespace ClassManagement
     {
         private SortableObservableCollection<ItemToEdit> listToEdit;
         private string listType;
-
-        public static Command TapDownCommand;
-        public static Command TapDeleteCommand;
-        public static Command TapUpCommand;
+        private string newItemText;
 
         public class ItemToEdit : ViewModelBase
         {
@@ -38,6 +36,18 @@ namespace ClassManagement
             }
         }
 
+        public string NewItemText
+        {
+            get { return newItemText; }
+            set { SetProperty(ref newItemText, value); }
+        }
+
+        public string ListType
+        {
+            get { return listType; }
+            set { SetProperty(ref listType, value); }
+        }
+
         private void UpdateItemOpacities()
         {
             for (int i = 0; i < ListToEdit.Count; i++)
@@ -55,17 +65,25 @@ namespace ClassManagement
 
         public EditListViewModel(string listType)
         {
-            this.listType = listType;
+            ListType = listType;
             listToEdit = BuildList();
             TapDeleteCommand = new Command(arg => DeleteItem(arg));
             TapDownCommand = new Command(arg => MoveItemDown(arg));
             TapUpCommand = new Command(arg => MoveItemUp(arg));
+            AddItemCommand = new Command(() => AddItem());
+            DoneButton = new Command(() => SendMessageToView());
         }
+
+        public ICommand AddItemCommand { protected set; get; }
+        public ICommand DoneButton { protected set; get; }
+        public ICommand TapDownCommand { protected set; get; }
+        public ICommand TapDeleteCommand { protected set; get; }
+        public ICommand TapUpCommand { protected set; get; }
 
         private SortableObservableCollection<ItemToEdit> BuildList()
         {
             SortableObservableCollection<string> currentList;
-            if (listType == "Behavior")
+            if (ListType == "EditBehaviorList")
             {
                 currentList = Settings.BehaviorList;
             }
@@ -91,7 +109,7 @@ namespace ClassManagement
             {
                 listOfItems.Add(item.ListItem);
             }
-            if (listType == "Behavior")
+            if (ListType == "EditBehaviorList")
             {
                 Settings.BehaviorList = listOfItems;
             }
@@ -152,13 +170,18 @@ namespace ClassManagement
             }
         }
 
-        public void AddItem(object sender, EventArgs e)
+        private void AddItem()
         {
-            ItemToEdit item = new ItemToEdit() { ListItem = ((Entry)sender).Text, UpOpacity = 1, DownOpacity = 0 };
+            ItemToEdit item = new ItemToEdit() { ListItem = NewItemText, UpOpacity = 1, DownOpacity = 0 };
             ListToEdit.Add(item);
             UpdateItemOpacities();
             SetList();
+            NewItemText = "";
+        }
 
+        private void SendMessageToView()
+        {
+            MessagingCenter.Send(this, "Done");
         }
     }
 }

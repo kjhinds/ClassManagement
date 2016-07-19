@@ -6,7 +6,6 @@ namespace ClassManagement
     public partial class PeriodListPage : ContentPage
     {
         #region Private fields
-        private SortableObservableCollection<Period> periods;
         private DataModel dataModel;
         #endregion
 
@@ -21,14 +20,20 @@ namespace ClassManagement
 
             SubscribeToMessages();
 
-            BindingContext = new PeriodListViewModel(dataModel.Periods, Navigation);
             this.dataModel = dataModel;
-            periods = dataModel.Periods;
         }
         #endregion
 
+        // Needed to ensure period list is updated if reset on settings page.
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+
+            BindingContext = new PeriodListViewModel(dataModel.Periods, Navigation);
+        }
+
         #region Private methods
-       
+
         /// <summary>
         /// Go to student list for selected period
         /// </summary>
@@ -54,7 +59,7 @@ namespace ClassManagement
 
         private void AddNewPeriod()
         {
-            Navigation.PushModalAsync(new PeriodDetailPage(periods), false);
+            Navigation.PushModalAsync(new PeriodDetailPage(dataModel.Periods), false);
         }
 
         private void OpenSettingsPage()

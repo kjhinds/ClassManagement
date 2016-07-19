@@ -55,6 +55,7 @@
     </Compile>
     <Compile Include="PeriodDetailViewModel.cs" />
     <Compile Include="PeriodListViewModel.cs" />
+    <Compile Include="SettingsViewModel.cs" />
     <Compile Include="StudentDetailPage.xaml.cs">
       <DependentUpon>StudentDetailPage.xaml</DependentUpon>
     </Compile>

@@ -11,16 +11,23 @@ namespace ClassManagement
         public EditListPage(string listType)
         {
             InitializeComponent();
-            
+
+            SubscribeToMessages();
 
             BindingContext = new EditListViewModel(listType);
             
         }
 
-        public void AddItem(object sender, EventArgs e)
+        private void SubscribeToMessages()
         {
-            ((EditListViewModel)BindingContext).AddItem(sender, e);
-            ((Entry)sender).Text = "";
+            MessagingCenter.Subscribe<EditListViewModel>(this, "Done",
+                (o) => ClosePage());
+        }
+
+        private void ClosePage()
+        {
+            MessagingCenter.Unsubscribe<EditListViewModel>(this, "Done");
+            Navigation.PopModalAsync(false);
         }
     }
 }
