@@ -3,7 +3,6 @@
 			xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
 			xmlns:local="clr-namespace:ClassManagement;assembly:ClassManagement" 
 			x:Class="ClassManagement.PeriodListPage"
-			Title="All Periods"
       x:Name="Page">
 
 	<ContentPage.Resources>
@@ -11,9 +10,8 @@
 			<Style TargetType="Label">
 				<Setter Property="FontSize" Value="Large" />
 				<Setter Property="HorizontalTextAlignment" Value="Center" />
-				<Setter Property="TextColor" Value="Green" />
 			</Style>
-      <Style TargetType="Image">
+      <Style x:Key="HiddenIconsStyle" TargetType="Image">
         <Setter Property="HorizontalOptions" Value="End" />
         <Setter Property="WidthRequest" Value="25" />
         <Setter Property="HeightRequest" Value="25" />
@@ -30,52 +28,76 @@
       WinPhone="10, 5, 10, 5"/>
 	</ContentPage.Padding>
 
-	<ContentPage.ToolbarItems>
-    <ToolbarItem Icon="settings.png"
-                 Activated="OnSettingsToolbarItemClicked"/>
-    <ToolbarItem Icon="edit.png"
-                 Activated="OnEditToolbarItemClicked"/>
-    <ToolbarItem Icon="add.png" 
-                 Activated="OnAddToolbarItemClicked"/>
-	</ContentPage.ToolbarItems>
-
 	<ContentPage.Content>
-		<ListView   ItemSelected="OnSelection"
-					SeparatorVisibility="None"
-					HasUnevenRows="true"
-					ItemsSource="{Binding Periods}">
-            <ListView.ItemTemplate>
-                <DataTemplate>
-                    <ViewCell>
-     				    <ContentView Padding="5">
-     				    	<Frame OutlineColor="Accent"
-     				    			Padding="10">
-		                        <StackLayout Orientation="Vertical">
-		                            <StackLayout Orientation="Horizontal">
-		                                <Label Text="{Binding PeriodName}"
-                                           HorizontalOptions="FillAndExpand"/>
-                                  <Image Source="{local:ImageResource ClassManagement.Resources.details.png}">
-                                    <Image.GestureRecognizers>
-                                      <TapGestureRecognizer
-                                          Command="{x:Static local:PeriodListViewModel.TapDetailsCommand}"
-                                          CommandParameter="{Binding PeriodName}"/>
-                                    </Image.GestureRecognizers>
-                                  </Image>
-                                  <Image Source="{local:ImageResource ClassManagement.Resources.delete.png}">
-                                    <Image.GestureRecognizers>
-                                      <TapGestureRecognizer
-                                          Command="{x:Static local:PeriodListViewModel.TapDeleteCommand}"
-                                          CommandParameter="{Binding PeriodName}"/>
-                                    </Image.GestureRecognizers>
-                                  </Image>
-		                            </StackLayout>
-		                        </StackLayout>
-		                    </Frame>
-		                </ContentView>	
-                    </ViewCell>
-                </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
+    <StackLayout>
+      <StackLayout Orientation="Horizontal"
+               HorizontalOptions="FillAndExpand">
+        <Image Source="{local:ImageResource ClassManagement.Resources.appicon.png}"
+               Style="{StaticResource ToolbarIconsStyle}"
+                HorizontalOptions="Start"/>
+        <Label Text="All Periods" HorizontalOptions="CenterAndExpand"
+               FontSize="Large" VerticalOptions="Center"/>
+        <Image Source="{local:ImageResource ClassManagement.Resources.settings.png}"
+               Style="{StaticResource ToolbarIconsStyle}"
+                HorizontalOptions="End">
+          <Image.GestureRecognizers>
+            <TapGestureRecognizer Command="{Binding SettingsCommand}"/>
+          </Image.GestureRecognizers>
+        </Image>
+        <Image Source="{local:ImageResource ClassManagement.Resources.edit.png}"
+               Style="{StaticResource ToolbarIconsStyle}"
+                HorizontalOptions="End">
+          <Image.GestureRecognizers>
+            <TapGestureRecognizer Command="{Binding EditCommand}"/>
+          </Image.GestureRecognizers>
+        </Image>
+        <Image Source="{local:ImageResource ClassManagement.Resources.add.png}"
+               Style="{StaticResource ToolbarIconsStyle}"
+                HorizontalOptions="End">
+          <Image.GestureRecognizers>
+            <TapGestureRecognizer Command="{Binding AddPeriodCommand}"/>
+          </Image.GestureRecognizers>
+        </Image>
+      </StackLayout>
+      <ListView ItemSelected="OnSelection"
+            SeparatorVisibility="None"
+            HasUnevenRows="true"
+            ItemsSource="{Binding Periods}">
+        <ListView.ItemTemplate>
+          <DataTemplate>
+            <ViewCell>
+              <ContentView Padding="5">
+                <Frame OutlineColor="Accent"
+                    Padding="10">
+                  <StackLayout Orientation="Vertical">
+                    <StackLayout Orientation="Horizontal">
+                      <Label Text="{Binding PeriodName}"
+                             HorizontalOptions="FillAndExpand"/>
+                      <Image Source="{local:ImageResource ClassManagement.Resources.details.png}"
+                             Style="{StaticResource HiddenIconsStyle}">
+                        <Image.GestureRecognizers>
+                          <TapGestureRecognizer
+                              Command="{x:Static local:PeriodListViewModel.TapDetailsCommand}"
+                              CommandParameter="{Binding PeriodName}"/>
+                        </Image.GestureRecognizers>
+                      </Image>
+                      <Image Source="{local:ImageResource ClassManagement.Resources.delete.png}"
+                             Style="{StaticResource HiddenIconsStyle}">
+                        <Image.GestureRecognizers>
+                          <TapGestureRecognizer
+                              Command="{x:Static local:PeriodListViewModel.TapDeleteCommand}"
+                              CommandParameter="{Binding PeriodName}"/>
+                        </Image.GestureRecognizers>
+                      </Image>
+                    </StackLayout>
+                  </StackLayout>
+                </Frame>
+              </ContentView>
+            </ViewCell>
+          </DataTemplate>
+        </ListView.ItemTemplate>
+      </ListView>
+    </StackLayout>
 	</ContentPage.Content>
 
 </ContentPage>

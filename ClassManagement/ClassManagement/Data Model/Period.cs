@@ -7,8 +7,11 @@ namespace ClassManagement
     {
         #region Private Fields
         private string _periodName;
-        private TimeSpan _periodStartTime;
-        private TimeSpan _periodEndTime;
+        private TimeSpan dailyStartTime;
+        private TimeSpan dailyEndTime;
+        private SortableObservableCollection<TimeSpan> customStartTimes;
+        private SortableObservableCollection<TimeSpan> customEndTimes;
+        private bool customTimes;
         private SortableObservableCollection<Student> _students;
         #endregion
         
@@ -18,16 +21,34 @@ namespace ClassManagement
             set { SetProperty(ref _periodName, value); }
         }
 
-        public TimeSpan PeriodStartTime
+        public TimeSpan DailyStartTime
         {
-            get { return _periodStartTime; }
-            set { SetProperty(ref _periodStartTime, value); }
+            get { return dailyStartTime; }
+            set { SetProperty(ref dailyStartTime, value); }
         } 
 
-        public TimeSpan PeriodEndTime
+        public TimeSpan DailyEndTime
         {
-            get { return _periodEndTime; }
-            set { SetProperty(ref _periodEndTime, value); }
+            get { return dailyEndTime; }
+            set { SetProperty(ref dailyEndTime, value); }
+        }
+
+        public SortableObservableCollection<TimeSpan> CustomStartTimes
+        {
+            get { return customStartTimes; }
+            set { SetProperty(ref customStartTimes, value); }
+        }
+
+        public SortableObservableCollection<TimeSpan> CustomEndTimes
+        {
+            get { return customEndTimes; }
+            set { SetProperty(ref customEndTimes, value); }
+        }
+
+        public bool CustomTimes
+        {
+            get { return customTimes; }
+            set { SetProperty(ref customTimes, value); }
         }
 
         public SortableObservableCollection<Student> Students {
@@ -41,7 +62,21 @@ namespace ClassManagement
         public Period (string periodName = "")
         {
             PeriodName = periodName;
+            CustomTimes = false;
             Students = new SortableObservableCollection<Student> ();
+            CustomStartTimes = new SortableObservableCollection<TimeSpan> {
+                new TimeSpan(),
+                new TimeSpan(),
+                new TimeSpan(),
+                new TimeSpan(),
+                new TimeSpan() };
+            CustomEndTimes = new SortableObservableCollection<TimeSpan> {
+                new TimeSpan(),
+                new TimeSpan(),
+                new TimeSpan(),
+                new TimeSpan(),
+                new TimeSpan() };
+
         }
         #endregion
 

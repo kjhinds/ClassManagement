@@ -1,9 +1,19 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
 			xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+      xmlns:local="clr-namespace:ClassManagement;assembly:ClassManagement"
 			x:Class="ClassManagement.PeriodDetailPage"
 			Title="Add Period">
-
+  
+  <ContentPage.Resources>
+    <ResourceDictionary>
+      <Style TargetType="TimePicker">
+        <Setter Property="HorizontalOptions" Value="CenterAndExpand" />
+        <Setter Property="VerticalOptions" Value="Start" />
+      </Style>
+    </ResourceDictionary>
+  </ContentPage.Resources>
+  
 	<ContentPage.Padding>
 	    <OnPlatform x:TypeArguments="Thickness"
 	    	iOS="10, 20, 10, 5"
@@ -13,41 +23,101 @@
 
 	<ContentPage.Content>
 		<StackLayout>
-			<Entry Placeholder="Enter period name"
-					HorizontalOptions="FillAndExpand"
-					VerticalOptions="Start"
-					Completed="PeriodNameEntryCompleted"
-					TextChanged="HandleTextChanged"
-					x:Name="PeriodNameEntry"/>
-      <StackLayout Orientation="Horizontal">
-        <Label Text="Start Time"
-               HorizontalOptions="CenterAndExpand"
-               VerticalOptions="Start"/>
-        <Label Text="End Time"
-               HorizontalOptions="CenterAndExpand"
-               VerticalOptions="Start"/>
+      <StackLayout Orientation="Horizontal"
+                   HorizontalOptions="FillAndExpand">
+        <Image Source="{local:ImageResource ClassManagement.Resources.leftarrow.png}"
+               Style="{StaticResource ToolbarIconsStyle}"
+                HorizontalOptions="Start">          
+          <Image.GestureRecognizers>
+            <TapGestureRecognizer Command="{Binding CancelButton}"/>
+          </Image.GestureRecognizers>
+        </Image>
+        <Label Text="Add/Edit Period" HorizontalOptions="CenterAndExpand"
+               FontSize="Large" VerticalOptions="Center"/>
+        <Image Source="{local:ImageResource ClassManagement.Resources.check.png}"
+               Style="{StaticResource ToolbarIconsStyle}"
+                HorizontalOptions="End">
+          <Image.GestureRecognizers>
+            <TapGestureRecognizer Command="{Binding DoneButton}"/>
+          </Image.GestureRecognizers>
+        </Image>
       </StackLayout>
-      <StackLayout Orientation="Horizontal">
-        <TimePicker HorizontalOptions="CenterAndExpand"
-                    VerticalOptions="Start"
-                    x:Name="StartTimeEntry"/>
-        <TimePicker HorizontalOptions="CenterAndExpand"
-                    VerticalOptions="Start"
-                    x:Name="EndTimeEntry"/>
-      </StackLayout>
-			<StackLayout Orientation="Horizontal"
-					HorizontalOptions="End">
-				<Button Text="Cancel"
-						Clicked="OnCancelButtonClicked"
-						HorizontalOptions="End"
-						VerticalOptions="Start"/>
-				<Button Text="Done" 
-						FontAttributes="Bold"
-						Clicked="OnDoneButtonClicked"
-						HorizontalOptions="End"
-						VerticalOptions="Start"
-						x:Name="DoneButton"/>
-			</StackLayout>
+        <Entry Text="{Binding PeriodName}"
+                Placeholder="Enter period name"
+                HorizontalOptions="FillAndExpand"
+                VerticalOptions="Start"
+                Completed="PeriodNameEntryCompleted"
+                TextChanged="HandleTextChanged"
+                x:Name="PeriodNameEntry"/>
+        <StackLayout Orientation="Horizontal">
+          <Label Text="Use Advanced Time Settings"/>
+          <Switch Toggled="OnAdvancedSwitchToggled" IsToggled="{Binding CustomTimes}"/>
+        </StackLayout>
+        <StackLayout Orientation="Horizontal">
+          <Label Text="Start Time"
+                 HorizontalOptions="CenterAndExpand"
+                 VerticalOptions="Start"/>
+          <Label Text="End Time"
+                 HorizontalOptions="CenterAndExpand"
+                 VerticalOptions="Start"/>
+        </StackLayout>
+        <StackLayout Orientation="Horizontal"
+                     IsVisible="{Binding DailyTimes}"
+                     x:Name="DailyTimesStack">
+          <TimePicker Time="{Binding DailyStartTime}"/>
+          <TimePicker Time="{Binding DailyEndTime}"/>
+        </StackLayout>
+        <Grid IsVisible="{Binding CustomTimes}"
+              x:Name="CustomTimesGrid">
+          <Grid.RowDefinitions>
+            <RowDefinition Height="35" />
+            <RowDefinition Height="35" />
+            <RowDefinition Height="35" />
+            <RowDefinition Height="35" />
+            <RowDefinition Height="35" />
+          </Grid.RowDefinitions>
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+          </Grid.ColumnDefinitions>
+          <Label Text="Monday" Grid.Row="0" Grid.Column="0" 
+                 HorizontalTextAlignment="End"/>
+          <Label Text="Tuesday" Grid.Row="1" Grid.Column="0" 
+                 HorizontalTextAlignment="End"/>
+          <Label Text="Wednesday" Grid.Row="2" Grid.Column="0" 
+                 HorizontalTextAlignment="End"/>
+          <Label Text="Thursday" Grid.Row="3" Grid.Column="0" 
+                 HorizontalTextAlignment="End"/>
+          <Label Text="Friday" Grid.Row="4" Grid.Column="0" 
+                 HorizontalTextAlignment="End"/>
+          <TimePicker Time="{Binding CustomStartTimes[0]}" Grid.Row="0" Grid.Column="1"/>
+          <TimePicker Time="{Binding CustomStartTimes[1]}" Grid.Row="1" Grid.Column="1"/>
+          <TimePicker Time="{Binding CustomStartTimes[2]}" Grid.Row="2" Grid.Column="1"/>
+          <TimePicker Time="{Binding CustomStartTimes[3]}" Grid.Row="3" Grid.Column="1"/>
+          <TimePicker Time="{Binding CustomStartTimes[4]}" Grid.Row="4" Grid.Column="1"/>
+          <TimePicker Time="{Binding CustomEndTimes[0]}" Grid.Row="0" Grid.Column="2"/>
+          <TimePicker Time="{Binding CustomEndTimes[1]}" Grid.Row="1" Grid.Column="2"/>
+          <TimePicker Time="{Binding CustomEndTimes[2]}" Grid.Row="2" Grid.Column="2"/>
+          <TimePicker Time="{Binding CustomEndTimes[3]}" Grid.Row="3" Grid.Column="2"/>
+          <TimePicker Time="{Binding CustomEndTimes[4]}" Grid.Row="4" Grid.Column="2"/>
+        </Grid>
+        <StackLayout Orientation="Horizontal"
+            HorizontalOptions="End">
+          <Button Text="Cancel"
+              Command="{Binding CancelButton}"
+              HorizontalOptions="End"
+              VerticalOptions="Start"/>
+          <!-- IsEnabled binding doesn't work!  Why?? 
+             Using TextChange Above instead-->
+          <Button Text="Done"
+                  FontAttributes="Bold"
+                  Command="{Binding DoneButton}"
+                  IsEnabled="{Binding EnableDoneButton}"
+                  HorizontalOptions="End"
+                  VerticalOptions="Start"
+                  x:Name="DoneButton"/>
+        </StackLayout>
 		</StackLayout>
 	</ContentPage.Content>
 

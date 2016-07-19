@@ -38,8 +38,29 @@ namespace ClassManagement
             EditMode = false;
             TapDeleteCommand = new Command(arg => DeleteItem(arg));
             TapDetailsCommand = new Command<string>(arg => ItemDetails(arg));
+            AddPeriodCommand = new Command(() => AddPeriod());
+            EditCommand = new Command(() => ToggleEditMode());
+            SettingsCommand = new Command(() => OnSettingsCommandClicked());
         }
         #endregion
+
+        public ICommand AddPeriodCommand { protected set; get; }
+        private void AddPeriod()
+        {
+            MessagingCenter.Send(this, "Add Period");
+        }
+
+        public ICommand EditCommand { protected set; get; }
+        private void ToggleEditMode()
+        {
+            EditMode = EditMode ? false : true;
+        }
+
+        public ICommand SettingsCommand { protected set; get; }
+        private void OnSettingsCommandClicked()
+        {
+            MessagingCenter.Send(this, "Open Settings Page");
+        }
 
         private void DeleteItem(object arg)
         {
@@ -59,14 +80,10 @@ namespace ClassManagement
             {
                 if (period.PeriodName == arg.ToString())
                 {
-                    navigation.PushAsync(new PeriodDetailPage(Periods, period, true),false);
+                    navigation.PushModalAsync(new PeriodDetailPage(Periods, period), false);
+                    break;
                 }
             }
-        }
-
-        public void ToggleEditMode()
-        {
-            EditMode = EditMode ? false : true;
         }
     }
 }

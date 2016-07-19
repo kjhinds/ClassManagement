@@ -47,14 +47,17 @@
     <Compile Include="IncidentDetailPage.xaml.cs">
       <DependentUpon>IncidentDetailPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+    </Compile>
     <Compile Include="PeriodDetailPage.xaml.cs">
       <DependentUpon>PeriodDetailPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="PeriodDetailViewModel.cs" />
     <Compile Include="PeriodListViewModel.cs" />
     <Compile Include="StudentDetailPage.xaml.cs">
       <DependentUpon>StudentDetailPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="App.cs" />
     <Compile Include="Data Model\DataModel.cs" />
     <Compile Include="Helpers\Settings.cs" />
     <Compile Include="IncidentListPage.xaml.cs">
@@ -147,6 +150,20 @@
     <EmbeddedResource Include="Resources\search.png" />
     <EmbeddedResource Include="Resources\settings.png" />
     <EmbeddedResource Include="Resources\uparrow.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\check.png" />
+    <EmbeddedResource Include="Resources\leftarrow.png" />
+    <EmbeddedResource Include="Resources\rightarrow.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\appicon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="App.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

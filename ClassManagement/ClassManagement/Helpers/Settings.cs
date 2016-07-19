@@ -38,10 +38,13 @@ namespace ClassManagement
         private static readonly int odrThresholdDefault = 3;
 
         private const string quickAddModeKey = "Quick_Add_Mode";
-        private static readonly bool quickAddModeDefault = true;
+        private static readonly bool quickAddModeDefault = false;
 
         private const string lastNameFirstKey = "Last_Name_First";
         private static readonly bool lastNameFirstDefault = true;
+
+        private const string jumpToPeriodKey = "Jump_To_Period";
+        private static readonly bool jumpToPeriodDefault = true;
 
         #endregion
 
@@ -119,6 +122,18 @@ namespace ClassManagement
             }
         }
 
+        public static bool JumpToPeriod
+        {
+            get
+            {
+                return AppSettings.GetValueOrDefault(jumpToPeriodKey, jumpToPeriodDefault);
+            }
+            set
+            {
+                AppSettings.AddOrUpdateValue(jumpToPeriodKey, value);
+            }
+        }
+
         public static void ResetSettings()
         {
             AppSettings.AddOrUpdateValue(behaviorListKey, behaviorListDefault);
@@ -126,6 +141,7 @@ namespace ClassManagement
             AppSettings.AddOrUpdateValue(odrThresholdKey, odrThresholdDefault);
             AppSettings.AddOrUpdateValue(quickAddModeKey, quickAddModeDefault);
             AppSettings.AddOrUpdateValue(lastNameFirstKey, lastNameFirstDefault);
+            AppSettings.AddOrUpdateValue(jumpToPeriodKey, jumpToPeriodDefault);
         }
     }
 }

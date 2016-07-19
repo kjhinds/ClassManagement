@@ -5,11 +5,7 @@ namespace ClassManagement
 {
     public partial class PeriodDetailPage : ContentPage
     {
-        #region Private fields
-        private SortableObservableCollection<Period> _periods;
-        private Period _period;
-        private bool isEditingPeriod;
-        #endregion
+        int timesEntered = 0;
 
         #region Constructor
         /// <summary>
@@ -19,38 +15,24 @@ namespace ClassManagement
         /// <param name="period"></param>
         /// <param name="isEditingPeriod"></param>
         public PeriodDetailPage(SortableObservableCollection<Period> periods, 
-                                Period period = null, 
-                                bool isEditingPeriod = false)
+                                Period period = null)
         {
             InitializeComponent();
-            this.isEditingPeriod = isEditingPeriod;
-            _periods = periods;
-            if (isEditingPeriod)
-            {
-                _period = period;
-                PeriodNameEntry.Text = _period.PeriodName;
-                StartTimeEntry.Time = _period.PeriodStartTime;
-                EndTimeEntry.Time = _period.PeriodEndTime;
-            }
-            else
-            {
-                _period = new Period();
-            }
+
+            SubscribeToMessages();
+
+            BindingContext = new PeriodDetailViewModel(periods, period);
         }
         #endregion
 
         #region Overrides
         /// <summary>
-        /// Make sure period name entry has focus and done button is disabled to start
+        /// Make sure period name entry has focus
         /// </summary>
         protected override void OnAppearing ()
         {
             base.OnAppearing ();
             PeriodNameEntry.Focus();
-            if (!isEditingPeriod)
-            {
-                DoneButton.IsEnabled = false;
-            }
         }
         #endregion
 
@@ -66,44 +48,6 @@ namespace ClassManagement
         }
 
         /// <summary>
-        /// Finalize period entry, add to collection and pop page from stack.
-        /// </summary>
-        private void PeriodEntryCompleted()
-        {
-            _period.PeriodName = PeriodNameEntry.Text;
-            _period.PeriodStartTime = StartTimeEntry.Time.Duration();
-            _period.PeriodEndTime = EndTimeEntry.Time.Duration();
-
-            if (!isEditingPeriod)
-            {
-                _periods.Add(_period);
-            }
-
-            _periods.Sort(Period.GetSortPreference());
-            Navigation.PopAsync(false);
-        }
-
-        /// <summary>
-        /// Done button clicked, finalize period entry information.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void OnDoneButtonClicked(object sender, EventArgs e)
-        {
-            PeriodEntryCompleted();
-        }
-
-        /// <summary>
-        /// Cancel button clicked, pop page from stack.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void OnCancelButtonClicked(object sender, EventArgs e)
-        {
-            Navigation.PopAsync (false);
-        }
-
-        /// <summary>
         /// Text entered, so update done button enable status.
         /// </summary>
         /// <param name="sender"></param>
@@ -115,6 +59,34 @@ namespace ClassManagement
             } else {
                 DoneButton.IsEnabled = false;
             }
+        }
+
+        private void SubscribeToMessages()
+        {
+            MessagingCenter.Subscribe<PeriodDetailViewModel>(this, "Duplicate Period",
+                (sender) => DuplicatePeriodAlert());
+
+            MessagingCenter.Subscribe<PeriodDetailViewModel>(this, "Close Period Detail Page",
+                (sender) => ClosePeriodDetailPage());
+        }
+
+        private void DuplicatePeriodAlert()
+        {
+            DisplayAlert("Duplicate Period", "Period name already in use", "OK");
+        }
+
+        private void ClosePeriodDetailPage()
+        {
+            Navigation.PopModalAsync(false);
+            MessagingCenter.Unsubscribe<PeriodDetailViewModel>(this, "Duplicate Period");
+            MessagingCenter.Unsubscribe<PeriodDetailViewModel>(this, "Close Period Detail Page");
+        }
+
+        private void OnAdvancedSwitchToggled(object sender, EventArgs e)
+        {
+            bool switchState = ((Switch)sender).IsToggled;
+            DailyTimesStack.IsVisible = !switchState;
+            CustomTimesGrid.IsVisible = switchState;            
         }
         #endregion
     }

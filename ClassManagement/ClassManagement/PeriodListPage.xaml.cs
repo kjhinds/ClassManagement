@@ -6,8 +6,7 @@ namespace ClassManagement
     public partial class PeriodListPage : ContentPage
     {
         #region Private fields
-        private SortableObservableCollection<Period> _periods;
-        private PeriodListViewModel viewModel;
+        private SortableObservableCollection<Period> periods;
         private DataModel dataModel;
         #endregion
 
@@ -19,10 +18,12 @@ namespace ClassManagement
         public PeriodListPage(DataModel dataModel)
         {
             InitializeComponent();
-            viewModel = new PeriodListViewModel(dataModel.Periods, Navigation);
+
+            SubscribeToMessages();
+
+            BindingContext = new PeriodListViewModel(dataModel.Periods, Navigation);
             this.dataModel = dataModel;
-            BindingContext = viewModel;
-            _periods = dataModel.Periods;
+            periods = dataModel.Periods;
         }
         #endregion
 
@@ -40,32 +41,25 @@ namespace ClassManagement
             }
             Period period = (Period)e.SelectedItem;
             ((ListView)sender).SelectedItem = null; 
-            Navigation.PushAsync(new StudentListPage(period), false);
+            Navigation.PushModalAsync(new StudentListPage(period), false);
         }
 
-        /// <summary>
-        /// Go to period add page
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void OnAddToolbarItemClicked(object sender, EventArgs e) {
-            Navigation.PushAsync(new PeriodDetailPage(_periods), false);
-        }
-
-        // TODO: Implement settings page.
-        /// <summary>
-        /// Go to setting page
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void OnSettingsToolbarItemClicked(object sender, EventArgs e)
+        private void SubscribeToMessages()
         {
-            Navigation.PushAsync(new SettingsPage(dataModel  as DataModel));
+            MessagingCenter.Subscribe<PeriodListViewModel>(this, "Add Period",
+                (sender) => AddNewPeriod());
+            MessagingCenter.Subscribe<PeriodListViewModel>(this, "Open Settings Page",
+                (sender) => OpenSettingsPage());
         }
 
-        private void OnEditToolbarItemClicked(object sender, EventArgs e)
+        private void AddNewPeriod()
         {
-            viewModel.ToggleEditMode();
+            Navigation.PushModalAsync(new PeriodDetailPage(periods), false);
+        }
+
+        private void OpenSettingsPage()
+        {
+            Navigation.PushModalAsync(new SettingsPage(dataModel), false);
         }
         #endregion
     }
