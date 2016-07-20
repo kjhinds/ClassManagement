@@ -6,7 +6,7 @@ namespace ClassManagement
     public partial class StudentListPage : ContentPage
     {
         #region Private fields
-        private SortableObservableCollection<Student> _students;
+        private SortableObservableCollection<Student> students;
         #endregion
 
         #region Constructor
@@ -17,12 +17,25 @@ namespace ClassManagement
         public StudentListPage(Period period)
         {
             InitializeComponent();
-            Title = period.PeriodName;
-            BindingContext = period;
-            _students = period.Students;
-            _students.Sort(Student.GetSortPreference());
+
+            BindingContext = new StudentListViewModel(period.Students, period.PeriodName);
+            students = period.Students;
+            students.Sort(Student.GetSortPreference());
         }
         #endregion
+
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+            MessagingCenter.Subscribe<StudentListViewModel, string>(this, "Message",
+                (sender, arg) => HandleMessage(arg));
+        }
+
+        protected override void OnDisappearing()
+        {
+            base.OnDisappearing();
+            MessagingCenter.Unsubscribe<StudentListViewModel, string>(this, "Message");
+        }
 
         #region Private methods
         /// <summary>
@@ -37,39 +50,47 @@ namespace ClassManagement
             }
             var student = e.SelectedItem as Student;
             ((ListView)sender).SelectedItem = null;
-            Navigation.PushAsync(new IncidentDetailPage(student), false);
+            Navigation.PushModalAsync(new IncidentDetailPage(student), false);
         }
 
-        /// <summary>
-        /// Details button pushed, go to list of student's incidents
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void OnDetailsMenuItemClicked (object sender, EventArgs e) {
-            var mi = ((MenuItem)sender);
-            var selectedStudent = mi.BindingContext as Student;
-            Navigation.PushAsync(new IncidentListPage(selectedStudent), false);
+        private void HandleMessage(string arg)
+        {
+            switch (arg)
+            {
+                case "_Add_":
+                    ShowAddStudentView();
+                    break;
+                case "_Cancel_":
+                    CloseStudentListPage();
+                    break;
+                default:
+                    ShowStudentDetailView(arg);
+                    break;
+            }
         }
 
-        /// <summary>
-        /// Delete button pushed, delete that student from the period.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void OnDeleteMenuItemClicked (object sender, EventArgs e) {
-            var mi = ((MenuItem)sender);
-            var student = mi.BindingContext as Student;
-            _students.Remove(student);
+        private void ShowAddStudentView()
+        {
+            Navigation.PushModalAsync(new StudentAddPage(students), false);
         }
 
-        /// <summary>
-        /// Add button pushed, push page to add a new student to the stack
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void OnAddToolbarItemClicked(object sender, EventArgs e) {
-            Navigation.PushAsync(new StudentDetailPage(_students), false);
+        private void CloseStudentListPage()
+        {
+            Navigation.PopModalAsync(false);
         }
+
+        private void ShowStudentDetailView(string studentName)
+        {
+            foreach (var student in students)
+            {
+                if (student.FullName == studentName)
+                {
+                    Navigation.PushModalAsync(new IncidentListPage(student), false);
+                    break;
+                }
+            }
+        }
+
         #endregion
     }
 }

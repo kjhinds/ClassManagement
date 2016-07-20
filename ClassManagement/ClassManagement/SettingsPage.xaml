@@ -2,94 +2,124 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
 		xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
 		xmlns:local="clr-namespace:ClassManagement"
-		x:Class="ClassManagement.SettingsPage">
-
-	<ContentPage.Padding>
-	    <OnPlatform x:TypeArguments="Thickness"
-			iOS="10, 5, 10, 5"
-	    	Android="10, 5, 10, 5"
-      		WinPhone="10, 5, 10, 5"/>
-	</ContentPage.Padding>
+		x:Class="ClassManagement.SettingsPage"
+    BackgroundColor="{StaticResource PageBackgroundColor}">
   
 	<ContentPage.Content>
 		<StackLayout>
-      <StackLayout Orientation="Horizontal"
-                   HorizontalOptions="FillAndExpand">
-        <Label Text="Settings" HorizontalOptions="CenterAndExpand"
-               FontSize="Large" VerticalOptions="Center"/>
+      <StackLayout Style="{StaticResource ToolbarStackLayout}">
+        <Label Text="Settings" Style="{StaticResource ToolbarTitle}"/>
         <Image Source="{local:ImageResource ClassManagement.Resources.check.png}"
                Style="{StaticResource ToolbarIconsStyle}"
-                HorizontalOptions="End">
+               HorizontalOptions="End">
           <Image.GestureRecognizers>
             <TapGestureRecognizer Command="{Binding ButtonCommand}"
                                   CommandParameter="Done"/>
           </Image.GestureRecognizers>
         </Image>
       </StackLayout>
-			<TableView Intent="Settings">
-				<TableRoot>
-          <TableSection Title="Export Data">
-            <TextCell Text="Export Data as CSV"
-                      TextColor="Green"
-                      Command="{Binding ExportCommand}"/>
-          </TableSection>
-          <TableSection Title="Settings">
-            <SwitchCell Text="Quick-Add mode:"
-								On="{Binding QuickAddMode}"/>
-            <SwitchCell Text="Sort students by last name:"
-								On="{Binding LastNameFirstSetting}"/>
-            <ViewCell>
-              <Grid>
-                <Grid.RowDefinitions>
-                  <RowDefinition Height="Auto"/>
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                  <ColumnDefinition Width="10"/>
-                  <ColumnDefinition Width="*"/>
-                  <ColumnDefinition Width="Auto"/>
-                  <ColumnDefinition Width="50"/>
-                </Grid.ColumnDefinitions>
-                <Label Text="Referral Threshold:"
-                     VerticalOptions="Center"
-                     Grid.Row="0" Grid.Column="1"/>
-                <Stepper Minimum="1" Maximum="999" Increment="1"
-                         Value="{Binding ODRThreshold}"
-                         Grid.Row="0" Grid.Column="2"/>
-                <Entry Text="{Binding ODRThreshold}"
-                       VerticalOptions="Center"
-                       Keyboard="Numeric"
-                       Grid.Row="0" Grid.Column="3"/>
-              </Grid>
-            </ViewCell>
-          </TableSection>
-          <TableSection Title="Edit Lists">
-            <TextCell Text="Edit Behavior List"
-                      TextColor="Green"
-                      Command="{Binding ButtonCommand}"
-                      CommandParameter="EditBehaviorList"/>
-            <TextCell Text="Edit Intervention List"
-                      TextColor="Green"
-                      Command="{Binding ButtonCommand}"
-                      CommandParameter="EditInterventionList"/>
-          </TableSection>
-          <TableSection Title="Reset Information">
-            <TextCell Text="Reset Defaults"
-                      TextColor="Red"
-                      Command="{Binding ButtonCommand}"
-                      CommandParameter="ResetDefaults"/>
-            <TextCell Text="Delete Student Data"
-                      TextColor="Red"
-                      Command="{Binding ButtonCommand}"
-                      CommandParameter="DeleteStudentData"/>
-          </TableSection>
-          <TableSection Title="About">
-            <TextCell Text="Credits"
-                      TextColor="Green"
-                      Command="{Binding ButtonCommand}"
-                      CommandParameter="Credits"/>
-          </TableSection>
-				</TableRoot>
-			</TableView>
+      <StackLayout Style="{StaticResource BodyStackLayout}">
+        <TableView Intent="Settings">
+          <TableRoot>
+            <TableSection Title="Export Data">
+              <TextCell Text="Export Data as CSV"
+                        TextColor="{StaticResource AccentColor}"
+                        Command="{Binding ExportCommand}"/>
+            </TableSection>
+            <TableSection Title="Settings">
+              <ViewCell>
+                <Grid>
+                  <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                  </Grid.RowDefinitions>
+                  <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="10"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                  </Grid.ColumnDefinitions>
+                  <Label Text="Quick-Add mode:" HorizontalOptions="FillAndExpand"
+                         TextColor="{StaticResource NormalTextColor}"
+                         VerticalOptions="Center"
+                         Grid.Row="0" Grid.Column="1"/>
+                  <Switch IsToggled="{Binding QuickAddMode}"
+                          VerticalOptions="Center"
+                          Grid.Row="0" Grid.Column="2"/>
+                </Grid>
+              </ViewCell>
+              <ViewCell>
+                <Grid>
+                  <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                  </Grid.RowDefinitions>
+                  <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="10"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                  </Grid.ColumnDefinitions>
+                  <Label Text="Sort students by last name:" HorizontalOptions="FillAndExpand"
+                         TextColor="{StaticResource NormalTextColor}"
+                         VerticalOptions="Center"
+                         Grid.Row="0" Grid.Column="1"/>
+                  <Switch IsToggled="{Binding LastNameFirstSetting}"
+                          VerticalOptions="Center"
+                          Grid.Row="0" Grid.Column="2"/>
+                </Grid>
+              </ViewCell>
+              <ViewCell>
+                <Grid>
+                  <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                  </Grid.RowDefinitions>
+                  <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="10"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="50"/>
+                  </Grid.ColumnDefinitions>
+                  <Label Text="Referral Threshold:"
+                         TextColor="{StaticResource NormalTextColor}"
+                         VerticalOptions="Center"
+                         Grid.Row="0" Grid.Column="1"/>
+                  <Stepper Minimum="1" Maximum="999" Increment="1"
+                           Value="{Binding ODRThreshold}"
+                           Grid.Row="0" Grid.Column="2"/>
+                  <Entry Text="{Binding ODRThreshold}"
+                         TextColor="{StaticResource NormalTextColor}"
+                         VerticalOptions="Center"
+                         Keyboard="Numeric"
+                         Grid.Row="0" Grid.Column="3"/>
+                </Grid>
+              </ViewCell>
+            </TableSection>
+            <TableSection Title="Edit Lists">
+              <TextCell Text="Edit Behavior List"
+                        TextColor="{StaticResource AccentColor}"
+                        Command="{Binding ButtonCommand}"
+                        CommandParameter="Behavior"/>
+              <TextCell Text="Edit Intervention List"
+                        TextColor="{StaticResource AccentColor}"
+                        Command="{Binding ButtonCommand}"
+                        CommandParameter="Intervention"/>
+            </TableSection>
+            <TableSection Title="Reset Information">
+              <TextCell Text="Reset Defaults"
+                        TextColor="{StaticResource WarningTextColor}"
+                        Command="{Binding ButtonCommand}"
+                        CommandParameter="ResetDefaults"/>
+              <TextCell Text="Delete Student Data"
+                        TextColor="{StaticResource WarningTextColor}"
+                        Command="{Binding ButtonCommand}"
+                        CommandParameter="DeleteStudentData"/>
+            </TableSection>
+            <TableSection Title="About">
+              <TextCell Text="Credits"
+                        TextColor="{StaticResource AccentColor}"
+                        Command="{Binding ButtonCommand}"
+                        CommandParameter="Credits"/>
+            </TableSection>
+          </TableRoot>
+        </TableView>
+      </StackLayout>
 		</StackLayout>
 	</ContentPage.Content>
 </ContentPage>

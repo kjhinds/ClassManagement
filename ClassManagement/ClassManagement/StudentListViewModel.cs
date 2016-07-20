@@ -3,18 +3,16 @@ using System.Windows.Input;
 
 namespace ClassManagement
 {
-    class PeriodListViewModel : ViewModelBase
+    class StudentListViewModel : ViewModelBase
     {
-        #region Private Fields
-        private SortableObservableCollection<Period> periods;
+        private SortableObservableCollection<Student> students;
+        private string periodName;
         private bool editMode;
-        #endregion
 
-        #region Public Properties
-        public SortableObservableCollection<Period> Periods
+        public string PeriodName
         {
-            get { return periods; }
-            set { SetProperty(ref periods, value); }
+            get { return periodName; }
+            set { SetProperty(ref periodName, value); }
         }
 
         public bool EditMode
@@ -22,19 +20,22 @@ namespace ClassManagement
             get { return editMode; }
             set { SetProperty(ref editMode, value); }
         }
-        #endregion
 
-
-        #region Constructor
-        public PeriodListViewModel(SortableObservableCollection<Period> periods)
+        public SortableObservableCollection<Student> Students
         {
-            Periods = periods;
-            EditMode = false;
-            DeleteCommand = new Command<string>((arg) => DeleteItem(arg));
+            get { return students; }
+            set { SetProperty(ref students, value); }
+        }
+
+        public StudentListViewModel(SortableObservableCollection<Student> students, string periodName)
+        {
+            Students = students;
+            PeriodName = periodName;
+            editMode = false;
             EditCommand = new Command(() => ToggleEditMode());
             ButtonCommand = new Command<string>((arg) => SendMessageToView(arg));
+            DeleteCommand = new Command<string>((arg) => DeleteStudent(arg));
         }
-        #endregion
 
         public ICommand EditCommand { protected set; get; }
         private void ToggleEditMode()
@@ -49,16 +50,17 @@ namespace ClassManagement
         }
 
         public ICommand DeleteCommand { protected set; get; }
-        private void DeleteItem(string arg)
+        private void DeleteStudent(string studentName)
         {
-            foreach (var period in Periods)
+            foreach (var student in Students)
             {
-                if (period.PeriodName == arg)
+                if (student.FullName == studentName)
                 {
-                    Periods.Remove(period);
+                    Students.Remove(student);
                     break;
                 }
             }
         }
+
     }
 }

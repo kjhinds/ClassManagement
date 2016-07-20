@@ -50,14 +50,15 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="IncidentListViewModel.cs" />
     <Compile Include="PeriodDetailPage.xaml.cs">
       <DependentUpon>PeriodDetailPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="PeriodDetailViewModel.cs" />
     <Compile Include="PeriodListViewModel.cs" />
     <Compile Include="SettingsViewModel.cs" />
-    <Compile Include="StudentDetailPage.xaml.cs">
-      <DependentUpon>StudentDetailPage.xaml</DependentUpon>
+    <Compile Include="StudentAddPage.xaml.cs">
+      <DependentUpon>StudentAddPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Data Model\DataModel.cs" />
     <Compile Include="Helpers\Settings.cs" />
@@ -70,6 +71,7 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Helpers\SortableObservableCollection.cs" />
+    <Compile Include="StudentAddViewModel.cs" />
     <Compile Include="StudentListPage.xaml.cs">
       <DependentUpon>StudentListPage.xaml</DependentUpon>
     </Compile>
@@ -81,6 +83,7 @@
     <Compile Include="SettingsPage.xaml.cs">
       <DependentUpon>SettingsPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="StudentListViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Plugin.Settings, Version=2.1.0.0, Culture=neutral, processorArchitecture=MSIL">
@@ -119,7 +122,7 @@
     <EmbeddedResource Include="PeriodDetailPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Include="StudentDetailPage.xaml">
+    <EmbeddedResource Include="StudentAddPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Include="IncidentListPage.xaml">

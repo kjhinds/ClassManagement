@@ -4,13 +4,6 @@
              x:Class="ClassManagement.IncidentDetailPage"
              xmlns:Local="clr-namespace:ClassManagement">
 
-  <ContentPage.Padding>
-    <OnPlatform x:TypeArguments="Thickness"
-                iOS="10, 20, 10, 5"
-                Android="10, 5, 10, 5"
-                WinPhone="10,5,10,5"/>
-  </ContentPage.Padding>
-
   <ContentPage.Content>
     <StackLayout>
       <StackLayout Orientation="Horizontal">

@@ -3,100 +3,80 @@
 			xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
 			xmlns:local="clr-namespace:ClassManagement;assembly:ClassManagement" 
 			x:Class="ClassManagement.PeriodListPage"
-      x:Name="Page">
+      x:Name="Page"
+      BackgroundColor="{StaticResource PageBackgroundColor}">
 
-	<ContentPage.Resources>
-		<ResourceDictionary>
-			<Style TargetType="Label">
-				<Setter Property="FontSize" Value="Large" />
-				<Setter Property="HorizontalTextAlignment" Value="Center" />
-			</Style>
-      <Style x:Key="HiddenIconsStyle" TargetType="Image">
-        <Setter Property="HorizontalOptions" Value="End" />
-        <Setter Property="WidthRequest" Value="25" />
-        <Setter Property="HeightRequest" Value="25" />
-        <Setter Property="Aspect" Value="AspectFill" />
-        <Setter Property="IsVisible" Value="{Binding Path=BindingContext.EditMode, Source={x:Reference Page}}" />
-      </Style>
-		</ResourceDictionary>
-	</ContentPage.Resources>
-
-	<ContentPage.Padding>
-	    <OnPlatform x:TypeArguments="Thickness"
-			iOS="10, 5, 10, 5"
-	    	Android="10, 5, 10, 5"
-      WinPhone="10, 5, 10, 5"/>
-	</ContentPage.Padding>
-
-	<ContentPage.Content>
+  <ContentPage.Content>
     <StackLayout>
-      <StackLayout Orientation="Horizontal"
-               HorizontalOptions="FillAndExpand">
+      <StackLayout Style="{StaticResource ToolbarStackLayout}">
         <Image Source="{local:ImageResource ClassManagement.Resources.appicon.png}"
                Style="{StaticResource ToolbarIconsStyle}"
-                HorizontalOptions="Start"/>
-        <Label Text="All Periods" HorizontalOptions="CenterAndExpand"
-               FontSize="Large" VerticalOptions="Center"/>
+               HorizontalOptions="Start"/>
+        <Label Text="All Periods" Style="{StaticResource ToolbarTitle}"/>
         <Image Source="{local:ImageResource ClassManagement.Resources.settings.png}"
                Style="{StaticResource ToolbarIconsStyle}"
-                HorizontalOptions="End">
+               HorizontalOptions="End">
           <Image.GestureRecognizers>
-            <TapGestureRecognizer Command="{Binding SettingsCommand}"/>
+            <TapGestureRecognizer Command="{Binding ButtonCommand}"
+                                  CommandParameter="_Settings_"/>
           </Image.GestureRecognizers>
         </Image>
         <Image Source="{local:ImageResource ClassManagement.Resources.edit.png}"
                Style="{StaticResource ToolbarIconsStyle}"
-                HorizontalOptions="End">
+               HorizontalOptions="End">
           <Image.GestureRecognizers>
             <TapGestureRecognizer Command="{Binding EditCommand}"/>
           </Image.GestureRecognizers>
         </Image>
         <Image Source="{local:ImageResource ClassManagement.Resources.add.png}"
                Style="{StaticResource ToolbarIconsStyle}"
-                HorizontalOptions="End">
+               HorizontalOptions="End">
           <Image.GestureRecognizers>
-            <TapGestureRecognizer Command="{Binding AddPeriodCommand}"/>
+            <TapGestureRecognizer Command="{Binding ButtonCommand}"
+                                  CommandParameter="_Add_"/>
           </Image.GestureRecognizers>
         </Image>
       </StackLayout>
-      <ListView ItemSelected="OnSelection"
-            SeparatorVisibility="None"
-            HasUnevenRows="true"
-            ItemsSource="{Binding Periods}">
-        <ListView.ItemTemplate>
-          <DataTemplate>
-            <ViewCell>
-              <ContentView Padding="5">
-                <Frame OutlineColor="Accent"
-                    Padding="10">
-                  <StackLayout Orientation="Vertical">
+      <StackLayout Style="{StaticResource BodyStackLayout}">
+        <ListView ItemSelected="OnSelection" SeparatorVisibility="None"
+                  HasUnevenRows="true" ItemsSource="{Binding Periods}">
+          <ListView.ItemTemplate>
+            <DataTemplate>
+              <ViewCell>
+                <ContentView>
+                  <Frame OutlineColor="{StaticResource AccentColor}" Padding="10">
                     <StackLayout Orientation="Horizontal">
                       <Label Text="{Binding PeriodName}"
+                             TextColor="{StaticResource NormalTextColor}"
+                             FontSize="Large"
+                             HorizontalTextAlignment="Center"
                              HorizontalOptions="FillAndExpand"/>
                       <Image Source="{local:ImageResource ClassManagement.Resources.details.png}"
-                             Style="{StaticResource HiddenIconsStyle}">
+                             Style="{StaticResource HiddenIconsStyle}"
+                             IsVisible="{Binding Path=BindingContext.EditMode, Source={x:Reference Page}}">
                         <Image.GestureRecognizers>
                           <TapGestureRecognizer
-                              Command="{x:Static local:PeriodListViewModel.TapDetailsCommand}"
+                              Command="{Binding Path=BindingContext.ButtonCommand, Source={x:Reference Page}}"
                               CommandParameter="{Binding PeriodName}"/>
                         </Image.GestureRecognizers>
                       </Image>
                       <Image Source="{local:ImageResource ClassManagement.Resources.delete.png}"
-                             Style="{StaticResource HiddenIconsStyle}">
+                             Style="{StaticResource HiddenIconsStyle}"
+                             IsVisible="{Binding Path=BindingContext.EditMode, Source={x:Reference Page}}">
                         <Image.GestureRecognizers>
                           <TapGestureRecognizer
-                              Command="{x:Static local:PeriodListViewModel.TapDeleteCommand}"
+                              Command="{Binding Path=BindingContext.DeleteCommand, Source={x:Reference Page}}"
                               CommandParameter="{Binding PeriodName}"/>
                         </Image.GestureRecognizers>
                       </Image>
                     </StackLayout>
-                  </StackLayout>
-                </Frame>
-              </ContentView>
-            </ViewCell>
-          </DataTemplate>
-        </ListView.ItemTemplate>
-      </ListView>
+                  </Frame>
+                </ContentView>
+              </ViewCell>
+            </DataTemplate>
+          </ListView.ItemTemplate>
+        </ListView>
+      </StackLayout>
     </StackLayout>
 	</ContentPage.Content>
 

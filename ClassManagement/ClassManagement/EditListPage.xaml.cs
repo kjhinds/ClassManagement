@@ -12,21 +12,25 @@ namespace ClassManagement
         {
             InitializeComponent();
 
-            SubscribeToMessages();
-
             BindingContext = new EditListViewModel(listType);
             
         }
 
-        private void SubscribeToMessages()
+        protected override void OnAppearing()
         {
+            base.OnAppearing();
             MessagingCenter.Subscribe<EditListViewModel>(this, "Done",
                 (o) => ClosePage());
         }
 
+        protected override void OnDisappearing()
+        {
+            base.OnDisappearing();
+            MessagingCenter.Unsubscribe<EditListViewModel>(this, "Done");
+        }
+
         private void ClosePage()
         {
-            MessagingCenter.Unsubscribe<EditListViewModel>(this, "Done");
             Navigation.PopModalAsync(false);
         }
     }

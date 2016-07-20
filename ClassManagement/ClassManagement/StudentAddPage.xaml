@@ -1,0 +1,63 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
+			xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+      xmlns:local="clr-namespace:ClassManagement;assembly:ClassManagement"
+			x:Class="ClassManagement.StudentAddPage"
+			Title="Add Student"
+      BackgroundColor="{StaticResource PageBackgroundColor}">
+
+	<ContentPage.Content>
+    <StackLayout>
+      <StackLayout Style="{StaticResource ToolbarStackLayout}">
+        <Image Source="{local:ImageResource ClassManagement.Resources.leftarrow.png}"
+               Style="{StaticResource ToolbarIconsStyle}"
+               HorizontalOptions="Start">
+          <Image.GestureRecognizers>
+            <TapGestureRecognizer Command="{Binding CancelButton}"/>
+          </Image.GestureRecognizers>
+        </Image>
+        <Label Text="Add New Student" Style="{StaticResource ToolbarTitle}"/>
+        <Image Source="{local:ImageResource ClassManagement.Resources.check.png}"
+               Style="{StaticResource ToolbarIconsStyle}"
+               HorizontalOptions="End">
+          <Image.GestureRecognizers>
+            <TapGestureRecognizer Command="{Binding DoneButton}"/>
+          </Image.GestureRecognizers>
+        </Image>
+      </StackLayout>
+      <StackLayout Style="{StaticResource BodyStackLayout}">
+			<Entry Text="{Binding FirstName, Mode=OneWayToSource}"
+             Placeholder="First Name"
+             TextColor="{StaticResource NormalTextColor}"
+					    HorizontalOptions="FillAndExpand"
+					    VerticalOptions="Start"
+					    Completed="FirstNameCompleted"
+					    TextChanged="HandleTextChanged"
+					    x:Name="FirstNameEntry"/>
+			<Entry Text="{Binding LastName, Mode=OneWayToSource}"
+             Placeholder="Last Name"
+             TextColor="{StaticResource NormalTextColor}"
+					    HorizontalOptions="FillAndExpand"
+					    VerticalOptions="Start"
+					    Completed="LastNameCompleted"
+					    TextChanged="HandleTextChanged"
+					    x:Name="LastNameEntry"/>
+			<StackLayout Orientation="Horizontal" HorizontalOptions="End">
+				<Button Text="Cancel"
+                TextColor="{StaticResource AccentColor}"
+                Command="{Binding CancelButton}"
+						    HorizontalOptions="End"
+						    VerticalOptions="Start"/>
+				<Button Text="Done" 
+                TextColor="{StaticResource AccentColor}"
+						    FontAttributes="Bold"
+                Command="{Binding DoneButton}"
+						    HorizontalOptions="End"
+						    VerticalOptions="Start"
+						    x:Name="DoneButton"/>
+			</StackLayout>
+      </StackLayout>
+    </StackLayout>
+	</ContentPage.Content>
+
+</ContentPage>

@@ -11,11 +11,22 @@ namespace ClassManagement
         {
             InitializeComponent ();
 
-            SubscribeToMessages();
-
             BindingContext = new SettingsViewModel(dataModel);
 
             this.dataModel = dataModel;
+        }
+
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+            MessagingCenter.Subscribe<SettingsViewModel, string>(this, "Message",
+                (sender, msg) => HandleMessage(msg));
+        }
+
+        protected override void OnDisappearing()
+        {
+            base.OnDisappearing();
+            MessagingCenter.Unsubscribe<SettingsViewModel, string>(this, "Message");
         }
 
         private async void ResetDefaults()
@@ -44,12 +55,6 @@ namespace ClassManagement
             }
         }
 
-        private void SubscribeToMessages()
-        {
-            MessagingCenter.Subscribe<SettingsViewModel, string>(this, "Message",
-                (sender, msg) => HandleMessage(msg));
-        }
-
         private void HandleMessage(string msg)
         {
             switch (msg)
@@ -66,8 +71,8 @@ namespace ClassManagement
                 case "ResetDefaults":
                     ResetDefaults();
                     break;
-                case "EditBehaviorList":
-                case "EditInterventionList":
+                case "Behavior":
+                case "Intervention":
                     ShowEditListPage(msg);
                     break;
                 case "ThresholdError":
@@ -80,7 +85,6 @@ namespace ClassManagement
 
         private void CloseSettingsPage()
         {
-            MessagingCenter.Unsubscribe<SettingsViewModel, string>(this, "Message");
             Navigation.PopModalAsync(false);
         }
 

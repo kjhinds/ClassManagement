@@ -18,18 +18,23 @@ namespace ClassManagement
         {
             InitializeComponent();
 
-            SubscribeToMessages();
-
             this.dataModel = dataModel;
         }
         #endregion
 
-        // Needed to ensure period list is updated if reset on settings page.
         protected override void OnAppearing()
         {
             base.OnAppearing();
+            MessagingCenter.Subscribe<PeriodListViewModel, string>(this, "Message",
+                (sender, msg) => HandleMessage(msg));
+            // Needed to ensure period list is updated if reset on settings page.
+            BindingContext = new PeriodListViewModel(dataModel.Periods);
+        }
 
-            BindingContext = new PeriodListViewModel(dataModel.Periods, Navigation);
+        protected override void OnDisappearing()
+        {
+            base.OnDisappearing();
+            MessagingCenter.Unsubscribe<PeriodListViewModel, string>(this, "Message");
         }
 
         #region Private methods
@@ -49,12 +54,20 @@ namespace ClassManagement
             Navigation.PushModalAsync(new StudentListPage(period), false);
         }
 
-        private void SubscribeToMessages()
+        private void HandleMessage(string msg)
         {
-            MessagingCenter.Subscribe<PeriodListViewModel>(this, "Add Period",
-                (sender) => AddNewPeriod());
-            MessagingCenter.Subscribe<PeriodListViewModel>(this, "Open Settings Page",
-                (sender) => OpenSettingsPage());
+            switch (msg)
+            {
+                case "_Settings_":
+                    OpenSettingsPage();
+                    break;
+                case "_Add_":
+                    AddNewPeriod();
+                    break;
+                default:
+                    ItemDetails(msg);
+                    break;
+            }
         }
 
         private void AddNewPeriod()
@@ -65,6 +78,18 @@ namespace ClassManagement
         private void OpenSettingsPage()
         {
             Navigation.PushModalAsync(new SettingsPage(dataModel), false);
+        }
+
+        private void ItemDetails(string arg)
+        {
+            foreach (var period in dataModel.Periods)
+            {
+                if (period.PeriodName == arg)
+                {
+                    Navigation.PushModalAsync(new PeriodDetailPage(dataModel.Periods, period), false);
+                    break;
+                }
+            }
         }
         #endregion
     }

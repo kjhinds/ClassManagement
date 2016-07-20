@@ -1,48 +1,92 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
 			xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
-			x:Class="ClassManagement.IncidentListPage">
-	<ContentPage.Padding>
-	    <OnPlatform x:TypeArguments="Thickness"
-	    	iOS="10, 5, 10, 5"
-	    	Android="10, 5, 10, 5" 
-        WinPhone="10, 5, 10, 5"/>
-	</ContentPage.Padding>
-
-	<ContentPage.ToolbarItems>
-		<ToolbarItem Name="Add" Activated="OnAddToolbarItemClicked"></ToolbarItem>
-	</ContentPage.ToolbarItems>
+      xmlns:local="clr-namespace:ClassManagement;assembly:ClassManagement"
+			x:Class="ClassManagement.IncidentListPage"
+      x:Name="Page"
+      BackgroundColor="{StaticResource PageBackgroundColor}">
 
 	<ContentPage.Content>
-	    <ListView ItemSelected="OnSelection"
-				  HasUnevenRows="True"
-          ItemsSource="{Binding Incidents}">
-            <ListView.ItemTemplate>
-                <DataTemplate>
-                    <ViewCell>
-               		    <ViewCell.ContextActions>
-         				    <MenuItem Clicked="OnDeleteMenuItemClicked"
-           							    Text="Delete" IsDestructive="True" />
-     				    </ViewCell.ContextActions>
-                        <StackLayout Orientation="Vertical">
-                            <StackLayout Orientation="Horizontal">
-                                <Label Text="{Binding Date, StringFormat=\{0:d\}}"
-                                		TextColor="Green" />
-                                <Label Text="{Binding Behavior}"
-										HorizontalOptions="EndAndExpand"/>
-                            </StackLayout>
-							<StackLayout Orientation="Horizontal">
-								<Label Text="{Binding Date, StringFormat=\{0:t\}}"
-                                		TextColor="Green" />
-								<Label Text="{Binding Intervention}"
-										HorizontalOptions="EndAndExpand"/>
-							</StackLayout>
-							<Label Text="{Binding Comment}"
-									HorizontalOptions="EndAndExpand"/>
-						</StackLayout>
-                    </ViewCell>
-                </DataTemplate>
-            </ListView.ItemTemplate>
+    <StackLayout>
+      <StackLayout Style="{StaticResource ToolbarStackLayout}">
+        <Image Source="{local:ImageResource ClassManagement.Resources.leftarrow.png}"
+               Style="{StaticResource ToolbarIconsStyle}"
+               HorizontalOptions="Start">
+          <Image.GestureRecognizers>
+            <TapGestureRecognizer Command="{Binding ButtonCommand}"
+                                  CommandParameter="_Cancel_"/>
+          </Image.GestureRecognizers>
+        </Image>
+        <Label Text="{Binding FullName}" Style="{StaticResource ToolbarTitle}"/>
+        <Image Source="{local:ImageResource ClassManagement.Resources.edit.png}"
+               Style="{StaticResource ToolbarIconsStyle}"
+               HorizontalOptions="End">
+          <Image.GestureRecognizers>
+            <TapGestureRecognizer Command="{Binding EditCommand}"/>
+          </Image.GestureRecognizers>
+        </Image>
+        <Image Source="{local:ImageResource ClassManagement.Resources.add.png}"
+               Style="{StaticResource ToolbarIconsStyle}"
+               HorizontalOptions="End">
+          <Image.GestureRecognizers>
+            <TapGestureRecognizer Command="{Binding ButtonCommand}"
+                                  CommandParameter="_Add_"/>
+          </Image.GestureRecognizers>
+        </Image>
+      </StackLayout>
+      <StackLayout Style="{StaticResource BodyStackLayout}">
+        <ListView ItemSelected="OnSelection"
+            HasUnevenRows="True"
+            ItemsSource="{Binding Incidents}">
+          <ListView.ItemTemplate>
+            <DataTemplate>
+              <ViewCell>
+                <StackLayout Orientation="Horizontal">
+                  <StackLayout Orientation="Vertical" HorizontalOptions="FillAndExpand">
+                    <StackLayout Orientation="Horizontal">
+                      <Label Text="{Binding Date, StringFormat=\{0:d\}}"
+                          TextColor="{StaticResource AccentColor}"
+                             HorizontalOptions="StartAndExpand"/>
+                      <Label Text="{Binding Behavior}"
+                             TextColor="{StaticResource NormalTextColor}"
+                             HorizontalOptions="EndAndExpand"/>
+                    </StackLayout>
+                    <StackLayout Orientation="Horizontal">
+                      <Label Text="{Binding Date, StringFormat=\{0:t\}}"
+                             TextColor="{StaticResource AccentColor}" 
+                             HorizontalOptions="StartAndExpand"/>
+                      <Label Text="{Binding Intervention}"
+                             TextColor="{StaticResource NormalTextColor}"
+                          HorizontalOptions="EndAndExpand"/>
+                    </StackLayout>
+                    <Label Text="{Binding Comment}"
+                           TextColor="{StaticResource NormalTextColor}"
+                        HorizontalOptions="EndAndExpand"/>
+                  </StackLayout>
+                  <Image Source="{local:ImageResource ClassManagement.Resources.details.png}"
+                     Style="{StaticResource HiddenIconsStyle}"
+                     IsVisible="{Binding Path=BindingContext.EditMode, Source={x:Reference Page}}">
+                    <Image.GestureRecognizers>
+                      <TapGestureRecognizer
+                          Command="{Binding Path=BindingContext.DetailsCommand, Source={x:Reference Page}}"
+                          CommandParameter="{Binding .}"/>
+                    </Image.GestureRecognizers>
+                  </Image>
+                  <Image Source="{local:ImageResource ClassManagement.Resources.delete.png}"
+                         Style="{StaticResource HiddenIconsStyle}"
+                         IsVisible="{Binding Path=BindingContext.EditMode, Source={x:Reference Page}}">
+                    <Image.GestureRecognizers>
+                      <TapGestureRecognizer
+                          Command="{Binding Path=BindingContext.DeleteCommand, Source={x:Reference Page}}"
+                          CommandParameter="{Binding .}"/>
+                    </Image.GestureRecognizers>
+                  </Image>
+                </StackLayout>
+              </ViewCell>
+            </DataTemplate>
+          </ListView.ItemTemplate>
         </ListView>
+      </StackLayout>
+      </StackLayout>
 	</ContentPage.Content>
 </ContentPage>

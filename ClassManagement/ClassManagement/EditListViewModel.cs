@@ -83,7 +83,7 @@ namespace ClassManagement
         private SortableObservableCollection<ItemToEdit> BuildList()
         {
             SortableObservableCollection<string> currentList;
-            if (ListType == "EditBehaviorList")
+            if (ListType == "Behavior")
             {
                 currentList = Settings.BehaviorList;
             }
@@ -109,7 +109,7 @@ namespace ClassManagement
             {
                 listOfItems.Add(item.ListItem);
             }
-            if (ListType == "EditBehaviorList")
+            if (ListType == "Behavior")
             {
                 Settings.BehaviorList = listOfItems;
             }

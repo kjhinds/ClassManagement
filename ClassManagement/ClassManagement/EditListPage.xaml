@@ -3,86 +3,78 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:ClassManagement;assembly:ClassManagement"
              x:Class="ClassManagement.EditListPage"
-             x:Name="EditListPage">
-
-  <ContentPage.Resources>
-    <ResourceDictionary>
-      <Style TargetType="Image">
-        <Setter Property="HorizontalOptions" Value="End" />
-        <Setter Property="WidthRequest" Value="25" />
-        <Setter Property="HeightRequest" Value="25" />
-        <Setter Property="Aspect" Value="AspectFill" />
-      </Style>
-    </ResourceDictionary>
-  </ContentPage.Resources>
-
-  <ContentPage.Padding>
-    <OnPlatform x:TypeArguments="Thickness"
-    iOS="10, 5, 10, 5"
-      Android="10, 5, 10, 5"
-        WinPhone="10, 5, 10, 5"/>
-  </ContentPage.Padding>
+             x:Name="EditListPage"
+             BackgroundColor="{StaticResource PageBackgroundColor}">
   
   <ContentPage.Content>
     <StackLayout Orientation="Vertical">
-      <StackLayout Orientation="Horizontal"
-             HorizontalOptions="FillAndExpand">
-        <Label Text="Binding ListType" HorizontalOptions="CenterAndExpand"
-               FontSize="Large" VerticalOptions="Center"/>
+      <StackLayout Style="{StaticResource ToolbarStackLayout}">
+        <Label Text="{Binding ListType}" Style="{StaticResource ToolbarTitle}"/>
         <Image Source="{local:ImageResource ClassManagement.Resources.check.png}"
                Style="{StaticResource ToolbarIconsStyle}"
-                HorizontalOptions="End">
+               HorizontalOptions="End">
           <Image.GestureRecognizers>
             <TapGestureRecognizer Command="{Binding DoneButton}"/>
           </Image.GestureRecognizers>
         </Image>
       </StackLayout>
-      <StackLayout Orientation="Horizontal">
-        <Entry Text="{Binding NewItemText}" Placeholder ="Add New Item"
-                HorizontalOptions="FillAndExpand"
-                VerticalOptions="Start"/>
-        <Button Text="Add Item" Command="{Binding AddItemCommand}" HorizontalOptions="End"/>
+      <StackLayout Style="{StaticResource BodyStackLayout}">
+        <StackLayout Orientation="Horizontal">
+          <Entry Text="{Binding NewItemText}" Placeholder ="Add New Item"
+                 TextColor="{StaticResource NormalTextColor}"
+                 HorizontalOptions="FillAndExpand"
+                 VerticalOptions="Start"/>
+          <Button Text="Add Item" Command="{Binding AddItemCommand}" HorizontalOptions="End"
+                  TextColor="{StaticResource AccentColor}"/>
+        </StackLayout>
+        <ListView RowHeight="30"
+                  ItemsSource="{Binding ListToEdit}">
+          <ListView.ItemTemplate>
+            <DataTemplate>
+              <ViewCell>
+                <StackLayout Orientation="Horizontal">
+                  <Label Text="{Binding ListItem}"
+                         FontSize="Medium"
+                         HorizontalOptions="FillAndExpand"
+                         TextColor="{StaticResource NormalTextColor}"/>
+                  <Image Source="{local:ImageResource ClassManagement.Resources.uparrow.png}"
+                         HorizontalOptions="End"
+                         Opacity="{Binding UpOpacity}"
+                         Style="{StaticResource RowIconStyle}">
+                    <Image.GestureRecognizers>
+                      <TapGestureRecognizer
+                          Command="{Binding BindingContext.TapUpCommand, 
+                                  Source={x:Reference EditListPage}}"
+                          CommandParameter="{Binding ListItem}"/>
+                    </Image.GestureRecognizers>
+                  </Image>
+                  <Image Source="{local:ImageResource ClassManagement.Resources.downarrow.png}"
+                         HorizontalOptions="End"
+                         Opacity="{Binding DownOpacity}"
+                         Style="{StaticResource RowIconStyle}">
+                    <Image.GestureRecognizers>
+                      <TapGestureRecognizer
+                          Command="{Binding BindingContext.TapDownCommand, 
+                                  Source={x:Reference EditListPage}}"
+                          CommandParameter="{Binding ListItem}"/>
+                    </Image.GestureRecognizers>
+                  </Image>
+                  <Image Source="{local:ImageResource ClassManagement.Resources.delete.png}"
+                         HorizontalOptions="End"
+                         Style="{StaticResource RowIconStyle}">
+                    <Image.GestureRecognizers>
+                      <TapGestureRecognizer
+                          Command="{Binding BindingContext.TapDeleteCommand, 
+                                  Source={x:Reference EditListPage}}"
+                          CommandParameter="{Binding ListItem}"/>
+                    </Image.GestureRecognizers>
+                  </Image>
+                </StackLayout>
+              </ViewCell>
+            </DataTemplate>
+          </ListView.ItemTemplate>
+        </ListView>
       </StackLayout>
-      <ListView RowHeight="30"
-                ItemsSource="{Binding ListToEdit}">
-        <ListView.ItemTemplate>
-          <DataTemplate>
-            <ViewCell>
-              <StackLayout Orientation="Horizontal">
-                <Label Text="{Binding ListItem}"
-                        FontSize="Medium"
-                        HorizontalOptions="FillAndExpand"/>
-                <Image Source="{local:ImageResource ClassManagement.Resources.uparrow.png}"
-                        Opacity="{Binding UpOpacity}">
-                  <Image.GestureRecognizers>
-                    <TapGestureRecognizer
-                        Command="{Binding BindingContext.TapUpCommand, 
-                                  Source={x:Reference EditListPage}}"
-                        CommandParameter="{Binding ListItem}"/>
-                  </Image.GestureRecognizers>
-                </Image>
-                <Image Source="{local:ImageResource ClassManagement.Resources.downarrow.png}"
-                        Opacity="{Binding DownOpacity}">
-                  <Image.GestureRecognizers>
-                    <TapGestureRecognizer
-                        Command="{Binding BindingContext.TapDownCommand, 
-                                  Source={x:Reference EditListPage}}"
-                        CommandParameter="{Binding ListItem}"/>
-                  </Image.GestureRecognizers>
-                </Image>
-                <Image Source="{local:ImageResource ClassManagement.Resources.delete.png}">
-                  <Image.GestureRecognizers>
-                    <TapGestureRecognizer
-                        Command="{Binding BindingContext.TapDeleteCommand, 
-                                  Source={x:Reference EditListPage}}"
-                        CommandParameter="{Binding ListItem}"/>
-                  </Image.GestureRecognizers>
-                </Image>
-              </StackLayout>
-            </ViewCell>
-          </DataTemplate>
-        </ListView.ItemTemplate>
-      </ListView>
     </StackLayout>
   </ContentPage.Content>
   

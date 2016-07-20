@@ -3,7 +3,8 @@
 			xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
       xmlns:local="clr-namespace:ClassManagement;assembly:ClassManagement"
 			x:Class="ClassManagement.PeriodDetailPage"
-			Title="Add Period">
+			Title="Add Period"
+      BackgroundColor="{StaticResource PageBackgroundColor}">
   
   <ContentPage.Resources>
     <ResourceDictionary>
@@ -13,36 +14,29 @@
       </Style>
     </ResourceDictionary>
   </ContentPage.Resources>
-  
-	<ContentPage.Padding>
-	    <OnPlatform x:TypeArguments="Thickness"
-	    	iOS="10, 20, 10, 5"
-	    	Android="10, 5, 10, 5" 
-        WinPhone="10, 5, 10, 5"/>
-	</ContentPage.Padding>
 
 	<ContentPage.Content>
 		<StackLayout>
-      <StackLayout Orientation="Horizontal"
-                   HorizontalOptions="FillAndExpand">
+      <StackLayout Style="{StaticResource ToolbarStackLayout}">
         <Image Source="{local:ImageResource ClassManagement.Resources.leftarrow.png}"
                Style="{StaticResource ToolbarIconsStyle}"
-                HorizontalOptions="Start">          
+               HorizontalOptions="Start">          
           <Image.GestureRecognizers>
             <TapGestureRecognizer Command="{Binding CancelButton}"/>
           </Image.GestureRecognizers>
         </Image>
-        <Label Text="Add/Edit Period" HorizontalOptions="CenterAndExpand"
-               FontSize="Large" VerticalOptions="Center"/>
+        <Label Text="Add/Edit Period" Style="{StaticResource ToolbarTitle}"/>
         <Image Source="{local:ImageResource ClassManagement.Resources.check.png}"
                Style="{StaticResource ToolbarIconsStyle}"
-                HorizontalOptions="End">
+               HorizontalOptions="End">
           <Image.GestureRecognizers>
             <TapGestureRecognizer Command="{Binding DoneButton}"/>
           </Image.GestureRecognizers>
         </Image>
       </StackLayout>
+      <StackLayout Style="{StaticResource BodyStackLayout}">
         <Entry Text="{Binding PeriodName}"
+               TextColor="{StaticResource NormalTextColor}"
                 Placeholder="Enter period name"
                 HorizontalOptions="FillAndExpand"
                 VerticalOptions="Start"
@@ -50,14 +44,19 @@
                 TextChanged="HandleTextChanged"
                 x:Name="PeriodNameEntry"/>
         <StackLayout Orientation="Horizontal">
-          <Label Text="Use Advanced Time Settings"/>
-          <Switch Toggled="OnAdvancedSwitchToggled" IsToggled="{Binding CustomTimes}"/>
+          <Label Text="Use Advanced Time Settings"
+                 TextColor="{StaticResource NormalTextColor}"
+                 VerticalOptions="Center"/>
+          <Switch Toggled="OnAdvancedSwitchToggled" IsToggled="{Binding CustomTimes}"
+                  VerticalOptions="Center"/>
         </StackLayout>
         <StackLayout Orientation="Horizontal">
           <Label Text="Start Time"
+                 TextColor="{StaticResource NormalTextColor}"
                  HorizontalOptions="CenterAndExpand"
                  VerticalOptions="Start"/>
           <Label Text="End Time"
+                 TextColor="{StaticResource NormalTextColor}"
                  HorizontalOptions="CenterAndExpand"
                  VerticalOptions="Start"/>
         </StackLayout>
@@ -81,15 +80,20 @@
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="*" />
           </Grid.ColumnDefinitions>
-          <Label Text="Monday" Grid.Row="0" Grid.Column="0" 
+          <Label Text="Monday" Grid.Row="0" Grid.Column="0"
+                 TextColor="{StaticResource NormalTextColor}"
                  HorizontalTextAlignment="End"/>
-          <Label Text="Tuesday" Grid.Row="1" Grid.Column="0" 
+          <Label Text="Tuesday" Grid.Row="1" Grid.Column="0"
+                 TextColor="{StaticResource NormalTextColor}"
                  HorizontalTextAlignment="End"/>
-          <Label Text="Wednesday" Grid.Row="2" Grid.Column="0" 
+          <Label Text="Wednesday" Grid.Row="2" Grid.Column="0"
+                 TextColor="{StaticResource NormalTextColor}"
                  HorizontalTextAlignment="End"/>
-          <Label Text="Thursday" Grid.Row="3" Grid.Column="0" 
+          <Label Text="Thursday" Grid.Row="3" Grid.Column="0"
+                 TextColor="{StaticResource NormalTextColor}"
                  HorizontalTextAlignment="End"/>
-          <Label Text="Friday" Grid.Row="4" Grid.Column="0" 
+          <Label Text="Friday" Grid.Row="4" Grid.Column="0"
+                 TextColor="{StaticResource NormalTextColor}"
                  HorizontalTextAlignment="End"/>
           <TimePicker Time="{Binding CustomStartTimes[0]}" Grid.Row="0" Grid.Column="1"/>
           <TimePicker Time="{Binding CustomStartTimes[1]}" Grid.Row="1" Grid.Column="1"/>
@@ -105,12 +109,14 @@
         <StackLayout Orientation="Horizontal"
             HorizontalOptions="End">
           <Button Text="Cancel"
-              Command="{Binding CancelButton}"
-              HorizontalOptions="End"
-              VerticalOptions="Start"/>
+                  TextColor="{StaticResource AccentColor}"
+                  Command="{Binding CancelButton}"
+                  HorizontalOptions="End"
+                  VerticalOptions="Start"/>
           <!-- IsEnabled binding doesn't work!  Why?? 
-             Using TextChange Above instead-->
+            Using TextChange Above instead-->
           <Button Text="Done"
+                  TextColor="{StaticResource AccentColor}"
                   FontAttributes="Bold"
                   Command="{Binding DoneButton}"
                   IsEnabled="{Binding EnableDoneButton}"
@@ -118,6 +124,7 @@
                   VerticalOptions="Start"
                   x:Name="DoneButton"/>
         </StackLayout>
+      </StackLayout>
 		</StackLayout>
 	</ContentPage.Content>
 

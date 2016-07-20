@@ -6,7 +6,7 @@ namespace ClassManagement
     public partial class IncidentListPage : ContentPage
     {
         #region Private fields
-        private Student _student;
+        private Student student;
         #endregion
 
         #region Constructor
@@ -17,11 +17,26 @@ namespace ClassManagement
         public IncidentListPage(Student student)
         {
             InitializeComponent ();
-            _student = student;
-            Title = _student.FullName;
-            BindingContext = _student;
+            this.student = student;
+            BindingContext = new IncidentListViewModel(student);
         }
         #endregion
+
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+            MessagingCenter.Subscribe<IncidentListViewModel, string>(this, "Message",
+                (sender, arg) => HandleMessage(arg));
+            MessagingCenter.Subscribe<IncidentListViewModel, Incident>(this, "Incident",
+                (sender, arg) => HandleIncident(arg));
+        }
+
+        protected override void OnDisappearing()
+        {
+            base.OnDisappearing();
+            MessagingCenter.Unsubscribe<IncidentListViewModel, string>(this, "Message");
+            MessagingCenter.Unsubscribe<IncidentListViewModel, Incident>(this, "Incident");
+        }
 
         #region Private methods
         /// <summary>
@@ -33,8 +48,8 @@ namespace ClassManagement
         private void OnDeleteMenuItemClicked (object sender, EventArgs e)
         {
             var selectedIncident = ((MenuItem)sender).BindingContext as Incident;
-            _student.Incidents.Remove(selectedIncident);
-            _student.UpdateWorstBehavior();
+            student.Incidents.Remove(selectedIncident);
+            student.UpdateWorstBehavior();
         }
 
         /// <summary>
@@ -49,7 +64,7 @@ namespace ClassManagement
             }
             ((ListView)sender).SelectedItem = null;
             var selectedIncident = e.SelectedItem as Incident;
-            Navigation.PushAsync(new IncidentDetailPage(_student, selectedIncident, true), false);
+            Navigation.PushModalAsync(new IncidentDetailPage(student, selectedIncident), false);
         }
 
         /// <summary>
@@ -59,7 +74,37 @@ namespace ClassManagement
         /// <param name="e"></param>
         private void OnAddToolbarItemClicked (object sender, EventArgs e)
         {
-            Navigation.PushAsync(new IncidentDetailPage(_student), false);
+            Navigation.PushModalAsync(new IncidentDetailPage(student), false);
+        }
+
+        private void HandleMessage(string arg)
+        {
+            switch (arg)
+            {
+                case "_Cancel_":
+                    CloseIncidentListPage();
+                    break;
+                case "_Add_":
+                    ShowIncidentDetailPage();
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        private void HandleIncident(Incident incident)
+        {
+            Navigation.PushModalAsync(new IncidentDetailPage(student, incident), false);
+        }
+
+        private void CloseIncidentListPage()
+        {
+            Navigation.PopModalAsync(false);
+        }
+
+        private void ShowIncidentDetailPage()
+        {
+            Navigation.PushModalAsync(new IncidentDetailPage(student), false);
         }
         #endregion
     }

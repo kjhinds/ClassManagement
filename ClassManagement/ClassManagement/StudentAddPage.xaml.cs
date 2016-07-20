@@ -3,21 +3,18 @@ using Xamarin.Forms;
 
 namespace ClassManagement
 {
-    public partial class StudentDetailPage : ContentPage
+    public partial class StudentAddPage : ContentPage
     {
-        #region Private fields
-        private SortableObservableCollection<Student> _students;
-        #endregion
-
         #region Constructor
         /// <summary>
         /// Create page for adding student first and last name
         /// </summary>
         /// <param name="students"></param>
-        public StudentDetailPage(SortableObservableCollection<Student> students)
+        public StudentAddPage(SortableObservableCollection<Student> students)
         {
             InitializeComponent();
-            _students = students;
+
+            BindingContext = new StudentAddViewModel(students);
         }
         #endregion
 
@@ -30,25 +27,18 @@ namespace ClassManagement
             base.OnAppearing ();
             FirstNameEntry.Focus();
             DoneButton.IsEnabled = false;
+            MessagingCenter.Subscribe<StudentAddViewModel, string>(this, "Message",
+                (sender, arg) => HandleMessage(arg));
+        }
+
+        protected override void OnDisappearing()
+        {
+            base.OnDisappearing();
+            MessagingCenter.Unsubscribe<StudentAddViewModel, string>(this, "Message");
         }
         #endregion
 
         #region Private methods
-        /// <summary>
-        /// Finalize student entry info if available and pop page from stack
-        /// </summary>
-        private void StudentEntryCompleted() {
-            if (FirstNameEntry.Text != "" && LastNameEntry.Text != "") {
-                _students.Add (new Student (LastNameEntry.Text, FirstNameEntry.Text));
-                _students.Sort (Student.GetSortPreference());
-                Navigation.PopAsync (false);
-            }
-            else
-            {
-                FirstNameEntry.Focus();
-            }
-        }
-
         /// <summary>
         /// User entered first name so move focus to LastNameEntry
         /// </summary>
@@ -65,7 +55,14 @@ namespace ClassManagement
         /// <param name="e"></param>
         private void LastNameCompleted(object sender, EventArgs e)
         {
-            StudentEntryCompleted();
+            if (DoneButton.IsEnabled)
+            {
+                DoneButton.Command.Execute(null);
+            }
+            else
+            {
+                FirstNameEntry.Focus();
+            }
         }
 
         /// <summary>
@@ -73,8 +70,9 @@ namespace ClassManagement
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void OnCancelButtonClicked(object sender, EventArgs e) {
-            Navigation.PopAsync (false);
+        private void OnCancelButtonClicked()
+        {
+            Navigation.PopModalAsync(false);
         }
 
         /// <summary>
@@ -82,9 +80,9 @@ namespace ClassManagement
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void OnDoneButtonClicked(object sender, EventArgs e)
+        private void OnDoneButtonClicked()
         {
-            StudentEntryCompleted();
+            Navigation.PopModalAsync(false);
         }
 
         /// <summary>
@@ -98,6 +96,21 @@ namespace ClassManagement
                 DoneButton.IsEnabled = true;
             } else {
                 DoneButton.IsEnabled = false;
+            }
+        }
+
+        private void HandleMessage(string arg)
+        {
+            switch (arg)
+            {
+                case "Cancel":
+                    OnCancelButtonClicked();
+                    break;
+                case "Done":
+                    OnDoneButtonClicked();
+                    break;
+                default:
+                    break;
             }
         }
         #endregion
