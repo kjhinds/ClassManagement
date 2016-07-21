@@ -129,7 +129,7 @@ namespace ClassManagement
                     }
                 }
                 periods.Add(period);
-                
+                periods.Sort();                
             }
             MessagingCenter.Send(this, "Close Period Detail Page");
         }

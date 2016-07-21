@@ -59,7 +59,7 @@ namespace ClassManagement
         public ICommand DeleteCommand { protected set; get; }
         private void DeleteIncident(Incident incident)
         {
-
+            Incidents.Remove(incident);
         }
 
     }

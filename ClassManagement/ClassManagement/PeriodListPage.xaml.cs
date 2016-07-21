@@ -17,7 +17,7 @@ namespace ClassManagement
         public PeriodListPage(DataModel dataModel)
         {
             InitializeComponent();
-
+            NavigationPage.SetHasNavigationBar(this, false);
             this.dataModel = dataModel;
         }
         #endregion
@@ -77,7 +77,7 @@ namespace ClassManagement
 
         private void OpenSettingsPage()
         {
-            Navigation.PushModalAsync(new SettingsPage(dataModel), false);
+            Navigation.PushAsync(new SettingsPage(dataModel), false);
         }
 
         private void ItemDetails(string arg)

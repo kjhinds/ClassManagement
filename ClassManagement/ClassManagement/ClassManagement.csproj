@@ -50,6 +50,7 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="IncidentDetailViewModel.cs" />
     <Compile Include="IncidentListViewModel.cs" />
     <Compile Include="PeriodDetailPage.xaml.cs">
       <DependentUpon>PeriodDetailPage.xaml</DependentUpon>

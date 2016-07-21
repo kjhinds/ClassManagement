@@ -2,54 +2,93 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="ClassManagement.IncidentDetailPage"
-             xmlns:Local="clr-namespace:ClassManagement">
+             xmlns:local="clr-namespace:ClassManagement;assembly:ClassManagement"
+             Style="{StaticResource ContentPageStyle}">
 
   <ContentPage.Content>
     <StackLayout>
-      <StackLayout Orientation="Horizontal">
-        <DatePicker HorizontalOptions="StartAndExpand"
-                    VerticalOptions="Start"
-                    x:Name="DateEntry"/>
-        <TimePicker HorizontalOptions="EndAndExpand"
-                    VerticalOptions="Start"
-                    x:Name="TimeEntry"/>
+      <StackLayout Style="{StaticResource ToolbarStackLayout}">
+        <Image Source="{local:ImageResource ClassManagement.Resources.leftarrow.png}"
+               Style="{StaticResource ToolbarIconsStyle}"
+               HorizontalOptions="Start"
+               VerticalOptions="End">
+          <Image.GestureRecognizers>
+            <TapGestureRecognizer Command="{Binding CommandButton}"
+                                  CommandParameter="Cancel"/>
+          </Image.GestureRecognizers>
+        </Image>
+        <Label Text="{Binding Student.FullName}" Style="{StaticResource ToolbarTitle}"/>
+        <Image Source="{local:ImageResource ClassManagement.Resources.check.png}"
+               Style="{StaticResource ToolbarIconsStyle}"
+               HorizontalOptions="End"
+               VerticalOptions="End">
+          <Image.GestureRecognizers>
+            <TapGestureRecognizer Command="{Binding CommandButton}"
+                                  CommandParameter="Done"/>
+          </Image.GestureRecognizers>
+        </Image>
       </StackLayout>
-      <Entry Placeholder="Comments"
-             HorizontalOptions="FillAndExpand"
-             VerticalOptions="Start"
-             Completed="OnCommentsEntryCompleted"
-             x:Name="CommentsEntry"></Entry>
-      <StackLayout Orientation="Horizontal">
-        <StackLayout VerticalOptions="FillAndExpand"
-                     HorizontalOptions="StartAndExpand">
-          <Label HorizontalOptions="Center" 
-                 Text="Behavior"/>
-          <ListView  x:Name="BehaviorListView"
-                     ItemSelected="OnSelection"
-                     RowHeight="30"
-                     ItemsSource="{Binding Source={x:Static Local:Settings.BehaviorList}}"/>
+      <StackLayout Style="{StaticResource BodyStackLayout}">
+        <StackLayout Orientation="Horizontal">
+          <DatePicker Date="{Binding Date}"
+                      TextColor="{StaticResource NormalTextColor}"
+                      HorizontalOptions="StartAndExpand"
+                      VerticalOptions="Start"
+                      x:Name="DateEntry"/>
+          <TimePicker Time="{Binding Date.TimeOfDay}"
+                      TextColor="{StaticResource NormalTextColor}"
+                      HorizontalOptions="EndAndExpand"
+                      VerticalOptions="Start"
+                      x:Name="TimeEntry"/>
         </StackLayout>
-        <StackLayout VerticalOptions="FillAndExpand"
-                     HorizontalOptions="EndAndExpand">
-          <Label HorizontalOptions="Center"
-                  Text="Intervention"/>
-          <ListView  x:Name="InterventionListView"
-                     ItemSelected="OnSelection"
-                     RowHeight="30"
-                     ItemsSource="{Binding Source={x:Static Local:Settings.InterventionList}}"/>
+        <Entry Text="{Binding Comments}"
+               TextColor="{StaticResource NormalTextColor}"
+               Placeholder="Comments"
+               HorizontalOptions="FillAndExpand"
+               VerticalOptions="Start"
+               Completed="OnCommentsEntryCompleted"
+               x:Name="CommentsEntry"></Entry>
+        <StackLayout Orientation="Horizontal">
+          <StackLayout VerticalOptions="FillAndExpand"
+                       HorizontalOptions="StartAndExpand">
+            <Label HorizontalOptions="Center"
+                   TextColor="{StaticResource NormalTextColor}"
+                   Text="Behavior"/>
+            <ListView  x:Name="BehaviorListView"
+                       ItemSelected="OnSelection"
+                       RowHeight="30"
+                       ItemsSource="{Binding BehaviorList}"
+                       SelectedItem="{Binding Behavior}"/>
+          </StackLayout>
+          <StackLayout VerticalOptions="FillAndExpand"
+                       HorizontalOptions="EndAndExpand">
+            <Label HorizontalOptions="Center"
+                    Text="Intervention"
+                    TextColor="{StaticResource NormalTextColor}"/>
+            <ListView  x:Name="InterventionListView"
+                       ItemSelected="OnSelection"
+                       RowHeight="30"
+                       ItemsSource="{Binding InterventionList}"
+                       SelectedItem="{Binding Intervention}"/>
+          </StackLayout>
         </StackLayout>
-      </StackLayout>
-      <StackLayout Orientation="Horizontal"
-                   HorizontalOptions="End">
-        <Button Text="Cancel"
-                Clicked="OnCancelButtonClicked"
-                HorizontalOptions="End"
-                VerticalOptions="Start"/>
-        <Button Text="Done"
-                FontAttributes="Bold"
-                Clicked="OnDoneButtonClicked"
-                HorizontalOptions="End"
-                VerticalOptions="Start"/>
+        <StackLayout Orientation="Horizontal"
+                     HorizontalOptions="End">
+          <Button Text="Cancel"
+                  TextColor="{StaticResource AccentColor}"
+                  Command="{Binding CommandButton}"
+                  CommandParameter="Cancel"
+                  HorizontalOptions="End"
+                  VerticalOptions="Start"/>
+          <Button Text="Done"
+                  TextColor="{StaticResource AccentColor}"
+                  FontAttributes="Bold"
+                  Command="{Binding CommandButton}"
+                  CommandParameter="Done"
+                  HorizontalOptions="End"
+                  VerticalOptions="Start"
+                  x:Name="DoneButton"/>
+        </StackLayout>
       </StackLayout>
     </StackLayout>
   </ContentPage.Content>

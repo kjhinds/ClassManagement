@@ -4,18 +4,20 @@
 			xmlns:local="clr-namespace:ClassManagement;assembly:ClassManagement" 
 			x:Class="ClassManagement.PeriodListPage"
       x:Name="Page"
-      BackgroundColor="{StaticResource PageBackgroundColor}">
+      Style="{StaticResource ContentPageStyle}">
 
   <ContentPage.Content>
     <StackLayout>
       <StackLayout Style="{StaticResource ToolbarStackLayout}">
         <Image Source="{local:ImageResource ClassManagement.Resources.appicon.png}"
                Style="{StaticResource ToolbarIconsStyle}"
-               HorizontalOptions="Start"/>
+               HorizontalOptions="Start"
+               VerticalOptions="End"/>
         <Label Text="All Periods" Style="{StaticResource ToolbarTitle}"/>
         <Image Source="{local:ImageResource ClassManagement.Resources.settings.png}"
                Style="{StaticResource ToolbarIconsStyle}"
-               HorizontalOptions="End">
+               HorizontalOptions="End"
+               VerticalOptions="End">
           <Image.GestureRecognizers>
             <TapGestureRecognizer Command="{Binding ButtonCommand}"
                                   CommandParameter="_Settings_"/>
@@ -23,14 +25,16 @@
         </Image>
         <Image Source="{local:ImageResource ClassManagement.Resources.edit.png}"
                Style="{StaticResource ToolbarIconsStyle}"
-               HorizontalOptions="End">
+               HorizontalOptions="End"
+               VerticalOptions="End">
           <Image.GestureRecognizers>
             <TapGestureRecognizer Command="{Binding EditCommand}"/>
           </Image.GestureRecognizers>
         </Image>
         <Image Source="{local:ImageResource ClassManagement.Resources.add.png}"
                Style="{StaticResource ToolbarIconsStyle}"
-               HorizontalOptions="End">
+               HorizontalOptions="End"
+               VerticalOptions="End">
           <Image.GestureRecognizers>
             <TapGestureRecognizer Command="{Binding ButtonCommand}"
                                   CommandParameter="_Add_"/>
@@ -44,7 +48,8 @@
             <DataTemplate>
               <ViewCell>
                 <ContentView>
-                  <Frame OutlineColor="{StaticResource AccentColor}" Padding="10">
+                  <Frame OutlineColor="{StaticResource AccentColor}" Padding="10"
+                         Margin="10">
                     <StackLayout Orientation="Horizontal">
                       <Label Text="{Binding PeriodName}"
                              TextColor="{StaticResource NormalTextColor}"

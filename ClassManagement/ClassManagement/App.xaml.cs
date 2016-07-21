@@ -18,7 +18,8 @@ namespace ClassManagement
             data = new DataModel();
 
             // The root page of your application
-            MainPage = new PeriodListPage(data);
+            MainPage = new NavigationPage(new PeriodListPage(data));
+            NavigationPage.SetHasNavigationBar(this, false);
 
             // Navigate to current period if setting enabled.
             Days.Add("Monday", 0);

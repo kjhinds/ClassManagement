@@ -95,7 +95,7 @@ namespace ClassManagement
 
         public static string ODRThresholdCompare
         {
-            get { return ">" + ODRThreshold; }
+            get { return ">" + (ODRThreshold-1); }
         }
 
         public static bool QuickAddMode

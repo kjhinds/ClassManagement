@@ -66,8 +66,8 @@ namespace ClassManagement
         public void LoadDefaults()
         {
             Periods = new SortableObservableCollection<Period>();
-            Period period = new Period("Sample Period (Tap to see student list)");
-            Student student = new Student("(Tap to add behavior incident)", "Sample Student");
+            Period period = new Period("Sample Period");
+            Student student = new Student("Last Name", "First Name");
             Incident incident = new Incident(DateTime.Now, "Sample Behavior", "Sample Intervention", "Sample Comment");
             student.Incidents.Add(incident);
             student.UpdateWorstBehavior();

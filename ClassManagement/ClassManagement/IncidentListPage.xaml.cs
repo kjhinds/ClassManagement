@@ -49,7 +49,6 @@ namespace ClassManagement
         {
             var selectedIncident = ((MenuItem)sender).BindingContext as Incident;
             student.Incidents.Remove(selectedIncident);
-            student.UpdateWorstBehavior();
         }
 
         /// <summary>

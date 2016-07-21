@@ -5,8 +5,6 @@ namespace ClassManagement
 {
     public partial class PeriodDetailPage : ContentPage
     {
-        int timesEntered = 0;
-
         #region Constructor
         /// <summary>
         /// Create page to enter new period or edit existing period.

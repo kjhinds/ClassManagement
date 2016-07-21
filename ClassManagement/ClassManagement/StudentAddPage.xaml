@@ -4,14 +4,15 @@
       xmlns:local="clr-namespace:ClassManagement;assembly:ClassManagement"
 			x:Class="ClassManagement.StudentAddPage"
 			Title="Add Student"
-      BackgroundColor="{StaticResource PageBackgroundColor}">
+      Style="{StaticResource ContentPageStyle}">
 
 	<ContentPage.Content>
     <StackLayout>
       <StackLayout Style="{StaticResource ToolbarStackLayout}">
         <Image Source="{local:ImageResource ClassManagement.Resources.leftarrow.png}"
                Style="{StaticResource ToolbarIconsStyle}"
-               HorizontalOptions="Start">
+               HorizontalOptions="Start"
+               VerticalOptions="End">
           <Image.GestureRecognizers>
             <TapGestureRecognizer Command="{Binding CancelButton}"/>
           </Image.GestureRecognizers>
@@ -19,7 +20,8 @@
         <Label Text="Add New Student" Style="{StaticResource ToolbarTitle}"/>
         <Image Source="{local:ImageResource ClassManagement.Resources.check.png}"
                Style="{StaticResource ToolbarIconsStyle}"
-               HorizontalOptions="End">
+               HorizontalOptions="End"
+               VerticalOptions="End">
           <Image.GestureRecognizers>
             <TapGestureRecognizer Command="{Binding DoneButton}"/>
           </Image.GestureRecognizers>

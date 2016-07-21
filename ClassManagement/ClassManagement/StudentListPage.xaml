@@ -5,7 +5,7 @@
             xmlns:local="clr-namespace:ClassManagement"
 			      x:Class="ClassManagement.StudentListPage"
             x:Name="Page"
-            BackgroundColor="{StaticResource PageBackgroundColor}">
+            Style="{StaticResource ContentPageStyle}">
 
 	<ContentPage.Resources>
 		<ResourceDictionary>
@@ -22,7 +22,8 @@
       <StackLayout Style="{StaticResource ToolbarStackLayout}">
         <Image Source="{local:ImageResource ClassManagement.Resources.leftarrow.png}"
                Style="{StaticResource ToolbarIconsStyle}"
-               HorizontalOptions="Start">
+               HorizontalOptions="Start"
+               VerticalOptions="End">
           <Image.GestureRecognizers>
             <TapGestureRecognizer Command="{Binding ButtonCommand}"
                                   CommandParameter="_Cancel_"/>
@@ -31,14 +32,16 @@
         <Label Text="{Binding PeriodName}" Style="{StaticResource ToolbarTitle}"/>
         <Image Source="{local:ImageResource ClassManagement.Resources.edit.png}"
                Style="{StaticResource ToolbarIconsStyle}"
-               HorizontalOptions="End">
+               HorizontalOptions="End"
+               VerticalOptions="End">
           <Image.GestureRecognizers>
             <TapGestureRecognizer Command="{Binding EditCommand}"/>
           </Image.GestureRecognizers>
         </Image>
         <Image Source="{local:ImageResource ClassManagement.Resources.add.png}"
                Style="{StaticResource ToolbarIconsStyle}"
-               HorizontalOptions="End">
+               HorizontalOptions="End"
+               VerticalOptions="End">
           <Image.GestureRecognizers>
             <TapGestureRecognizer Command="{Binding ButtonCommand}"
                                   CommandParameter="_Add_"/>
@@ -52,28 +55,37 @@
           <ListView.ItemTemplate>
             <DataTemplate>
               <ViewCell>
-                <StackLayout Orientation="Horizontal">
-                  <StackLayout Orientation="Vertical" HorizontalOptions="FillAndExpand"
-                        Spacing="2" Padding="5">
-                    <Label Text="{Binding FullName}" TextColor="{StaticResource NormalTextColor}"/>
-                    <StackLayout Orientation="Horizontal">
-                      <Label Text="{Binding Incidents.Count, StringFormat='{0} Total Incidents'}"
-                             TextColor="{StaticResource NormalTextColor}"
-                             x:Name="NumberOfIncidents"
-                             HorizontalOptions="StartAndExpand"
-                             FontSize="Small"/>
-                      <Label Text="{Binding WorstNumAndType}"
-                             x:Name="WorstNumAndType"
-                             HorizontalOptions="EndAndExpand"
-                             FontSize="Small"
-                             TextColor="{Binding WorstBehaviorNum,
+                <Grid>
+                  <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                  </Grid.RowDefinitions>
+                  <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                  </Grid.ColumnDefinitions>
+                    <Label Text="{Binding FullName}" TextColor="{StaticResource AccentColor}"
+                           Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"/>
+                    <Label Text="{Binding Incidents.Count, StringFormat='{0} Total Incidents'}"
+                            TextColor="{StaticResource NormalTextColor}"
+                            x:Name="NumberOfIncidents"
+                            HorizontalOptions="Fill"
+                            FontSize="Small"
+                           Grid.Row="1" Grid.Column="0"/>
+                    <Label Text="{Binding WorstNumAndType}"
+                            x:Name="WorstNumAndType"
+                            HorizontalOptions="Fill"
+                            FontSize="Small"
+                            TextColor="{Binding WorstBehaviorNum,
 													    Converter={StaticResource thresholdConverter},
-													    ConverterParameter={x:Static local:Settings.ODRThresholdCompare}}"/>
-                    </StackLayout>
-                  </StackLayout>
+													    ConverterParameter={x:Static local:Settings.ODRThresholdCompare}}"
+                           Grid.Row="1" Grid.Column="1"/>
 
                   <Image Source="{local:ImageResource ClassManagement.Resources.details.png}"
                          Style="{StaticResource HiddenIconsStyle}"
+                         Grid.Row="0" Grid.RowSpan="2" Grid.Column="2"
                          IsVisible="{Binding Path=BindingContext.EditMode, Source={x:Reference Page}}">
                     <Image.GestureRecognizers>
                       <TapGestureRecognizer
@@ -83,6 +95,7 @@
                   </Image>
                   <Image Source="{local:ImageResource ClassManagement.Resources.delete.png}"
                          Style="{StaticResource HiddenIconsStyle}"
+                         Grid.Row="0" Grid.RowSpan="2" Grid.Column="3"
                          IsVisible="{Binding Path=BindingContext.EditMode, Source={x:Reference Page}}">
                     <Image.GestureRecognizers>
                       <TapGestureRecognizer
@@ -90,7 +103,7 @@
                           CommandParameter="{Binding FullName}"/>
                     </Image.GestureRecognizers>
                   </Image>
-                </StackLayout>
+                </Grid>
               </ViewCell>
             </DataTemplate>
           </ListView.ItemTemplate>

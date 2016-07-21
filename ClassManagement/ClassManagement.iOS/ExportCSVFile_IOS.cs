@@ -31,10 +31,6 @@ namespace ClassManagement.iOS
                 var subviews = window.Subviews;
                 var view = subviews.First();
 
-                //Get navigation controller
-                var firstController = UIApplication.SharedApplication.KeyWindow.RootViewController.ChildViewControllers.First().ChildViewControllers.Last().ChildViewControllers.First();
-                var navcontroller = firstController as UINavigationController;
-
                 //Create Document Interaction Controller
                 var uidic = UIDocumentInteractionController.FromUrl(new NSUrl(_filePath, true));
                 var uidicDel = new UIDocumentInteractionControllerDelegate();

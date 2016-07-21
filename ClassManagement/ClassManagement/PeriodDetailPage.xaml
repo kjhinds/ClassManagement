@@ -4,7 +4,7 @@
       xmlns:local="clr-namespace:ClassManagement;assembly:ClassManagement"
 			x:Class="ClassManagement.PeriodDetailPage"
 			Title="Add Period"
-      BackgroundColor="{StaticResource PageBackgroundColor}">
+      Style="{StaticResource ContentPageStyle}">
   
   <ContentPage.Resources>
     <ResourceDictionary>
@@ -20,7 +20,8 @@
       <StackLayout Style="{StaticResource ToolbarStackLayout}">
         <Image Source="{local:ImageResource ClassManagement.Resources.leftarrow.png}"
                Style="{StaticResource ToolbarIconsStyle}"
-               HorizontalOptions="Start">          
+               HorizontalOptions="Start"
+               VerticalOptions="End">          
           <Image.GestureRecognizers>
             <TapGestureRecognizer Command="{Binding CancelButton}"/>
           </Image.GestureRecognizers>
@@ -28,7 +29,8 @@
         <Label Text="Add/Edit Period" Style="{StaticResource ToolbarTitle}"/>
         <Image Source="{local:ImageResource ClassManagement.Resources.check.png}"
                Style="{StaticResource ToolbarIconsStyle}"
-               HorizontalOptions="End">
+               HorizontalOptions="End"
+               VerticalOptions="End">
           <Image.GestureRecognizers>
             <TapGestureRecognizer Command="{Binding DoneButton}"/>
           </Image.GestureRecognizers>
@@ -69,11 +71,11 @@
         <Grid IsVisible="{Binding CustomTimes}"
               x:Name="CustomTimesGrid">
           <Grid.RowDefinitions>
-            <RowDefinition Height="35" />
-            <RowDefinition Height="35" />
-            <RowDefinition Height="35" />
-            <RowDefinition Height="35" />
-            <RowDefinition Height="35" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
           </Grid.RowDefinitions>
           <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto" />

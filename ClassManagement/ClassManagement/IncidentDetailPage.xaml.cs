@@ -6,8 +6,6 @@ namespace ClassManagement
     public partial class IncidentDetailPage : ContentPage
     {
         #region Private fields
-        private Student _student;
-        private Incident _incident;
         private bool isEditingIncident;
         #endregion
 
@@ -17,72 +15,31 @@ namespace ClassManagement
         /// </summary>
         /// <param name="incident"></param>
         /// <param name="isEditingIncident"></param>
-        public IncidentDetailPage (Student student, Incident incident = null, bool isEditingIncident = false)
+        public IncidentDetailPage (Student student, Incident incident = null)
         {
             InitializeComponent();
-            _student = student;
-            Title = _student.FullName;
-            BindingContext = _student;
-            this.isEditingIncident = isEditingIncident;
+            BindingContext = new IncidentDetailViewModel(student, incident);
+            isEditingIncident = (incident != null) ? true : false;
             if (isEditingIncident)
             {
-                _incident = incident;
-                DateEntry.Date = _incident.Date.Date;
-                TimeEntry.Time = _incident.Date.TimeOfDay;
-                CommentsEntry.Text = _incident.Comment;
-                BehaviorListView.SelectedItem = _incident.Behavior;
-                InterventionListView.SelectedItem = _incident.Intervention;
-            }
-            else
-            {
-                _incident = new Incident(DateTime.Now); 
-                DateEntry.Date = DateTime.Now.Date;
-                TimeEntry.Time = DateTime.Now.TimeOfDay;
+                InterventionListView.SelectedItem = incident.Intervention;
+                BehaviorListView.SelectedItem = incident.Behavior;
             }
         }
         #endregion
 
-        #region Private methods
-        /// <summary>
-        /// Called when incident entry is completed to finish adding/editing data.
-        /// </summary>
-        private void IncidentEntryCompleted ()
+        protected override void OnAppearing()
         {
-            DateTime fullDateTime = new DateTime (DateEntry.Date.Ticks + TimeEntry.Time.Ticks);
+            base.OnAppearing();
 
-            _incident.Date = fullDateTime;
-            _incident.Behavior = BehaviorListView.SelectedItem.ToString();
-            _incident.Intervention = InterventionListView.SelectedItem.ToString();
-            _incident.Comment = CommentsEntry.Text;
-
-            if (!isEditingIncident)  // New incident, need to add to collection
-            {
-                _student.Incidents.Add(_incident);
-            }
-    
-            _student.Incidents.Sort();
-            _student.UpdateWorstBehavior();
-            Navigation.PopAsync (false);
+            MessagingCenter.Subscribe<IncidentDetailViewModel, string>(this, "Message",
+                (sender, arg) => HandleMessage(arg));
         }
 
-        /// <summary>
-        /// Done button clicked.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void OnDoneButtonClicked (object sender, EventArgs e)
+        protected override void OnDisappearing()
         {
-            IncidentEntryCompleted ();
-        }
-
-        /// <summary>
-        /// Cancel button clicked.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void OnCancelButtonClicked (object sender, EventArgs e)
-        {
-            Navigation.PopAsync (false);
+            base.OnDisappearing();
+            MessagingCenter.Unsubscribe<IncidentDetailViewModel, string>(this, "Message");
         }
 
         /// <summary>
@@ -112,10 +69,15 @@ namespace ClassManagement
                 InterventionListView.SelectedItem != null &&
                 !isEditingIncident)
             {
-                IncidentEntryCompleted ();
+                DoneButton.Command.Execute("Done");
             }
         }
-        #endregion
+
+        private void HandleMessage(string arg)
+        {
+            Navigation.PopModalAsync(false);
+        }
+        
     }
 }
 

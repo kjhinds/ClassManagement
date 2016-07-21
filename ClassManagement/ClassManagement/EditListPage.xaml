@@ -4,7 +4,7 @@
              xmlns:local="clr-namespace:ClassManagement;assembly:ClassManagement"
              x:Class="ClassManagement.EditListPage"
              x:Name="EditListPage"
-             BackgroundColor="{StaticResource PageBackgroundColor}">
+             Style="{StaticResource ContentPageStyle}">
   
   <ContentPage.Content>
     <StackLayout Orientation="Vertical">
@@ -12,7 +12,8 @@
         <Label Text="{Binding ListType}" Style="{StaticResource ToolbarTitle}"/>
         <Image Source="{local:ImageResource ClassManagement.Resources.check.png}"
                Style="{StaticResource ToolbarIconsStyle}"
-               HorizontalOptions="End">
+               HorizontalOptions="End"
+               VerticalOptions="End">
           <Image.GestureRecognizers>
             <TapGestureRecognizer Command="{Binding DoneButton}"/>
           </Image.GestureRecognizers>
@@ -27,8 +28,7 @@
           <Button Text="Add Item" Command="{Binding AddItemCommand}" HorizontalOptions="End"
                   TextColor="{StaticResource AccentColor}"/>
         </StackLayout>
-        <ListView RowHeight="30"
-                  ItemsSource="{Binding ListToEdit}">
+        <ListView ItemsSource="{Binding ListToEdit}">
           <ListView.ItemTemplate>
             <DataTemplate>
               <ViewCell>

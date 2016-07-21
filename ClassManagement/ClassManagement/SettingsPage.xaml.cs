@@ -10,7 +10,7 @@ namespace ClassManagement
         public SettingsPage (DataModel dataModel)
         {
             InitializeComponent ();
-
+            NavigationPage.SetHasNavigationBar(this, false);
             BindingContext = new SettingsViewModel(dataModel);
 
             this.dataModel = dataModel;
@@ -85,7 +85,7 @@ namespace ClassManagement
 
         private void CloseSettingsPage()
         {
-            Navigation.PopModalAsync(false);
+            Navigation.PopAsync(false);
         }
 
         private void ShowCredits()
