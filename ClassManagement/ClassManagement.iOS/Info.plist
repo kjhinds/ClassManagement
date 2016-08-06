@@ -21,13 +21,22 @@
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
 	<key>MinimumOSVersion</key>
-	<string>8.4</string>
+	<string>9.0</string>
 	<key>CFBundleDisplayName</key>
 	<string>Class Management</string>
 	<key>CFBundleIdentifier</key>
 	<string>com.khinds.Class-Management</string>
 	<key>CFBundleIconFiles</key>
-	<array/>
+	<array>
+		<string>Icon-60@2x.png</string>
+		<string>Icon-76.png</string>
+		<string>Icon-76@2x.png</string>
+		<string>Default-568h@2x.png</string>
+		<string>Icon-Small-40.png</string>
+		<string>Icon-Small-40@2x.png</string>
+		<string>Icon-Small.png</string>
+		<string>Icon-Small@2x.png</string>
+	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>CFBundleName</key>
@@ -35,29 +44,12 @@
 	<key>UIMainStoryboardFile</key>
 	<string>LaunchScreen</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.0.2</string>
+	<string>1.0.1</string>
 	<key>CFBundleVersion</key>
 	<string>3.0</string>
 	<key>UIMainStoryboardFile~ipad</key>
 	<string>LaunchScreen</string>
 	<key>UIStatusBarStyle</key>
 	<string>UIStatusBarStyleBlackTranslucent</string>
-	<key>XSAppIconAssets</key>
-	<string>Resources/Media.xcassets/AppIcons.appiconset</string>
-	<key>CFBundleDocumentTypes</key>
-	<array>
-		<dict>
-			<key>CFBundleTypeName</key>
-			<string>CSV</string>
-			<key>CFBundleTypeIconFiles</key>
-			<array>
-				<string>Icon-83.5@2x</string>
-			</array>
-			<key>LSItemContentTypes</key>
-			<array>
-				<string>public.comma-separated-values-text</string>
-			</array>
-		</dict>
-	</array>
 </dict>
 </plist>
