@@ -1,6 +1,7 @@
 ﻿using System;
 using Newtonsoft.Json;
 using Xamarin.Forms;
+using System.Diagnostics;
 
 namespace ClassManagement
 {
@@ -76,6 +77,10 @@ namespace ClassManagement
             SaveData();
         }
 
+        public void AddStudents(string studentData)
+        {
+            Debug.WriteLine(studentData);
+        }
 
     }
 }

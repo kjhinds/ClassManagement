@@ -50,6 +50,11 @@ namespace ClassManagement
             NavigateToPeriod();
         }
 
+        public void ImportStudentList(string filePath)
+        {
+            data.AddStudents(filePath);
+        }
+
         private void NavigateToPeriod()
         {
             double currentTimeMinutes = DateTime.Now.TimeOfDay.TotalMinutes;
