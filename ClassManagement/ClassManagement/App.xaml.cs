@@ -27,6 +27,8 @@ namespace ClassManagement
             Days.Add("Wednesday", 2);
             Days.Add("Thursday", 3);
             Days.Add("Friday", 4);
+            Days.Add("Saturday", 5);
+            Days.Add("Sunday", 6);
 
             if (Settings.JumpToPeriod)
             {

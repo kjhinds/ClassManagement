@@ -33,13 +33,11 @@
           <DatePicker Date="{Binding Date}"
                       TextColor="{StaticResource NormalTextColor}"
                       HorizontalOptions="StartAndExpand"
-                      VerticalOptions="Start"
-                      x:Name="DateEntry"/>
+                      VerticalOptions="Start"/>
           <TimePicker Time="{Binding Date.TimeOfDay}"
                       TextColor="{StaticResource NormalTextColor}"
                       HorizontalOptions="EndAndExpand"
-                      VerticalOptions="Start"
-                      x:Name="TimeEntry"/>
+                      VerticalOptions="Start"/>
         </StackLayout>
         <Entry Text="{Binding Comments}"
                TextColor="{StaticResource NormalTextColor}"
