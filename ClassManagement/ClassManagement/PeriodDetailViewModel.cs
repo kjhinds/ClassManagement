@@ -112,26 +112,29 @@ namespace ClassManagement
 
         private void OnDoneButtonClicked()
         {
-            period.PeriodName = PeriodName;
-            period.CustomTimes = CustomTimes;
-            period.DailyStartTime = DailyStartTime;
-            period.DailyEndTime = DailyEndTime;
-            period.CustomStartTimes = CustomStartTimes;
-            period.CustomEndTimes = CustomEndTimes;
-            if (isNewPeriod)
-            {
-                foreach (var item in periods)
-                {
-                    if (item.PeriodName == PeriodName)
-                    {
-                        MessagingCenter.Send(this, "Duplicate Period");
-                        return;
+            if (PeriodName != "") {
+                period.PeriodName = PeriodName;
+                period.CustomTimes = CustomTimes;
+                period.DailyStartTime = DailyStartTime;
+                period.DailyEndTime = DailyEndTime;
+                period.CustomStartTimes = CustomStartTimes;
+                period.CustomEndTimes = CustomEndTimes;
+                if (isNewPeriod) {
+                    foreach (var item in periods) {
+                        if (item.PeriodName == PeriodName) {
+                            MessagingCenter.Send(this, "Duplicate Period");
+                            return;
+                        }
                     }
+                    periods.Add(period);
+                    periods.Sort();
                 }
-                periods.Add(period);
-                periods.Sort();                
+                MessagingCenter.Send(this, "Close Period Detail Page");
             }
-            MessagingCenter.Send(this, "Close Period Detail Page");
+            else
+            {
+                MessagingCenter.Send(this, "Enter a period name");
+            }
         }
 
         private bool EnableButton()

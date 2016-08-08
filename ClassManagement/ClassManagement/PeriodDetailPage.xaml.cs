@@ -64,6 +64,9 @@ namespace ClassManagement
             MessagingCenter.Subscribe<PeriodDetailViewModel>(this, "Duplicate Period",
                 (sender) => DuplicatePeriodAlert());
 
+            MessagingCenter.Subscribe<PeriodDetailViewModel>(this, "Duplicate Period",
+                (sender) => NoPeriodNameAlert());
+
             MessagingCenter.Subscribe<PeriodDetailViewModel>(this, "Close Period Detail Page",
                 (sender) => ClosePeriodDetailPage());
         }
@@ -71,6 +74,11 @@ namespace ClassManagement
         private void DuplicatePeriodAlert()
         {
             DisplayAlert("Duplicate Period", "Period name already in use", "OK");
+        }
+
+        private void NoPeriodNameAlert()
+        {
+            DisplayAlert("Enter Period Name", "Please enter a period name", "OK");
         }
 
         private void ClosePeriodDetailPage()

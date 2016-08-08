@@ -1,6 +1,7 @@
 ﻿using System;
 using Newtonsoft.Json;
 using Xamarin.Forms;
+using System.Diagnostics;
 
 namespace ClassManagement
 {
@@ -76,6 +77,31 @@ namespace ClassManagement
             SaveData();
         }
 
+        public void AddStudents(string studentData)
+        {
+            string[] dataRows = studentData.Split(new string[] { "\r\n", "\n" }, StringSplitOptions.None);
+            for (int i = 1; i < dataRows.Length; i++) {  //skip header row
+                string[] rowItems = dataRows[i].Split(',');
+                bool studentAdded = false;
+                foreach (var period in Periods) {
+                    if (period.PeriodName == rowItems[0] && rowItems[1] != null && rowItems[2] != null) 
+                    {
+                            Student newStudent = new Student(rowItems[1], rowItems[2]);
+                            period.Students.Add(newStudent);
+                            studentAdded = true;
+                            break;
+                    }
+                }
+                if (!studentAdded && rowItems[0] != "" && rowItems[1] != null && rowItems[2] != null)
+                {
+                    Period newPeriod = new Period(rowItems[0]);
+                    Student newStudent = new Student(rowItems[1], rowItems[2]);
+                    newPeriod.Students.Add(newStudent);
+                    Periods.Add(newPeriod);
+                }
+            }
+            SaveData();
+        }
 
     }
 }
