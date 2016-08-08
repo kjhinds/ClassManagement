@@ -16,12 +16,7 @@ namespace ClassManagement
 
             Toolkit.Init();
             data = new DataModel();
-
-            // The root page of your application
-            MainPage = new NavigationPage(new PeriodListPage(data));
-            NavigationPage.SetHasNavigationBar(this, false);
-
-            // Navigate to current period if setting enabled.
+           
             Days.Add("Monday", 0);
             Days.Add("Tuesday", 1);
             Days.Add("Wednesday", 2);
@@ -29,16 +24,17 @@ namespace ClassManagement
             Days.Add("Friday", 4);
             Days.Add("Saturday", 5);
             Days.Add("Sunday", 6);
-
-            if (Settings.JumpToPeriod)
-            {
-                NavigateToPeriod();
-            }
+            
         }
 
         protected override void OnStart()
         {
+            data.LoadData();
 
+            MainPage = new NavigationPage(new PeriodListPage(data));
+            NavigationPage.SetHasNavigationBar(this, false);
+
+            NavigateToPeriod();
         }
 
         protected override void OnSleep()
@@ -49,6 +45,10 @@ namespace ClassManagement
         protected override void OnResume()
         {
             data.LoadData();
+
+            MainPage = new NavigationPage(new PeriodListPage(data));
+            NavigationPage.SetHasNavigationBar(this, false);
+
             NavigateToPeriod();
         }
 
@@ -59,28 +59,31 @@ namespace ClassManagement
 
         private void NavigateToPeriod()
         {
-            double currentTimeMinutes = DateTime.Now.TimeOfDay.TotalMinutes;
-            string currentDayOfWeek = DateTime.Now.DayOfWeek.ToString();
-            int dayIndex = Days[currentDayOfWeek];
-
-            foreach (var period in data.Periods)
+            if (Settings.JumpToPeriod)
             {
-                if (period.CustomTimes)
-                {
+                double currentTimeMinutes = DateTime.Now.TimeOfDay.TotalMinutes;
+                string currentDayOfWeek = DateTime.Now.DayOfWeek.ToString();
+                int dayIndex = Days[currentDayOfWeek];
 
-                    if (currentTimeMinutes >= period.CustomStartTimes[dayIndex].TotalMinutes &&
-                            currentTimeMinutes <= period.CustomEndTimes[dayIndex].TotalMinutes)
-                    {
-                        MainPage.Navigation.PushModalAsync(new StudentListPage(period), false);
-                        break;
-                    }
-                }
-                else
+                foreach (var period in data.Periods)
                 {
-                    if (currentTimeMinutes >= period.DailyStartTime.TotalMinutes && currentTimeMinutes <= period.DailyEndTime.TotalMinutes)
+                    if (period.CustomTimes)
                     {
-                        MainPage.Navigation.PushModalAsync(new StudentListPage(period), false);
-                        break;
+
+                        if (currentTimeMinutes >= period.CustomStartTimes[dayIndex].TotalMinutes &&
+                                currentTimeMinutes <= period.CustomEndTimes[dayIndex].TotalMinutes)
+                        {
+                            MainPage.Navigation.PushModalAsync(new StudentListPage(period), false);
+                            break;
+                        }
+                    }
+                    else
+                    {
+                        if (currentTimeMinutes >= period.DailyStartTime.TotalMinutes && currentTimeMinutes <= period.DailyEndTime.TotalMinutes)
+                        {
+                            MainPage.Navigation.PushModalAsync(new StudentListPage(period), false);
+                            break;
+                        }
                     }
                 }
             }
